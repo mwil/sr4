@@ -11,14 +11,17 @@
 
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
+
+	<style type="text/css">
+		.med { font-size:medium; }
+	</style>
 </head>
 
 <body>
 
 <form>
 	<fieldset data-role="controlgroup" data-type="horizontal">
-    
-    	<a href="#" data-role="button", style="width:200px">Agility</a>
+    	<a href="#" data-role="button" style="width:200px;">Agility</a>
     
 	    <select name="select-native-12" id="select-native-12">
 	        <option value="#">1</option>
@@ -45,30 +48,14 @@
 	</fieldset>
 
 	<fieldset data-role="controlgroup" data-type="horizontal">
-    
-    	<a href="#" data-role="button", style="width:200px">Logic</a>
-    
+    	<a href="#" data-role="button" style="width:200px;">Logic</a>
+
 	    <select name="select-native-13" id="select-native-13">
-	        <option value="#">1</option>
-	        <option value="#">2</option>
-	        <option value="#">3</option>
-	        <option value="#">4</option>
-	        <option value="#">5</option>
-	        <option value="#">6</option>
+	        <option value="#">1</option><option value="#">2</option>
+	        <option value="#">3</option><option value="#">4</option>
+	        <option value="#">5</option><option value="#">6</option>
 	        <option value="#">7</option>
 	    </select>
-
-	    <select name="select-native-14" id="select-native-14">
-	        <option value="#">1</option>
-	        <option value="#">2</option>
-	        <option value="#">3</option>
-	        <option value="#">4</option>
-	        <option value="#">5</option>
-	        <option value="#">6</option>
-	        <option value="#">7</option>
-	        <option value="#">8</option>
-	        <option value="#">9</option>
-	  	</select>
 	</fieldset>
 </form>
 
@@ -76,12 +63,48 @@
     <div data-role="collapsible">
         <h2>Attributes</h2>
         <ul data-role="listview">
-            <li><a href="index.html">Strength <span class="ui-li-count">7</span></a></li>
-            <li><a href="index.html">Agility <span class="ui-li-count">9</span></a></li>
-            <li><a href="index.html">Logic <span class="ui-li-count">7</span></a></li>
-            <li><a href="index.html">Willpower <span class="ui-li-count">4</span></a></li>
-            <li><a href="index.html">Edge <span class="ui-li-count">7</span></a></li>
+            <li><a href="#">Strength <span class="ui-li-count" style="font-size:medium;">7</span></a></li>
+            <li><a href="#">Agility <span class="ui-li-count" style="font-size:medium;">11</span></a></li>
+            <li><a href="#">Logic <span class="ui-li-count" style="font-size:medium;">7</span></a></li>
+            <li><a href="#">Willpower <span class="ui-li-count" style="font-size:medium;">4</span></a></li>
+            <li><a href="#">Edge <span class="ui-li-count" style="font-size:medium;">7</span></a></li>
         </ul>
     </div>
+
+<form>
+    <fieldset data-role="controlgroup" data-type="horizontal">
+        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+        <label for="radio-choice-h-2a" style="width:600px;">One</label>
+        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+        <label for="radio-choice-h-2b">Two</label>
+        <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2c" value="other">
+        <label for="radio-choice-h-2c">Three</label>
+    </fieldset>
+</form>
+
+<div data-role="navbar">
+	<ul>
+        <li style="width:70%;"><a href="#" data-role="button">Agility</a></li>
+        <li style="width:30%;">
+        	<select name="cboYear" id="cboYear" data-corners="false" data-shadow="false">
+	        	<option value="#">1</option><option value="#">2</option><option value="#">3</option>
+	        	<option value="#">4</option><option value="#">5</option><option value="#">6</option><option value="#">7</option>
+        	</select>
+        </li>
+    </ul>
+</div><!-- /navbar -->
+
+<div data-role="navbar">
+	<ul>
+        
+        <li style="width:70%;"><a data-theme="d">Logic</a></li>
+        <li style="width:30%;">
+        	<select name="cboYear" id="cboYear" data-corners="false" data-shadow="false" data-theme="e">
+	        	<option value="#">1</option><option value="#">2</option><option value="#">3</option>
+	        	<option value="#">4</option><option value="#">5</option><option value="#">6</option><option value="#">7</option>
+        	</select>
+        </li>
+    </ul>
+</div><!-- /navbar -->
 
 </body>

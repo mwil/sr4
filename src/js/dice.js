@@ -69,8 +69,8 @@ Dice.relabel = function(active, offset) {
 
 	$('.dicebutton').each(
 		function(index) {
-			console.log($(this).find(".ui-btn-text")[0])
-			$(this).find(".ui-btn-text")[0].innerHTML = $(this).attr("baseval") + offset + 1;
+			$(this).find(".ui-btn-text")[0].innerHTML = parseInt($(this).attr("currval")) + offset;
+			$(this).prop("currval", 5);//parseInt($(this).attr("currval")) + offset);
 		}
 	)
 };

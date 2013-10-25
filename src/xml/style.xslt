@@ -78,29 +78,33 @@
 	<xsl:if test="$rowcount > 0">
 		<!-- content to put ... -->
 		<div class="ui-block-a">
-	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" baseval="{$dicelabel}"
-	    	   onClick="Dice.roll({$dicelabel}, $('#dicemode-cb-edge')[0].checked, $('#dicemode-cb-sort')[0].checked);"
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
+	    	   baseval="{$dicelabel}" currval="{$dicelabel}" id="{generate-id(.)}"
+	    	   onClick="Dice.roll(parseInt($('#{generate-id(.)}').attr('currval')), $('#dicemode-cb-edge')[0].checked, $('#dicemode-cb-sort')[0].checked);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-b">
-	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" baseval="{$dicelabel + 1}"
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
+	    	   baseval="{$dicelabel + 1}" currval="{$dicelabel + 1}"
 	    	   onClick="Dice.roll({$dicelabel + 1}, $('#dicemode-cb-edge')[0].checked, $('#dicemode-cb-sort')[0].checked);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 1"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-c">
-	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" baseval="{$dicelabel + 2}"
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" 
+	    	   baseval="{$dicelabel + 2}" currval="{$dicelabel + 2}"
 	    	   onClick="Dice.roll({$dicelabel + 2}, $('#dicemode-cb-edge')[0].checked, $('#dicemode-cb-sort')[0].checked);"
 			   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 2"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-d">
-	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" baseval="{$dicelabel + 3}"
-	    		onClick="Dice.roll({$dicelabel + 3}, $('#dicemode-cb-edge')[0].checked, $('#dicemode-cb-sort')[0].checked);"
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
+	    	   baseval="{$dicelabel + 3}" currval="{$dicelabel + 3}"
+	    	   onClick="Dice.roll({$dicelabel + 3}, $('#dicemode-cb-edge')[0].checked, $('#dicemode-cb-sort')[0].checked);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 3"/>
 	    	</a>

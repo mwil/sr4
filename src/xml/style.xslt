@@ -51,7 +51,7 @@
 <xsl:template match="dice-buttons">
 	<div class="ui-grid-c">
 
-		<xsl:for-each select="1 to 2"><p><xsl:text>Jam!</xsl:text></xsl:for-each>
+		<xsl:for-each select="1 to 2"><p><xsl:text>Jam!</xsl:text></p></xsl:for-each>
 		<!-- row 1 -->
 	    <div class="ui-block-a">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(1);"

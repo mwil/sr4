@@ -2,9 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="style.xslt"?>
 
 <app>
-<page id="dice">
-</page>
+	<page id="dice">
+	</page>
 
-<page id="stats">
-</page>
+	<page id="stats">
+	</page>
 </app>

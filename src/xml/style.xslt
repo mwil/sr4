@@ -28,7 +28,7 @@
 <xsl:template match="page">
 	<xsl:element name="div">
 		<xsl:attribute name="data-role">page</xsl:attribute>
-        <xsl:attribute name="id"><xsl:value-of select="id"/></xsl:attribute>
+        <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
     
 		<xsl:copy-of select="document('jQheader.xml')/*"/>
 

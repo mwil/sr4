@@ -64,13 +64,15 @@ Dice.roll = function(num_dice, edge, sort) {
 
 Dice.relabel = function(active, offset) {
 	if (!active) {
-		offset = 0;
+		offset = -offset;
 	}
 
 	$('.dicebutton').each(
 		function(index) {
-			$(this).find(".ui-btn-text")[0].innerHTML = parseInt($(this).attr("currval")) + offset;
-			$(this).currval = 5;//parseInt($(this).attr("currval")) + offset);
+			var newval = parseInt($(this).attr("currval")) + offset
+
+			$(this).find(".ui-btn-text")[0].innerHTML = newval;
+			$(this).attr("currval", newval);
 		}
 	)
 };

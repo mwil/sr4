@@ -52,7 +52,8 @@
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
 	    	onClick="Dice.relabel($('#dicemode-cb-edge')[0].checked, Stats.edge);"/>
 	    <label for="dicemode-cb-edge" style="width:120px;">Edge</label>
-	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"/>
+	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
+	    	onClick="Dice.relabel($('#dicemode-cb-add')[0].checked, 24);"/>
 	    <label for="dicemode-cb-add" style="width:120px;">+</label>
 	</fieldset>
 	</form>

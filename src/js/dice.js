@@ -14,7 +14,7 @@ Dice.roll = function(num_dice, edge) {
 			ones += 1;
 		}
 
-		if (edge and rolls[i] == 6) {
+		if (edge && rolls[i] == 6) {
 			adds += 1;
 		}
 	};

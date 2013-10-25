@@ -27,7 +27,6 @@
 		<xsl:copy-of select="document('jQheader.xml')/*"/>
 
 		<div data-role="content">
-			<h3><xsl:text>I love candy! 5</xsl:text></h3>
 			<xsl:apply-templates/>
 		</div>
 	</div>
@@ -48,13 +47,12 @@
 <xsl:template match="dice-buttons">
 	<div class="ui-grid-c">
 		<xsl:call-template name="button-row">
-      		<xsl:with-param name="rowcount" select="5"/>
-      		<xsl:with-param name="dicelabel" select="1"/>
+      		<xsl:with-param name="rowcount" select="6"/>
     	</xsl:call-template>
 	</div>
 
 	<div data-role="popup" id="dice-popup">
-	    <h3 id="dice-poptext"><xsl:text>You got a six!</xsl:text></h3>
+	    <h3 id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></h3>
 	    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c"><xsl:text>Whatever.</xsl:text></a>
 	</div>
 </xsl:template>
@@ -64,7 +62,7 @@
 	<xsl:param name="dicelabel" select="1"/>
 
 	<xsl:if test="$rowcount > 0">
-
+		<!-- content to put ... -->
 		<div class="ui-block-a">
 	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel});"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
@@ -89,12 +87,14 @@
 	    	   <xsl:value-of select="$dicelabel + 3"/>
 	    	</a>
 	    </div>
+	    <!-- --->
 
+	    <!-- ... the recursion ... -->
         <xsl:call-template name="button-row">
         	<xsl:with-param name="rowcount" select="$rowcount - 1"/>
         	<xsl:with-param name="dicelabel" select="$dicelabel + 4"/>
         </xsl:call-template>
-      </xsl:if>
+    </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

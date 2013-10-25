@@ -62,12 +62,18 @@ Dice.roll = function(num_dice, edge, sort) {
 			</table>";
 };
 
-Dice.relabel = function(offset) {
-	console.log($('.dicebutton'));
+Dice.relabel = function(active, offset) {
+	if (!active) {
+		offset = 0;
+	}
+	console.log(offset);
+
 	$('.dicebutton').each(
 		function(index) {
-			//alert($(this)[0].attr());
-			//$(this).children()[0].innerHTML = '<span class="ui-btn-text">'+($(this).baseval)+'</span>';
+			if (index == 1) {
+				//alert(fGetKeys($(this)[0]));
+			}
+			$(this).children()[0].innerHTML = '<span class="ui-btn-text">'+(index+offset+1)+'</span>';
 		}
 	)
 };

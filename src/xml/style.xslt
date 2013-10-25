@@ -49,7 +49,8 @@
 	<fieldset data-role="controlgroup" data-type="horizontal">
 	    <input type="checkbox" name="dicemode-cb-sort" id="dicemode-cb-sort" checked="checked"/>
 	    <label for="dicemode-cb-sort" style="width:120px;">Sort</label>
-	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge"/>
+	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
+	    	onClick="Dice.relabel($('#dicemode-cb-edge')[0].checked, Stats.edge);"/>
 	    <label for="dicemode-cb-edge" style="width:120px;">Edge</label>
 	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"/>
 	    <label for="dicemode-cb-add" style="width:120px;">+</label>

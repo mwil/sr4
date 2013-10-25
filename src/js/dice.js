@@ -61,10 +61,4 @@ Dice.roll = function(num_dice, edge, sort) {
 					<td>&#x2a09;</td><td>"+count[6]+"</td>\
 				</tr>\
 			</table>";
-
-	//$('#dice-poptext')[0].innerHTML = "You got a "+rolls+" from "+num_dice+" dice!"+ 
-	//								  "<br/>This is "+count[1]+"x&#9856; + "+count[2]+"x&#9857; + "+count[3]+"x&#9858; + "+
-	//								  count[4]+"x&#9859; + "+count[5]+"x&#9860; + "+count[6]+"x&#9861;. "+
-	//							      "<br/>This is "+hits+" hits and "+ones+" ones. "+
-	//							      "<br/>Edge was "+edge+" and you got "+adds+" additional hits." ;
 };

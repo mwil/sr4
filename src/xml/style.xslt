@@ -7,21 +7,7 @@
 <xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
 <html>
 
-<head>
-	<title>HTML from XML via XSLT</title>
-
-    <meta charset="utf-8"/>
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css"/>
-
-	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
-
-	<style type="text/css">
-		#med { font-size:medium; }
-	</style>
-</head>
+<xsl:copy-of select="document('incl.xml')/*"/>
 
 <body>
 	<xsl:apply-templates/>

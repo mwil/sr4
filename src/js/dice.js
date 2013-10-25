@@ -63,7 +63,7 @@ Dice.roll = function(num_dice, edge, sort) {
 };
 
 Dice.relabel = function(offset) {
-	console.log($('.dicebutton').attr());
+	console.log($('.dicebutton'));
 	$('.dicebutton').each(
 		function(index) {
 			//alert($(this)[0].attr());

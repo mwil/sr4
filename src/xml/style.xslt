@@ -31,4 +31,10 @@
 	</xsl:element>
 </xsl:template>
 
+<xsl:template match="@*|node()">
+    <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+</xsl:template>
+
 </xsl:stylesheet>

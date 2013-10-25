@@ -67,14 +67,14 @@ Dice.relabel = function(active, offset) {
 		offset = 0;
 	}
 	console.log($('.dicebutton')[0].getAttribute("baseval"));
-	console.log($('.dicebutton.span')[0]);
+	console.log($('.dicebutton.ui-btn-inner.ui-btn-text')[0]);
 
 	$('.dicebutton').each(
 		function(index) {
 			if (index == 1) {
 				//alert(fGetKeys($(this)[0]));
 			}
-			$(this).children()[0].innerHTML = '<span class="ui-btn-text">'+(index+offset+1)+'</span>';
+			$(this).children()[0].innerHTML = '<span class="ui-btn-text">'+($(this).getAttribute("baseval")+offset+1)+'</span>';
 		}
 	)
 };

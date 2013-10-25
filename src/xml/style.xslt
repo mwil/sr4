@@ -16,7 +16,7 @@
 </html>
 </xsl:template>
 
-<!-- copy over unknown elements -->
+<!-- copy over some elements -->
 <xsl:template match="a">
     <xsl:copy-of select="."/>
 </xsl:template>
@@ -29,8 +29,8 @@
 		<xsl:copy-of select="document('jQheader.xml')/*"/>
 
 		<div data-role="content">
-			<h3><xsl:text>I love candy! 2</xsl:text></h3>
-			<xsl:apply-templates select="node()"/>
+			<h3><xsl:text>I love candy! 3</xsl:text></h3>
+			<xsl:apply-templates/>
 		</div>
 	</xsl:element>
 </xsl:template>

@@ -26,19 +26,16 @@
 </xsl:template>
 
 <xsl:template match="page">
-
 	<xsl:element name="div">
 		<xsl:attribute name="data-role">page</xsl:attribute>
         <xsl:attribute name="id"><xsl:value-of select="id"/></xsl:attribute>
     
-	<xsl:copy-of select="document('jQheader.xml')/*"/>
+		<xsl:copy-of select="document('jQheader.xml')/*"/>
 
-	<div data-role="content">
-		<h3><xsl:text>I love candy!</xsl:text></h3>
-	</div>
+		<div data-role="content">
+			<h3><xsl:text>I love candy!</xsl:text></h3>
+		</div>
 	</xsl:element>
-</div>
-
 </xsl:template>
 
 </xsl:stylesheet>

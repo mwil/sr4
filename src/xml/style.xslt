@@ -31,8 +31,8 @@
 		<xsl:copy-of select="document('jQheader.xml')/*"/>
 
 		<div data-role="content">
-			<h3><xsl:text>I love candy!</xsl:text></h3>
-			<xsl:apply-templates select="a"/>
+			<h3><xsl:text>I love candy! 2</xsl:text></h3>
+			<xsl:apply-templates select="@*|node()"/>
 		</div>
 	</xsl:element>
 </xsl:template>

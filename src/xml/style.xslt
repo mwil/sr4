@@ -19,7 +19,7 @@
 <!-- copy over unknown elements -->
 <xsl:template match="a">
     <xsl:copy>
-        <xsl:apply-templates select="@*|node()"/>
+        <xsl:apply-templates select="node()"/>
     </xsl:copy>
 </xsl:template>
 
@@ -32,7 +32,7 @@
 
 		<div data-role="content">
 			<h3><xsl:text>I love candy! 2</xsl:text></h3>
-			<xsl:apply-templates select="@*|node()"/>
+			<xsl:apply-templates select="node()"/>
 		</div>
 	</xsl:element>
 </xsl:template>

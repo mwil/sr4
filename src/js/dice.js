@@ -40,7 +40,6 @@ Dice.roll = function(num_dice, edge, sort) {
 			var title = "<h3>No Hits!</h3>";
 		}
 	}
-	
 
 	$('#dice-poptext')[0].innerHTML = title+"\
 			<table>\
@@ -64,5 +63,10 @@ Dice.roll = function(num_dice, edge, sort) {
 };
 
 Dice.relabel = function(offset) {
-	//$('.diebutton')
-}
+	$('.dicebutton').each(
+		function(index) {
+			alert($(this).attr());
+			$(this).children()[0].innerHTML = '<span class="ui-btn-text">'+($(this).baseval)+'</span>';
+		}
+	)
+};

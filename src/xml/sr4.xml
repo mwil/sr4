@@ -5,7 +5,7 @@
 	<page id="dice">
 		<dicemode-cb/>
 		<dice-buttons/>
-		<a href="#stats" data-role="button">Page Stats</a>
+		<a href="#stats" data-role="button" onClick="Dice.relabel(9);">Page Stats</a>
 	</page>
 
 	<page id="stats">

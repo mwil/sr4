@@ -77,7 +77,7 @@ Dice.relabel = function(active, offset) {
 				//alert(fGetKeys($(this)[0]));
 			}
 			console.log(this)
-			console.log($(this).children(".ui-btn-text"))
+			console.log($(this).children(".ui-btn-text")[0])
 			//this.innerHTML = '<span class="ui-btn-text">'+($(this).getAttribute("baseval")+offset+1)+'</span>';
 		}
 	)

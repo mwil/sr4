@@ -17,7 +17,7 @@
 </xsl:template>
 
 <!-- copy over unknown elements -->
-<xsl:template match="page/a">
+<xsl:template match="a">
     <xsl:copy>
         <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
@@ -32,7 +32,7 @@
 
 		<div data-role="content">
 			<h3><xsl:text>I love candy!</xsl:text></h3>
-			<xsl:apply-templates select="page/a"/>
+			<xsl:apply-templates select="a"/>
 		</div>
 	</xsl:element>
 </xsl:template>

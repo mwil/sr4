@@ -36,7 +36,7 @@
 <xsl:template match="dicemode-cb">
 	<form>
 	<fieldset data-role="controlgroup" data-type="horizontal">
-	    <input type="checkbox" name="dicemode-cb-sort" id="dicemode-cb-sort"/>
+	    <input type="checkbox" name="dicemode-cb-sort" id="dicemode-cb-sort" checked="checked"/>
 	    <label for="dicemode-cb-sort" style="width:160px;">Sort</label>
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge"/>
 	    <label for="dicemode-cb-edge" style="width:160px;">Edge</label>

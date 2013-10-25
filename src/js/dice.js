@@ -1,6 +1,6 @@
 var Dice = {};
 
-Dice.roll = function(num_dice, edge) {
+Dice.roll = function(num_dice, edge, sort) {
 	var rolls = new Array();
 	var hits  = 0;
 	var ones  = 0;
@@ -8,6 +8,7 @@ Dice.roll = function(num_dice, edge) {
 	
 	for (var i = 0; i < (num_dice + adds); i++) {
 		rolls[i] = 1 + Math.floor(Math.random() * 6);
+
 		if (rolls[i] > 4) {
 			hits += 1;
 		} else if (rolls[i] == 1) {
@@ -19,7 +20,11 @@ Dice.roll = function(num_dice, edge) {
 		}
 	};
 
-	$('#dice-poptext')[0].innerHTML = "You got a " + rolls + " from " + num_dice + " dice!" + 
-								      "<br/>This is " + hits + " hits and "+ ones + " ones. "+
-								      "<br/>Edge was "+ edge + "and you got "+ adds+" additional hits." ;
+	if (sort) {
+		rolls.sort(function(a,b){return a - b});
+	}
+
+	$('#dice-poptext')[0].innerHTML = "You got a "+rolls+" from "+num_dice+" dice!"+ 
+								      "<br/>This is "+hits+" hits and "+ones+" ones. "+
+								      "<br/>Edge was "+edge+" and you got "+adds+" additional hits." ;
 };

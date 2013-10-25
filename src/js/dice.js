@@ -62,3 +62,7 @@ Dice.roll = function(num_dice, edge, sort) {
 				</tr>\
 			</table>";
 };
+
+Dice.relabel = function(offset) {
+	//$('.diebutton')
+}

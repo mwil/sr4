@@ -1,12 +1,3 @@
-
-// Run once the DOM is ready
-/**/
-$(document).ready(
-    function () {
-    	UI.init();
-    }
-);
-
 var Dice = {};
 
 Dice.roll = function(num_dice) {

@@ -16,6 +16,12 @@
 </html>
 </xsl:template>
 
+<!-- copy over unknown elements -->
+<xsl:template match="page/a">
+    <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+    </xsl:copy>
+</xsl:template>
 
 <xsl:template match="page">
 	<xsl:element name="div">
@@ -26,15 +32,9 @@
 
 		<div data-role="content">
 			<h3><xsl:text>I love candy!</xsl:text></h3>
-			<xsl:apply-templates select="a"/>
+			<xsl:apply-templates select="page/a"/>
 		</div>
 	</xsl:element>
-</xsl:template>
-
-<xsl:template match="a">
-    <xsl:copy>
-        <xsl:apply-templates select="@*|node()"/>
-    </xsl:copy>
 </xsl:template>
 
 </xsl:stylesheet>

@@ -66,7 +66,7 @@ Dice.relabel = function(active, offset) {
 	if (!active) {
 		offset = 0;
 	}
-	console.log($('.dicebutton'));
+	console.log($('.dicebutton')[0]);
 
 	$('.dicebutton').each(
 		function(index) {

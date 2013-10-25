@@ -50,11 +50,10 @@
 
 <xsl:template match="dice-buttons">
 	<div class="ui-grid-c">
-		<xsl:call-template name="dots">
+		<xsl:call-template name="button-row">
       		<xsl:with-param name="rowcount" select="5"/>
       		<xsl:with-param name="dicelabel" select="1"/>
     	</xsl:call-template>
-
 	</div>
 
 	<div data-role="popup" id="popupBasic">

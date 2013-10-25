@@ -67,7 +67,7 @@ Dice.relabel = function(active, offset) {
 		offset = 0;
 	}
 	console.log($('.dicebutton')[0].getAttribute("baseval"));
-	console.log($('.dicebutton.ui-btn-inner.ui-btn-text')[0]);
+	console.log($('.ui-btn-text')[0]);
 
 	$('.dicebutton').each(
 		function(index) {
@@ -75,8 +75,8 @@ Dice.relabel = function(active, offset) {
 				//alert(fGetKeys($(this)[0]));
 			}
 			console.log(this)
-			console.log($(this)[0])
-			//$(this).children()[0].innerHTML = '<span class="ui-btn-text">'+($(this).getAttribute("baseval")+offset+1)+'</span>';
+			console.log($(this > ui-btn-text)[0])
+			//this.innerHTML = '<span class="ui-btn-text">'+($(this).getAttribute("baseval")+offset+1)+'</span>';
 		}
 	)
 };

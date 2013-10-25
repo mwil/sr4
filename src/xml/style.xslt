@@ -31,7 +31,7 @@
 		<xsl:attribute name="data-role">page</xsl:attribute>
         <xsl:attribute name="id"><xsl:value-of select="page/id"/></xsl:attribute>
     </xsl:element>
-    f
+    
 	<xsl:copy-of select="document('jQheader.xml')/*"/>
 
 	<div data-role="content">

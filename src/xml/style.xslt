@@ -54,36 +54,38 @@
 	    <div class="ui-block-a">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(1);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   
+	    	   <xsl:text>1</xsl:text>
 	    	</a>
 	    </div>
 	    <div class="ui-block-b">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(2);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   
+	    	   <xsl:text>2</xsl:text>
 	    	</a>
 	    </div>
 	    <div class="ui-block-c">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(3);"
 			   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   
+	    	   <xsl:text>3</xsl:text>
 	    	</a>
 	    </div>
 	    <div class="ui-block-d">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(4);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   
+	    	   <xsl:text>4</xsl:text>
 	    	</a>
 	    </div>
 	    <!-- row 2 -->
 	    <div class="ui-block-a">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(5);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   
+	    	   	<xsl:text>5</xsl:text>
 	    	</a>
 	    </div>
 	    <div class="ui-block-b">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" data-inline="false" data-transition="pop" data-position-to="window"></a>
+	    	<a href="#popupBasic" data-rel="popup" data-role="button" data-inline="false" data-transition="pop" data-position-to="window">
+	    		<xsl:text>6</xsl:text>
+	    	</a>
 	    </div>
 
 	</div>

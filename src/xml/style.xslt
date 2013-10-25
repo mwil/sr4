@@ -26,12 +26,12 @@
 
 		<div data-role="content">
 			<h3><xsl:text>I love candy!</xsl:text></h3>
-			<xsl:apply-templates select="@*|node()"/>
+			<xsl:apply-templates select="a"/>
 		</div>
 	</xsl:element>
 </xsl:template>
 
-<xsl:template match="@*|node()">
+<xsl:template match="a">
     <xsl:copy>
         <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>

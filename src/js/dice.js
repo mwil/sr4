@@ -69,13 +69,13 @@ Dice.relabel = function(active, offset) {
 	console.log($('.dicebutton')[0].getAttribute("baseval"));
 	console.log($('.ui-btn-text')[0]);
 
-	$('.dicebutton').each(
+	$('.dicebutton >').each(
 		function(index) {
 			if (index == 1) {
 				//alert(fGetKeys($(this)[0]));
 			}
 			console.log(this)
-			console.log($(this > ui-btn-text)[0])
+			console.log($('this > .ui-btn-text')[0])
 			//this.innerHTML = '<span class="ui-btn-text">'+($(this).getAttribute("baseval")+offset+1)+'</span>';
 		}
 	)

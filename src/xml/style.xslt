@@ -4,16 +4,16 @@
 <xsl:output method="html" indent="yes"/>
 
 <xsl:template match="/">
-<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
-<html>
+	<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
+	<html>
 
-<xsl:copy-of select="document('htmlheader.xml')/*"/>
+	<xsl:copy-of select="document('htmlheader.xml')/*"/>
 
-<body>
-	<xsl:apply-templates/>
-</body>
+	<body>
+		<xsl:apply-templates/>
+	</body>
 
-</html>
+	</html>
 </xsl:template>
 
 <!-- copy over a elements verbatim -->
@@ -64,7 +64,7 @@
 	<xsl:if test="$rowcount > 0">
 		<!-- content to put ... -->
 		<div class="ui-block-a">
-	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel});"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel}, $('#checkbox-h-2b')[0].checked);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel"/>
 	    	</a>

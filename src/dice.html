@@ -41,7 +41,7 @@
 	<div class="ui-grid-c">
 		<!-- row 1 -->
 	    <div class="ui-block-a">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(1);"
+	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(1, $('#checkbox-h-2b')[0].checked);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   1
 	    	</a>
@@ -136,7 +136,7 @@
 	</div>
 
 	<div data-role="popup" id="popupBasic">
-	    <h3 id="poptext">You got a six!</h3>
+	    <h3 id="dice-poptext">You got a six!</h3>
 	    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c">Whatever.</a>
 	</div>
 
@@ -144,7 +144,7 @@
 </div> <!-- /page -->
 
 <div data-role="page" id="stats">
-	<div data-role="header" id="theheader"></div>
+	<div data-role="header" id="theheader">
 	<div data-role="content">
 		
 	<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Search stats ..." data-inset="true">

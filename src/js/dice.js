@@ -1,9 +1,14 @@
 var Dice = {};
 
-Dice.roll = function(num_dice) {
+Dice.roll = function(num_dice, edge) {
 	var rolls = new Array(num_dice);
 	var hits  = 0;
 	var ones  = 0;
+
+	if (edge) {
+		alert(edge);
+	}
+	
 	
 	for (var i = 0; i < num_dice; i++) {
 		rolls[i] = 1 + Math.floor(Math.random() * 6);
@@ -15,5 +20,5 @@ Dice.roll = function(num_dice) {
 	};
 
 	$('#dice-poptext')[0].innerHTML = "You got a " + rolls + " from " + num_dice + " dice!" + 
-								 "</br>This is " + hits + " hits and " + ones + " ones.";
+								      "</br>This is " + hits + " hits and " + ones + " ones.";
 };

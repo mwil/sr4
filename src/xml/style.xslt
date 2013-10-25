@@ -50,13 +50,29 @@
 
 <xsl:template match="dice-buttons">
 	<div class="ui-grid-c">
+		<xsl:call-template name="dots">
+      		<xsl:with-param name="rowcount" select="5"/>
+      		<xsl:with-param name="dicelabel" select="1"/>
+    	</xsl:call-template>
 
-		<xsl:for-each select="1 to 2"><p><xsl:text>Jam!</xsl:text></p></xsl:for-each>
-		<!-- row 1 -->
-	    <div class="ui-block-a">
+	</div>
+
+	<div data-role="popup" id="popupBasic">
+	    <h3 id="poptext"><xsl:text>You got a six!</xsl:text></h3>
+	    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c"><xsl:text>Whatever.</xsl:text></a>
+	</div>
+</xsl:template>
+
+<xsl:template name="button-row">
+	<xsl:param name="rowcount" select="1"/>
+	<xsl:param name="dicelabel" select="1"/>
+
+	<xsl:if test="$rowcount > 0">
+
+		<div class="ui-block-a">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(1);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   <xsl:text>1</xsl:text>
+	    	   <xsl:value-of select="$dicelabel"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-b">
@@ -77,25 +93,12 @@
 	    	   <xsl:text>4</xsl:text>
 	    	</a>
 	    </div>
-	    <!-- row 2 -->
-	    <div class="ui-block-a">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(5);"
-	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   	<xsl:text>5</xsl:text>
-	    	</a>
-	    </div>
-	    <div class="ui-block-b">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" data-inline="false" data-transition="pop" data-position-to="window">
-	    		<xsl:text>6</xsl:text>
-	    	</a>
-	    </div>
 
-	</div>
-
-	<div data-role="popup" id="popupBasic">
-	    <h3 id="poptext"><xsl:text>You got a six!</xsl:text></h3>
-	    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c"><xsl:text>Whatever.</xsl:text></a>
-	</div>
+        <xsl:call-template name="button-row">
+        	<xsl:with-param name="rowcount" select="$rowcount - 1"/>
+        	<xsl:with-param name="dicelabel" select="$dicelabel + 4"/>
+        </xsl:call-template>
+      </xsl:if>
 </xsl:template>
 
 </xsl:stylesheet>

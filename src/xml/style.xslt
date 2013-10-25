@@ -18,9 +18,7 @@
 
 <!-- copy over unknown elements -->
 <xsl:template match="a">
-    <xsl:copy>
-        <xsl:apply-templates/>
-    </xsl:copy>
+    <xsl:copy-of select="."/>
 </xsl:template>
 
 <xsl:template match="page">

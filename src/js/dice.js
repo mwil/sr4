@@ -26,8 +26,45 @@ Dice.roll = function(num_dice, edge, sort) {
 		rolls.sort(function(a,b){return a - b});
 	}
 
-	$('#dice-poptext')[0].innerHTML = "You got a "+rolls+" from "+num_dice+" dice!"+ 
-									  "<br/>This is "+count[1]+"x1 + "+count[2]+"x2 + "+count[3]+"x3 + "+count[4]+"x4 + "+count[5]+"x5 + "+count[6]+"x6."+
-								      "<br/>This is "+hits+" hits and "+ones+" ones. "+
-								      "<br/>Edge was "+edge+" and you got "+adds+" additional hits." ;
+	if (hits > 0) {
+		if (ones >= (num_dice+adds)/2) {
+			// normal glitch, too many ones ...
+			var title = "<h3 style='color:red';>"+hits+(hits>1?" Hits":" Hit")+ " (and glitch!)</h3>";	
+		} else {
+			var title = "<h3>"+hits+(hits>1?" Hits":" Hit")+"!</h3>";
+		}
+	} else {
+		 if (ones >= (num_dice+adds)/2) {
+			var title = "<h3 style='color:red;'>Critical glitch!!</h3>";	
+		} else {
+			var title = "<h3>No Hits!</h3>";
+		}
+	}
+	
+
+	$('#dice-poptext')[0].innerHTML = title+"\
+			<table>\
+				<tr>\
+					<td><div class='die'>&#9856;</div></td>\
+					<td>&#x2a09;</td><td>"+count[1]+"</td>\
+					<td><div class='die'>&#9857;</div></td>\
+					<td>&#x2a09;</td><td>"+count[2]+"</td>\
+					<td><div class='die'>&#9858;</div></td>\
+					<td>&#x2a09;</td><td>"+count[3]+"</td>\
+				</tr>\
+				<tr>\
+					<td><div class='die'>&#9859;</div></td>\
+					<td>&#x2a09;</td><td>"+count[4]+"</td>\
+					<td><div class='die'>&#9860;</div></td>\
+					<td>&#x2a09;</td><td>"+count[5]+"</td>\
+					<td><div class='die'>&#9861;</div></td>\
+					<td>&#x2a09;</td><td>"+count[6]+"</td>\
+				</tr>\
+			</table>";
+
+	//$('#dice-poptext')[0].innerHTML = "You got a "+rolls+" from "+num_dice+" dice!"+ 
+	//								  "<br/>This is "+count[1]+"x&#9856; + "+count[2]+"x&#9857; + "+count[3]+"x&#9858; + "+
+	//								  count[4]+"x&#9859; + "+count[5]+"x&#9860; + "+count[6]+"x&#9861;. "+
+	//							      "<br/>This is "+hits+" hits and "+ones+" ones. "+
+	//							      "<br/>Edge was "+edge+" and you got "+adds+" additional hits." ;
 };

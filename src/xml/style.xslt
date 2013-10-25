@@ -32,14 +32,27 @@
 	</div>
 </xsl:template>
 
+<xsl:template match="stats">
+	<div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="true">
+	    <div data-role="collapsible">
+	        <h2><xsl:text>Attributes</xsl:text></h2>
+	        <ul data-role="listview">
+	            <li><a href="#"><xsl:text>Edge</xsl:text><span class="ui-li-count" id="edge"></span></a></li>
+	        </ul>
+	    </div>
+	</div>
+</xsl:template>
+
 <!-- on dice page: checkbox for dice modes -->
 <xsl:template match="dicemode-cb">
 	<form>
 	<fieldset data-role="controlgroup" data-type="horizontal">
 	    <input type="checkbox" name="dicemode-cb-sort" id="dicemode-cb-sort" checked="checked"/>
-	    <label for="dicemode-cb-sort" style="width:160px;">Sort</label>
+	    <label for="dicemode-cb-sort" style="width:120px;">Sort</label>
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge"/>
-	    <label for="dicemode-cb-edge" style="width:160px;">Edge</label>
+	    <label for="dicemode-cb-edge" style="width:120px;">Edge</label>
+	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"/>
+	    <label for="dicemode-cb-add" style="width:120px;">+</label>
 	</fieldset>
 	</form>
 </xsl:template>
@@ -52,7 +65,7 @@
 	</div>
 
 	<div data-role="popup" id="dice-popup">
-	    <h3 id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></h3>
+	    <p id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></p>
 	    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c"><xsl:text>Whatever.</xsl:text></a>
 	</div>
 </xsl:template>

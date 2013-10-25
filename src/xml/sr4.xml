@@ -9,6 +9,7 @@
 	</page>
 
 	<page id="stats">
+		<stats/>
 		<a href="#dice" data-role="button">Page Dice</a>
 	</page>
 </app>

@@ -25,7 +25,7 @@
 </p>
 </xsl:template>
 
-<xsl:template match="/page">
+<xsl:template match="page">
 <div data-role="page">
 	<xsl:element name="div">
 		<xsl:attribute name="data-role">page</xsl:attribute>

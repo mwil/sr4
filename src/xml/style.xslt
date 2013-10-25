@@ -23,17 +23,14 @@
 
 <!-- generic page markup -->
 <xsl:template match="page">
-	<xsl:element name="div">
-		<xsl:attribute name="data-role">page</xsl:attribute>
-        <xsl:attribute name="id"><xsl:value-of select="@id"/></xsl:attribute>
-    
+	<div data-role="page" id="{@id}">
 		<xsl:copy-of select="document('jQheader.xml')/*"/>
 
 		<div data-role="content">
 			<h3><xsl:text>I love candy! 4</xsl:text></h3>
 			<xsl:apply-templates/>
 		</div>
-	</xsl:element>
+	</div>
 </xsl:template>
 
 <!-- on dice page: checkbox for dice modes -->
@@ -75,19 +72,19 @@
 	    	</a>
 	    </div>
 	    <div class="ui-block-b">
-	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll(2);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel});"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 1"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-c">
-	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll(3);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel});"
 			   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 2"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-d">
-	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll(4);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel});"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 3"/>
 	    	</a>

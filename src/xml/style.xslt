@@ -4,7 +4,7 @@
 <xsl:output method="html" indent="yes"/>
 
 <xsl:template match="/">
-<!DOCTYPE html>
+<xsl:text disable-output-escaping='yes'>&lt;!DOCTYPE html></xsl:text>
 <html>
 
 <head>

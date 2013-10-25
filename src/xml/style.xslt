@@ -77,13 +77,13 @@
 	    <div class="ui-block-b">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(2);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   <xsl:text>2</xsl:text>
+	    	   <xsl:value-of select="$dicelabel + 1"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-c">
 	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(3);"
 			   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   <xsl:text>3</xsl:text>
+	    	   <xsl:value-of select="$dicelabel + 2"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-d">

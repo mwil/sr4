@@ -3,8 +3,10 @@
 
 <app>
 	<page id="dice">
+		<a href="#stats" data-role="button">Page Stats</a>
 	</page>
 
 	<page id="stats">
+		<a href="#dice" data-role="button">Page Dice</a>
 	</page>
 </app>

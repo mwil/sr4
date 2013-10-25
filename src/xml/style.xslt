@@ -16,14 +16,6 @@
 </html>
 </xsl:template>
 
-<xsl:template match="mytext">
-<h1>
-<xsl:value-of select="myhead"/>
-</h1>
-<p>
-<xsl:value-of select="mypara"/>
-</p>
-</xsl:template>
 
 <xsl:template match="page">
 	<xsl:element name="div">
@@ -34,6 +26,7 @@
 
 		<div data-role="content">
 			<h3><xsl:text>I love candy!</xsl:text></h3>
+			<xsl:apply-templates select="@*|node()"/>
 		</div>
 	</xsl:element>
 </xsl:template>

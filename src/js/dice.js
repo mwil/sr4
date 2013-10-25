@@ -14,6 +14,6 @@ Dice.roll = function(num_dice) {
 		}
 	};
 
-	$('#poptext')[0].innerHTML = "You got a " + rolls + " from " + num_dice + " dice!" + 
+	$('#dice-poptext')[0].innerHTML = "You got a " + rolls + " from " + num_dice + " dice!" + 
 								 "</br>This is " + hits + " hits and " + ones + " ones.";
 };

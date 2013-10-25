@@ -56,8 +56,8 @@
     	</xsl:call-template>
 	</div>
 
-	<div data-role="popup" id="popupBasic">
-	    <h3 id="poptext"><xsl:text>You got a six!</xsl:text></h3>
+	<div data-role="popup" id="dice-popup">
+	    <h3 id="dice-poptext"><xsl:text>You got a six!</xsl:text></h3>
 	    <a href="#" data-role="button" data-inline="true" data-rel="back" data-theme="c"><xsl:text>Whatever.</xsl:text></a>
 	</div>
 </xsl:template>
@@ -69,27 +69,27 @@
 	<xsl:if test="$rowcount > 0">
 
 		<div class="ui-block-a">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(1);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll({$dicelabel});"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-b">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(2);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll(2);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 1"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-c">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(3);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll(3);"
 			   data-inline="false" data-transition="pop" data-position-to="window">
 	    	   <xsl:value-of select="$dicelabel + 2"/>
 	    	</a>
 	    </div>
 	    <div class="ui-block-d">
-	    	<a href="#popupBasic" data-rel="popup" data-role="button" onClick="Dice.roll(4);"
+	    	<a href="#dice-popup" data-rel="popup" data-role="button" onClick="Dice.roll(4);"
 	    	   data-inline="false" data-transition="pop" data-position-to="window">
-	    	   <xsl:text>4</xsl:text>
+	    	   <xsl:value-of select="$dicelabel + 3"/>
 	    	</a>
 	    </div>
 

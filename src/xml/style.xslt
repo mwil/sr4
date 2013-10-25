@@ -87,7 +87,7 @@
 	    	   <xsl:value-of select="$dicelabel + 3"/>
 	    	</a>
 	    </div>
-	    <!-- --->
+	    <!-- -->
 
 	    <!-- ... the recursion ... -->
         <xsl:call-template name="button-row">

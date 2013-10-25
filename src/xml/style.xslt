@@ -16,11 +16,12 @@
 </html>
 </xsl:template>
 
-<!-- copy over some elements -->
+<!-- copy over a elements verbatim -->
 <xsl:template match="a">
     <xsl:copy-of select="."/>
 </xsl:template>
 
+<!-- generic page markup -->
 <xsl:template match="page">
 	<xsl:element name="div">
 		<xsl:attribute name="data-role">page</xsl:attribute>
@@ -33,6 +34,17 @@
 			<xsl:apply-templates/>
 		</div>
 	</xsl:element>
+</xsl:template>
+
+<xsl:template match="dicemode-cb">
+	<form>
+	<fieldset data-role="controlgroup" data-type="horizontal">
+	    <input type="checkbox" name="dicemode-cb-sort" id="dicemode-cb-sort">
+	    <label for="dicemode-cb-sort" style="width:160px;">Sort</label>
+	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge">
+	    <label for="dicemode-cb-edge" style="width:160px;">Edge</label>
+	</fieldset>
+	</form>
 </xsl:template>
 
 </xsl:stylesheet>

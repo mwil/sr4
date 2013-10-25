@@ -3,6 +3,7 @@
 
 <app>
 	<page id="dice">
+		<dicemode-cb/>
 		<a href="#stats" data-role="button">Page Stats</a>
 	</page>
 

@@ -19,7 +19,7 @@
 <!-- copy over unknown elements -->
 <xsl:template match="a">
     <xsl:copy>
-        <xsl:apply-templates select="node()"/>
+        <xsl:apply-templates/>
     </xsl:copy>
 </xsl:template>
 

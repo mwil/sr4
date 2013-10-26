@@ -19,20 +19,11 @@
 
 	<div data-role="popup" id="edge-popup" class="ui-content">
 	    <h3 id="edge-poptext"><xsl:text>New Edge value:</xsl:text></h3>
-	    
-	    <div data-role="controlgroup">
-	    	<a href="#" data-role="button">1</a>
-	    	<a href="#" data-role="button">2</a>
-	    	<a href="#" data-role="button">3</a>
-	    	<a href="#" data-role="button">4</a>
-	    	<a href="#" data-role="button">5</a>
-	    	<a href="#" data-role="button">6</a>
-	    	<a href="#" data-role="button">7</a>
-	    	<a href="#" data-role="button">8</a>
-	    	<a href="#" data-role="button">9</a>
-	    	<a href="#" data-role="button">10</a>
-	    	<a href="#" data-role="button">Even more ...</a>
-		</div>
+
+<form>
+    <label for="slider-1">Slider:</label>
+    <input type="range" name="slider-1" id="slider-1" min="0" max="100" value="50">
+</form>
 	</div>
 </xsl:template>
 

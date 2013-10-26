@@ -20,7 +20,7 @@ jQuery(window).load(function () {
 
 var Stats = {};
 
-var StatList = ["Attrib_EDG", "Attrib_BOD"];
+var StatList = ["Attrib_BOD", "Attrib_EDG"];
 
 Stats.init = function() {
 	for (var i = 0; i < StatList.length; i++) {
@@ -62,6 +62,7 @@ Stats.updatePopup = function(label, target, value) {
 	console.log(target);
 	console.log(value);
 	$('#stats-slider').attr('value', value);
+	console.log($('#stats-slider').attr('value'));
 	$('#stats-slider').attr('stat-target', target);
 	$('#stats-slider').slider('refresh');
 

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <!-- Templates for the dice page -->
 
-<!-- checkbox for dice modes -->
+<!-- Checkbox for dice modes -->
 <xsl:template match="dicemode-cb">
-	<form>
+	<form style="text-align:center;">
 	<fieldset data-role="controlgroup" data-type="horizontal">
 	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
 	    	onClick="Dice.rebase($('#dicemode-cb-add')[0].checked, 24);"/>
-	    <label for="dicemode-cb-add" style="width:120px;">+</label>
+	    <label for="dicemode-cb-add" style="width:160px;">+</label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
 	    	onClick="Dice.relabel($('#dicemode-cb-edge')[0].checked, Stats.edge);"/>
-	    <label for="dicemode-cb-edge" style="width:120px;">Edge</label>
+	    <label for="dicemode-cb-edge" style="width:160px;">Edge</label>
 	</fieldset>
 	</form>
 </xsl:template>
@@ -25,7 +27,7 @@
 	</div>
 
 	<div data-role="popup" id="dice-popup" class="ui-content">
-	    <p id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></p>
+	    <h2 id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></h2>
 	    <div data-role="controlgroup" data-type="horizontal" data-theme="c">
 	    	<a href="#" data-role="button" data-inline="true" onClick="Dice.addEdge(Stats.edge); $('.pop-edge').toggleClass('ui-disabled');"
 	    		data-icon="plus" data-iconpos="right" class="pop-edge">
@@ -39,6 +41,8 @@
 	</div>
 </xsl:template>
 
+<!-- Generate the dice grid (semi-)automatically, rowcount can be adapted to fit different screen sizes -->
+<!-- Adapted from http://www.ibm.com/developerworks/xml/library/x-tiploop/index.html -->
 <xsl:template name="button-row">
 	<xsl:param name="rowcount" select="1"/>
 	<xsl:param name="dicelabel" select="1"/>
@@ -86,3 +90,5 @@
         </xsl:call-template>
     </xsl:if>
 </xsl:template>
+
+</xsl:stylesheet>

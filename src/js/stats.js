@@ -15,9 +15,20 @@
 */
 
 jQuery(window).load(function () {
-	$('#edge')[0].innerHTML = Stats.edge;
+	Stats.updatePage();
 });
 
 var Stats = {}
 
 Stats.edge = 7;
+
+Stats.update = function(what, value) {
+	alert('hier');
+	this.setAttribute(what, value);
+	this.updatePage();
+
+}
+
+Stats.updatePage = function() {
+	$('#edge')[0].innerHTML = Stats.edge;
+}

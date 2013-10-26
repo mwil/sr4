@@ -27,7 +27,7 @@ Stats.Attrib.edge = 7;
 var StatList = ["Attrib.edge"];
 
 Stats.init = function() {
-	console.log($('this.Attrib.edge')[0]);
+	console.log($('Stats.Attrib.edge')[0]);
 	for (var i = 0; i < StatList.length; i++) {
 		if (StatList[i] in localStorage) {
 			Stats[StatList[i]] = localStorage[StatList[i]];

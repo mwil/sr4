@@ -10,22 +10,29 @@
 	        <ul data-role="listview">
 	            <li>
 	            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
-	            		onClick="Stats.updateSlider('Edge', Stats.Attrib_EDG);">
+	            		onClick="Stats.updatePopup('Body', 'Attrib_BOD', Stats.Attrib_BOD);">
+	            		<xsl:text>Body</xsl:text>
+	            		<span class="ui-li-count med" id="Attrib_BOD"></span>
+	            	</a>
+	        	</li>
+	            <li>
+	            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
+	            		onClick="Stats.updatePopup('Edge', 'Attrib_EDG', Stats.Attrib_EDG);">
 	            		<xsl:text>Edge</xsl:text>
 	            		<span class="ui-li-count med" id="Attrib_EDG"></span>
 	            	</a>
-	        	</li>
+	            </li>
 	        </ul>
 	    </div>
 	</div>
 
 	<div data-role="popup" id="stats-popup" class="ui-content">
-	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New FILLME value:</xsl:text></h3>
+	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New FIXME value:</xsl:text></h3>
 		
 		<form style="width:360px;">
 		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7"/>
-		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="Stats.update('Attrib_EDG', $('#stats-slider').val());">
+		    <a href="#" data-role="button" data-rel="back" stat-target="invalid"
+		    	onClick="Stats.update($('#stats-slider').attr('stat-target'), $('#stats-slider').val());">
 		    	<xsl:text>Set</xsl:text>
 		    </a>
 		</form>

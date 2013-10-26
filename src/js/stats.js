@@ -20,7 +20,7 @@ jQuery(window).load(function () {
 
 var Stats = {};
 
-var StatList = ["Attrib_EDG"];
+var StatList = ["Attrib_EDG", "Attrib_BOD"];
 
 Stats.init = function() {
 	for (var i = 0; i < StatList.length; i++) {
@@ -54,11 +54,13 @@ Stats.update = function(label, value) {
  */
 Stats.updatePage = function() {
 	$('#Attrib_EDG')[0].innerHTML = Stats.Attrib_EDG;
+	$('#Attrib_BOD')[0].innerHTML = Stats.Attrib_BOD;
 };
 
-Stats.updatePopup = function(label, value) {
+Stats.updatePopup = function(label, target, value) {
 	$('#stats-slider').attr('value', value);
+	$('#stats-slider').attr('stat-target', target);
 	$('#stats-slider').slider('refresh');
 
-	$('#stats-poptext').val("New "+label+" value:");
+	$('#stats-poptext')[0].innerHTML = "New "+label+" value:";
 };

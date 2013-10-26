@@ -18,4 +18,14 @@
 	<page id="ammo">
 		<p>Coming up: Ammo tracking</p>
 	</page>
+
+	<chummer>
+		<useless></useless>
+		<attr>
+			<id>EDG</id>
+		</attr>
+		<attr>
+			<id>BOD</id>
+		</attr>
+	</chummer>
 </app>

@@ -48,7 +48,7 @@
 <!-- Markup elements that should not appear later ... -->
 
 <!-- copy over a elements verbatim -->
-<xsl:template match="a">
+<xsl:template match="a|p">
     <xsl:copy-of select="."/>
 </xsl:template>
 

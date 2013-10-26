@@ -15,18 +15,36 @@
 */
 
 jQuery(window).load(function () {
-	Stats.updatePage();
+	Stats.init();
 });
 
-var Stats = {}
+var Stats = {
+	Attrib:{},
+}
 
-Stats.edge = 7;
+//Stats.Attrib.edge = 7;
+
+var Attribs = ["edge"];
+
+Stats.init = function() {
+	for (var i = 0; i < Attribs.length; i++) {
+		if (Attribs[i] in localStorage) {
+			Stats.Attrib[Attribs[i]] = localStorage[Attribs[i]];
+		} else {
+			Stats.Attrib[Attribs[i]] = 2;
+		}
+	}
+
+	Stats.updatePage();
+};
 
 /*
  * Update a single character statistic and update the page
  */
 Stats.update = function(label, value) {
 	this[label] = parseInt(value);
+	console.log(label);
+	console.log(this);
 
 	// Notify dice offsets that a value was changed if necessary
 	if (label in Dice.Offsets) {
@@ -40,5 +58,5 @@ Stats.update = function(label, value) {
  * Copy current values to the page contents
  */
 Stats.updatePage = function() {
-	$('#edge')[0].innerHTML = Stats.edge;
+	$('#edge')[0].innerHTML = Stats.Attrib.edge;
 };

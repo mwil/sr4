@@ -10,4 +10,12 @@
 	<page id="stats">
 		<stats/>
 	</page>
+
+	<page id="monitor">
+		<p>Coming up: Condition Monitor</p>
+	</page>
+
+	<page id="ammo">
+		<p>Coming up: Ammo tracking</p>
+	</page>
 </app>

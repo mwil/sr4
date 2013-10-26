@@ -10,7 +10,7 @@
 	        <ul data-role="listview">
 	            <li>
 	            	<a href="#edge-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
-	            		onClick="$('#edge-slider').attr('value', Stats.edge);">
+	            		onClick="$('#edge-slider').attr('value', Stats.Attrib.edge);">
 	            		<xsl:text>Edge</xsl:text>
 	            		<span class="ui-li-count med" id="edge"></span>
 	            	</a>
@@ -26,7 +26,7 @@
 		    <input type="range" id="edge-slider" data-highlight="true"
 		    	min="1" max="8" value="7"/>
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="Stats.update('edge', $('#edge-slider').val());">
+		    	onClick="Stats.update('Attrib.edge', $('#edge-slider').val());">
 		    	<xsl:text>Set</xsl:text>
 		    </a>
 		</form>

@@ -25,8 +25,9 @@
 	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
 		<form style="width:360px;">
-		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7"/>
-		    <a href="#" data-role="button" data-rel="back" stat-target="autofilled"
+		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7" stat-target="autofill"/>
+
+		    <a href="#" data-role="button" data-rel="back" 
 		    	onClick="Stats.update($('#stats-slider').attr('stat-target'), $('#stats-slider').val());">
 		    	<xsl:text>Set</xsl:text>
 		    </a>

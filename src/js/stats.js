@@ -58,11 +58,7 @@ Stats.updatePage = function() {
 };
 
 Stats.updatePopup = function(label, target, value) {
-	console.log(label);
-	console.log(target);
-	console.log(value);
 	$('#stats-slider').attr('value', value);
-	console.log($('#stats-slider').attr('value'));
 	$('#stats-slider').attr('stat-target', target);
 	$('#stats-slider').slider('refresh');
 

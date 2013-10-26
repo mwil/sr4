@@ -19,13 +19,14 @@
 		<p>Coming up: Ammo tracking</p>
 	</page>
 
-	<chummer>
-		<useless></useless>
-		<attr>
-			<id>EDG</id>
-		</attr>
+	<attribs>
 		<attr>
 			<id>BOD</id>
+			<name>Body</name>
 		</attr>
-	</chummer>
+		<attr>
+			<id>EDG</id>
+			<name>Edge</name>
+		</attr>
+	</attribs>
 </app>

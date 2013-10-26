@@ -4,28 +4,24 @@
 <!-- Templates for the stats page -->
 
 <xsl:template match="stats">
-	<xsl:for-each select="chummer/attr">
+	<xsl:for-each select="/app/attribs/attr">
 		<p><xsl:value-of select="id"/></p>
+		<p><xsl:value-of select="name"/></p>
 	</xsl:for-each>
 
 	<div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="true">
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>
 	        <ul data-role="listview">
-	            <li>
-	            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
-	            		onClick="Stats.updatePopup('Body', 'Attrib_BOD', Stats.Attrib_BOD);">
-	            		<xsl:text>Body</xsl:text>
-	            		<span class="ui-li-count med" id="Attrib_BOD"></span>
-	            	</a>
-	        	</li>
-	            <li>
-	            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
-	            		onClick="Stats.updatePopup('Edge', 'Attrib_EDG', Stats.Attrib_EDG);">
-	            		<xsl:text>Edge</xsl:text>
-	            		<span class="ui-li-count med" id="Attrib_EDG"></span>
-	            	</a>
-	            </li>
+	        	<xsl:for-each select="/app/attribs/attr">
+		            <li>
+		            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
+		            		onClick="Stats.updatePopup('{name}', 'Attrib_{id}', Stats.Attrib_{id});">
+		            		<xsl:value-of select="name"/>
+		            		<span class="ui-li-count med" id="Attrib_{id}"></span>
+		            	</a>
+		            </li>
+		        </xsl:for-each>
 	        </ul>
 	    </div>
 	</div>

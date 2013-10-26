@@ -9,8 +9,10 @@
 	        <h2><xsl:text>Attributes</xsl:text></h2>
 	        <ul data-role="listview">
 	            <li>
-	            	<a href="#edge-popup" data-rel="popup" data-transition="pop" data-position-to="window">
-	            	<xsl:text>Edge</xsl:text><span class="ui-li-count med" id="edge"></span>
+	            	<a href="#edge-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
+	            		onClick="$('#edge-slider').attr('value', Stats.edge);">
+	            		<xsl:text>Edge</xsl:text>
+	            		<span class="ui-li-count med" id="edge"></span>
 	            	</a>
 	        	</li>
 	        </ul>
@@ -18,12 +20,16 @@
 	</div>
 
 	<div data-role="popup" id="edge-popup" class="ui-content">
-	    <h3 id="edge-poptext"><xsl:text>New Edge value:</xsl:text></h3>
-
-<form>
-    <label for="slider-1">Slider:</label>
-    <input type="range" name="slider-1" id="slider-1" min="0" max="100" value="50">
-</form>
+	    <h3 id="edge-poptext" class="poplabel"><xsl:text>New Edge value:</xsl:text></h3>
+		
+		<form style="width:360px;">
+		    <input type="range" id="edge-slider" data-highlight="true"
+		    	min="1" max="8" value="7"/>
+		    <a href="#" data-role="button" data-rel="back" 
+		    	onClick="Stats.update('edge', $('#edge-slider').val());">
+		    	<xsl:text>Set</xsl:text>
+		    </a>
+		</form>
 	</div>
 </xsl:template>
 

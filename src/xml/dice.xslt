@@ -29,11 +29,11 @@
 	<div data-role="popup" id="dice-popup" class="ui-content">
 	    <p id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></p>
 	    <div data-role="controlgroup" data-type="horizontal" data-theme="c">
-	    	<a href="#" data-role="button" data-inline="true" onClick="Dice.addEdge(Stats.edge); $('.pop-edge').toggleClass('ui-disabled');"
+	    	<a href="#" data-role="button" onClick="Dice.addEdge(Stats.edge); $('.pop-edge').toggleClass('ui-disabled');"
 	    		data-icon="plus" data-iconpos="right" class="pop-edge">
 	    		<xsl:text>Edge</xsl:text>
 	    	</a>
-	    	<a href="#" data-role="button" data-inline="true" onClick="Dice.reroll(); $('.pop-edge').toggleClass('ui-disabled');"
+	    	<a href="#" data-role="button" onClick="Dice.reroll(); $('.pop-edge').toggleClass('ui-disabled');"
 	    		data-icon="refresh" data-iconpos="right" class="pop-edge">
 	    		<xsl:text>Edge</xsl:text>
 	    	</a>

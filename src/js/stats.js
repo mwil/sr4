@@ -18,20 +18,18 @@ jQuery(window).load(function () {
 	Stats.init();
 });
 
-var Stats = {
-	Attrib:{},
-}
+var Stats = {}
 
 //Stats.Attrib.edge = 7;
 
-var Attribs = ["edge"];
+var StatList = ["Attrib.edge"];
 
 Stats.init = function() {
-	for (var i = 0; i < Attribs.length; i++) {
-		if (Attribs[i] in localStorage) {
-			Stats.Attrib[Attribs[i]] = localStorage[Attribs[i]];
+	for (var i = 0; i < StatList.length; i++) {
+		if (StatList[i] in localStorage) {
+			Stats[StatList[i]] = localStorage[StatList[i]];
 		} else {
-			Stats.Attrib[Attribs[i]] = 2;
+			Stats[StatList[i]] = 2;
 		}
 	}
 
@@ -45,7 +43,7 @@ Stats.update = function(label, value) {
 	this[label] = parseInt(value);
 	console.log(label);
 	console.log(this);
-	console.log(this.Attrib);
+	console.log(this.Attrib.edge);
 
 	// Notify dice offsets that a value was changed if necessary
 	if (label in Dice.Offsets) {

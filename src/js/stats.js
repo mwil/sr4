@@ -20,7 +20,7 @@ jQuery(window).load(function () {
 
 var Stats = {};
 
-var StatList = ["Attrib_edge"];
+var StatList = ["Attrib_EDG"];
 
 Stats.init = function() {
 	for (var i = 0; i < StatList.length; i++) {
@@ -53,5 +53,5 @@ Stats.update = function(label, value) {
  * Copy current values to the page contents
  */
 Stats.updatePage = function() {
-	$('#edge')[0].innerHTML = Stats.Attrib_edge;
+	$('#edge')[0].innerHTML = Stats.Attrib_EDG;
 };

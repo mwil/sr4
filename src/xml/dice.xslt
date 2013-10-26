@@ -12,7 +12,7 @@
 	    <label for="dicemode-cb-add" style="width:160px;"><xsl:text>+</xsl:text></label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
-	    	onClick="Dice.changeOffset('edge', Stats.Attrib_edge, !$('#dicemode-cb-edge')[0].checked);"/>
+	    	onClick="Dice.changeOffset('Attrib_EDG', Stats.Attrib_EDG, !$('#dicemode-cb-edge')[0].checked);"/>
 	    <label for="dicemode-cb-edge" style="width:160px;"><xsl:text>Edge</xsl:text></label>
 	</fieldset>
 	</form>
@@ -29,7 +29,7 @@
 	<div data-role="popup" id="dice-popup" class="ui-content">
 	    <p id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></p>
 	    <div data-role="controlgroup" data-type="horizontal" data-theme="c">
-	    	<a href="#" data-role="button" onClick="Dice.addEdge(Stats.Attrib_edge); $('.pop-edge').toggleClass('ui-disabled');"
+	    	<a href="#" data-role="button" onClick="Dice.addEdge(Stats.Attrib_EDG); $('.pop-edge').toggleClass('ui-disabled');"
 	    		data-icon="plus" data-iconpos="right" class="pop-edge">
 	    		<xsl:text>Edge</xsl:text>
 	    	</a>

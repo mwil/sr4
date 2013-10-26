@@ -136,50 +136,6 @@ Dice.rebase = function(active, offset) {
 	)
 }
 
-/*
- * Add dice offsets to the dice buttons and relabel.
- */
- 
-Dice.relabel = function(active, offset) {
-	if (!active) {
-		offset = -offset;
-	}
-
-	$('.dicebutton').each(
-		function(index) {
-			var baseval = parseInt($(this).attr("baseval"));
-			var currval = parseInt($(this).attr("currval"));
-			var newval = currval + offset;
-			var valoffset = newval - baseval;
-			
-			$(this).attr("currval", newval);
-			$(this).attr("valoffset", valoffset);
-
-			$(this).find(".ui-btn-text")[0].innerHTML = baseval + 
-				(valoffset != 0 ? "<sub style='color:grey;'>(+"+parseInt($(this).attr("valoffset"))+")</sub>" : "");
-		}
-	)
-};
-
-
-Dice.rebaseDiceButtons = function(offset, remove) {
-	if (remove) {
-		offset = -offset;
-	}
-
-	$('.dicebutton').each(
-		function(index) {
-			var baseval = parseInt($(this).attr("baseval"));
-			var currval = parseInt($(this).attr("currval"));
-			
-			$(this).attr("baseval", baseval + offset);
-			$(this).attr("currval", currval + offset);
-		}
-	)
-
-	this.updateDiceButtons();
-};
-
 Dice.changeOffset = function(label, value, remove) {
 	if (!remove) {
 		Dice.Offsets[label] = value;

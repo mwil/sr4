@@ -1,4 +1,4 @@
-<div data-role="panel" id="mypanel">
+<div data-role="panel" id="mypanel" data-display="overlay">
 	<a href="#theheader" data-rel="close" data-role="button" data-icon="delete" data-iconpos="right">Close panel</a>
 
 	<div data-role="controlgroup">

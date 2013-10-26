@@ -4,6 +4,10 @@
 <!-- Templates for the stats page -->
 
 <xsl:template match="stats">
+	<xsl:for-each select="chummer/attr">
+		<p><xsl:value-of select="id"/></p>
+	</xsl:for-each>
+
 	<div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="true">
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>
@@ -27,11 +31,11 @@
 	</div>
 
 	<div data-role="popup" id="stats-popup" class="ui-content">
-	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New FIXME value:</xsl:text></h3>
+	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
 		<form style="width:360px;">
 		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7"/>
-		    <a href="#" data-role="button" data-rel="back" stat-target="invalid"
+		    <a href="#" data-role="button" data-rel="back" stat-target="autofilled"
 		    	onClick="Stats.update($('#stats-slider').attr('stat-target'), $('#stats-slider').val());">
 		    	<xsl:text>Set</xsl:text>
 		    </a>

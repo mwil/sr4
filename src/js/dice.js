@@ -15,7 +15,7 @@
 */
 
 var Dice = {
-	Offsets = {};
+	Offsets : {},
 };
 
 Dice.roll = function(num_dice, edge) {

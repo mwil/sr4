@@ -18,13 +18,16 @@ jQuery(window).load(function () {
 	Stats.init();
 });
 
-var Stats = {}
+var Stats = { 
+	Attrib:{},
+};
 
-//Stats.Attrib.edge = 7;
+Stats.Attrib.edge = 7;
 
 var StatList = ["Attrib.edge"];
 
 Stats.init = function() {
+	console.log($('this.Attrib.edge'));
 	for (var i = 0; i < StatList.length; i++) {
 		if (StatList[i] in localStorage) {
 			Stats[StatList[i]] = localStorage[StatList[i]];

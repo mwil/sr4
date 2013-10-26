@@ -139,6 +139,7 @@ Dice.rebase = function(active, offset) {
 /*
  * Add dice offsets to the dice buttons and relabel.
  */
+ 
 Dice.relabel = function(active, offset) {
 	if (!active) {
 		offset = -offset;
@@ -160,6 +161,25 @@ Dice.relabel = function(active, offset) {
 	)
 };
 
+
+Dice.rebaseDiceButtons = function(offset, remove) {
+	if (remove) {
+		offset = -offset;
+	}
+
+	$('.dicebutton').each(
+		function(index) {
+			var baseval = parseInt($(this).attr("baseval"));
+			var currval = parseInt($(this).attr("currval"));
+			
+			$(this).attr("baseval", baseval + offset);
+			$(this).attr("currval", currval + offset);
+		}
+	)
+
+	this.updateDiceButtons();
+};
+
 Dice.changeOffset = function(label, value, remove) {
 	if (!remove) {
 		Dice.Offsets[label] = value;
@@ -168,6 +188,8 @@ Dice.changeOffset = function(label, value, remove) {
 		alert("remove shit");
 		delete Dice.Offsets[label];
 	}
+
+	this.updateDiceButtons();
 };
 
 Dice.updateDiceButtons = function() {
@@ -183,14 +205,13 @@ Dice.updateDiceButtons = function() {
 				offset += Dice.Offsets[prop];
 			};
 
-			var newval = currval + offset;
-			var valoffset = newval - baseval;
+			currval += offset;
 			
-			$(this).attr("currval", newval);
-			$(this).attr("valoffset", valoffset);
+			$(this).attr("currval", currval);
+			$(this).attr("valoffset", offset);
 
 			$(this).find(".ui-btn-text")[0].innerHTML = baseval + 
-				(valoffset != 0 ? "<sub style='color:grey;'>(+"+parseInt($(this).attr("valoffset"))+")</sub>" : "");
+				(offset != 0 ? "<sub style='color:grey;'>(+"+offset+")</sub>" : "");
 		}
 	)
 };

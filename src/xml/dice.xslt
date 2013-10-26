@@ -8,11 +8,11 @@
 	<form style="text-align:center;">
 	<fieldset data-role="controlgroup" data-type="horizontal">
 	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
-	    	onClick="Dice.rebase($('#dicemode-cb-add')[0].checked, 24);"/>
+	    	onClick="Dice.rebaseDiceButtons(24, !$('#dicemode-cb-add')[0].checked);"/>
 	    <label for="dicemode-cb-add" style="width:160px;">+</label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
-	    	onClick="Dice.changeOffset('edge', Stats.edge, !$('#dicemode-cb-edge')[0].checked); Dice.updateDiceButtons();"/>
+	    	onClick="Dice.changeOffset('edge', Stats.edge, !$('#dicemode-cb-edge')[0].checked);"/>
 	    <label for="dicemode-cb-edge" style="width:160px;">Edge</label>
 	</fieldset>
 	</form>

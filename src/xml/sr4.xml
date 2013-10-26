@@ -5,11 +5,11 @@
 	<page id="dice">
 		<dicemode-cb/>
 		<dice-buttons/>
-		<a href="#stats" data-role="button">Page Stats</a>
+		<a href="#stats" data-role="button">Page: Stats</a>
 	</page>
 
 	<page id="stats">
 		<stats/>
-		<a href="#dice" data-role="button">Page Dice</a>
+		<a href="#dice" data-role="button">Page: Dice</a>
 	</page>
 </app>

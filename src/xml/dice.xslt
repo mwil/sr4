@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Templates for the dice page -->
+
+<!-- checkbox for dice modes -->
+<xsl:template match="dicemode-cb">
+	<form>
+	<fieldset data-role="controlgroup" data-type="horizontal">
+	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
+	    	onClick="Dice.rebase($('#dicemode-cb-add')[0].checked, 24);"/>
+	    <label for="dicemode-cb-add" style="width:120px;">+</label>
+
+	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
+	    	onClick="Dice.relabel($('#dicemode-cb-edge')[0].checked, Stats.edge);"/>
+	    <label for="dicemode-cb-edge" style="width:120px;">Edge</label>
+	</fieldset>
+	</form>
+</xsl:template>
+
+<!-- Dice number select buttons and the corresponing popup -->
+<xsl:template match="dice-buttons">
+	<div class="ui-grid-c">
+		<xsl:call-template name="button-row">
+      		<xsl:with-param name="rowcount" select="6"/>
+    	</xsl:call-template>
+	</div>
+
+	<div data-role="popup" id="dice-popup" class="ui-content">
+	    <p id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></p>
+	    <div data-role="controlgroup" data-type="horizontal" data-theme="c">
+	    	<a href="#" data-role="button" data-inline="true" onClick="Dice.addEdge(Stats.edge); $('.pop-edge').toggleClass('ui-disabled');"
+	    		data-icon="plus" data-iconpos="right" class="pop-edge">
+	    		<xsl:text>Edge</xsl:text>
+	    	</a>
+	    	<a href="#" data-role="button" data-inline="true" onClick="Dice.reroll(); $('.pop-edge').toggleClass('ui-disabled');"
+	    		data-icon="refresh" data-iconpos="right" class="pop-edge">
+	    		<xsl:text>Edge</xsl:text>
+	    	</a>
+	    </div>
+	</div>
+</xsl:template>
+
+<xsl:template name="button-row">
+	<xsl:param name="rowcount" select="1"/>
+	<xsl:param name="dicelabel" select="1"/>
+
+	<xsl:if test="$rowcount > 0">
+		<!-- content to put ... -->
+		<div class="ui-block-a">
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
+	    	   baseval="{$dicelabel}" currval="{$dicelabel}" valoffset="0" id="b{$dicelabel}"
+	    	   onClick="Dice.roll(parseInt($('#b{$dicelabel}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);"
+	    	   data-inline="false" data-transition="pop" data-position-to="window">
+	    	   <xsl:value-of select="$dicelabel"/>
+	    	</a>
+	    </div>
+	    <div class="ui-block-b">
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
+	    	   baseval="{$dicelabel + 1}" currval="{$dicelabel + 1}" id="b{$dicelabel + 1}"
+	    	   onClick="Dice.roll(parseInt($('#b{$dicelabel+1}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);"
+	    	   data-inline="false" data-transition="pop" data-position-to="window">
+	    	   <xsl:value-of select="$dicelabel + 1"/>
+	    	</a>
+	    </div>
+	    <div class="ui-block-c">
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" 
+	    	   baseval="{$dicelabel + 2}" currval="{$dicelabel + 2}" id="b{$dicelabel + 2}"
+	    	   onClick="Dice.roll(parseInt($('#b{$dicelabel+2}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);"
+			   data-inline="false" data-transition="pop" data-position-to="window">
+	    	   <xsl:value-of select="$dicelabel + 2"/>
+	    	</a>
+	    </div>
+	    <div class="ui-block-d">
+	    	<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
+	    	   baseval="{$dicelabel + 3}" currval="{$dicelabel + 3}" id="b{$dicelabel + 3}"
+	    	   onClick="Dice.roll(parseInt($('#b{$dicelabel+3}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);"
+	    	   data-inline="false" data-transition="pop" data-position-to="window">
+	    	   <xsl:value-of select="$dicelabel + 3"/>
+	    	</a>
+	    </div>
+	    <!-- -->
+
+	    <!-- ... the recursion ... -->
+        <xsl:call-template name="button-row">
+        	<xsl:with-param name="rowcount" select="$rowcount - 1"/>
+        	<xsl:with-param name="dicelabel" select="$dicelabel + 4"/>
+        </xsl:call-template>
+    </xsl:if>
+</xsl:template>

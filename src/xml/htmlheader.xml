@@ -17,7 +17,7 @@
 		.diceres { text-align:center; }
 		.diceresglitch { text-align:center; color:red; }
 		.center { margin-left:auto; margin-right:auto; }
-		.med { font-size:medium; }
+		.med { font-size:medium !important; }
 		.dicebutton { height:43px; }
 		td { text-align:center; }
 	</style>

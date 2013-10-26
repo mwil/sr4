@@ -1,3 +1,8 @@
+<div data-role="panel" id="mypanel">
+	<a href="#theheader" data-rel="close">Close panel</a>
+</div><!-- /panel -->
+
 <div data-role="header" id="theheader" data-position="fixed">
 	<h2>Shadowrun 4 App</h2>
-</div>
+	<a href="#mypanel" data-icon="bars" data-iconpos="notext"></a>
+</div><!-- /header -->

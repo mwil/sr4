@@ -176,8 +176,9 @@ Dice.updateDiceButtons = function() {
 			var baseval = parseInt($(this).attr("baseval"));
 			var currval = parseInt($(this).attr("currval"));
 			
-			val offset = 0;
+			var offset = 0;
 
+			console.log(this.Offsets);
 			for (var prop in this.Offsets) {
 				offset += this.Offsets[prop];
 			};

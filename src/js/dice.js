@@ -76,15 +76,15 @@ Dice.printToPopup = function (count) {
 	if (hits > 0) {
 		if (count[1] >= (num_dice)/2) {
 			// normal glitch, too many ones ...
-			var title = "<h2 class='diceresglitch'>"+hits+(hits>1?" Hits":" Hit")+ " (and glitch!)</h2>";	
+			var title = "<h3 class='diceresglitch'>"+hits+(hits>1?" Hits":" Hit")+ " (and glitch!)</h3>";	
 		} else {
-			var title = "<h2 class='diceres'>"+hits+(hits>1?" Hits":" Hit")+"!</h2>";
+			var title = "<h3 class='diceres'>"+hits+(hits>1?" Hits":" Hit")+"!</h3>";
 		}
 	} else {
 		 if (count[1] >= (num_dice)/2) {
-			var title = "<h2 class='diceresglitch'>Critical glitch!!</h2>";	
+			var title = "<h3 class='diceresglitch'>Critical glitch!!</h3>";	
 		} else {
-			var title = "<h2 class='diceres'>No Hits!</h2>";
+			var title = "<h3 class='diceres'>No Hits!</h3>";
 		}
 	}
 

@@ -24,11 +24,11 @@ Stats.edge = 7;
 
 Stats.update = function(what, value) {
 	alert('hier');
-	this.setAttribute(what, value);
-	this.updatePage();
-
-}
+	console.log(this);
+	//Stats.setAttribute(what, value);
+	Stats.updatePage();
+};
 
 Stats.updatePage = function() {
 	$('#edge')[0].innerHTML = Stats.edge;
-}
+};

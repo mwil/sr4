@@ -160,13 +160,13 @@ Dice.relabel = function(active, offset) {
 	)
 };
 
-Dice.registerOffset = function(label, value) {
-	this.Offsets[label] = value;
-};
-
-Dice.removeOffset = function(label) {
-	if (label in this.Offsets) {
-		delete this.Offsets[label];
+Dice.changeOffset = function(label, value, remove) {
+	if (!remove) {
+		Dice.Offsets[label] = value;
+		alert("add shit");	
+	} else if (label in Dice.Offsets) {
+		alert("remove shit");
+		delete Dice.Offsets[label];
 	}
 };
 
@@ -178,9 +178,9 @@ Dice.updateDiceButtons = function() {
 			
 			var offset = 0;
 
-			console.log(this.Offsets);
-			for (var prop in this.Offsets) {
-				offset += this.Offsets[prop];
+			console.log(Dice.Offsets);
+			for (var prop in Dice.Offsets) {
+				offset += Dice.Offsets[prop];
 			};
 
 			var newval = currval + offset;

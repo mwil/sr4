@@ -37,7 +37,7 @@
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>
 	        <ul data-role="listview">
-	            <li><a href="#"><xsl:text>Edge</xsl:text><span class="ui-li-count" id="edge"></span></a></li>
+	            <li><a href="#"><xsl:text>Edge</xsl:text><span class="med ui-li-count" id="edge"></span></a></li>
 	        </ul>
 	    </div>
 	</div>

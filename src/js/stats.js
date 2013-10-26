@@ -22,13 +22,18 @@ var Stats = {}
 
 Stats.edge = 7;
 
+/*
+ * Update a single character statistic and update the page
+ */
 Stats.update = function(what, value) {
-	alert('hier');
-	console.log(this);
-	//Stats.setAttribute(what, value);
+	this[what] = parseInt(value);
+
 	Stats.updatePage();
 };
 
+/*
+ * Copy current values to the page contents
+ */
 Stats.updatePage = function() {
 	$('#edge')[0].innerHTML = Stats.edge;
 };

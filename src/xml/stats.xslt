@@ -21,11 +21,11 @@
 	    <h2 id="edge-poptext"><xsl:text>New Edge value:</xsl:text></h2>
 	    <form>
 			<div data-role="fieldcontain">
-			    <select name="select-native-1" id="select-native-1" onChange="alert('ja.'); Stats.update('edge', 5);">
+			    <select name="edge-sel" id="edge-sel" onChange="Stats.update('edge', $('#edge-sel').val());">
 			        <option value="0">0</option>
 			        <option value="1">1</option>
 			        <option value="2">2</option>
-			        <option value="3">3</option>
+			        <option value="3" selected="selected">3</option>
 			        <option value="4">4</option>
 			        <option value="5">5</option>
 			        <option value="6">6</option>

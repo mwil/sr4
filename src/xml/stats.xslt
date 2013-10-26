@@ -4,11 +4,6 @@
 <!-- Templates for the stats page -->
 
 <xsl:template match="stats">
-	<xsl:for-each select="/app/attribs/attr">
-		<p><xsl:value-of select="id"/></p>
-		<p><xsl:value-of select="name"/></p>
-	</xsl:for-each>
-
 	<div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="true">
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>

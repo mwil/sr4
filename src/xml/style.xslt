@@ -52,6 +52,6 @@
     <xsl:copy-of select="."/>
 </xsl:template>
 
-<xsl:template match="chummer/*"/>
+<xsl:template match="attribs/*"/>
 
 </xsl:stylesheet>

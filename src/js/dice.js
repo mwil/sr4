@@ -14,7 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var Dice = {};
+var Dice = {
+	this.Offsets = {};
+};
 
 Dice.roll = function(num_dice, edge) {
 	var count = new Array(0, 0, 0, 0, 0, 0, 0);
@@ -146,6 +148,40 @@ Dice.relabel = function(active, offset) {
 		function(index) {
 			var baseval = parseInt($(this).attr("baseval"));
 			var currval = parseInt($(this).attr("currval"));
+			var newval = currval + offset;
+			var valoffset = newval - baseval;
+			
+			$(this).attr("currval", newval);
+			$(this).attr("valoffset", valoffset);
+
+			$(this).find(".ui-btn-text")[0].innerHTML = baseval + 
+				(valoffset != 0 ? "<sub style='color:grey;'>(+"+parseInt($(this).attr("valoffset"))+")</sub>" : "");
+		}
+	)
+};
+
+Dice.registerOffset = function(label, value) {
+	this.Offsets[label] = value;
+};
+
+Dice.removeOffset = function(label) {
+	if (label in this.Offsets) {
+		delete this.Offsets[label];
+	}
+};
+
+Dice.updateDiceButtons = function() {
+	$('.dicebutton').each(
+		function(index) {
+			var baseval = parseInt($(this).attr("baseval"));
+			var currval = parseInt($(this).attr("currval"));
+			
+			val offset = 0;
+
+			for (var prop in this.Offsets) {
+				offset += this.Offsets[prop];
+			};
+
 			var newval = currval + offset;
 			var valoffset = newval - baseval;
 			

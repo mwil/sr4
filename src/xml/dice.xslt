@@ -12,7 +12,7 @@
 	    <label for="dicemode-cb-add" style="width:160px;">+</label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
-	    	onClick="Dice.relabel($('#dicemode-cb-edge')[0].checked, Stats.edge);"/>
+	    	onClick="Dice.registerOffset('edge', Stats.edge); Dice.updateDiceButtons();"/>
 	    <label for="dicemode-cb-edge" style="width:160px;">Edge</label>
 	</fieldset>
 	</form>

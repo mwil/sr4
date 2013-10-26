@@ -18,21 +18,21 @@
 	</div>
 
 	<div data-role="popup" id="edge-popup" class="ui-content">
-	    <h2 id="edge-poptext"><xsl:text>New Edge value:</xsl:text></h2>
-	    <form>
-			<div data-role="fieldcontain">
-			    <select name="edge-sel" id="edge-sel" onChange="Stats.update('edge', $('#edge-sel').val());">
-			        <option value="0">0</option>
-			        <option value="1">1</option>
-			        <option value="2">2</option>
-			        <option value="3" selected="selected">3</option>
-			        <option value="4">4</option>
-			        <option value="5">5</option>
-			        <option value="6">6</option>
-			        <option value="7">7</option>
-			    </select>
-			</div>
-			</form>
+	    <h3 id="edge-poptext"><xsl:text>New Edge value:</xsl:text></h3>
+	    
+	    <div data-role="controlgroup">
+	    	<a href="#" data-role="button">1</a>
+	    	<a href="#" data-role="button">2</a>
+	    	<a href="#" data-role="button">3</a>
+	    	<a href="#" data-role="button">4</a>
+	    	<a href="#" data-role="button">5</a>
+	    	<a href="#" data-role="button">6</a>
+	    	<a href="#" data-role="button">7</a>
+	    	<a href="#" data-role="button">8</a>
+	    	<a href="#" data-role="button">9</a>
+	    	<a href="#" data-role="button">10</a>
+	    	<a href="#" data-role="button">Even more ...</a>
+		</div>
 	</div>
 </xsl:template>
 

@@ -45,6 +45,7 @@ Stats.update = function(label, value) {
 	this[label] = parseInt(value);
 	console.log(label);
 	console.log(this);
+	console.log(this.Attrib);
 
 	// Notify dice offsets that a value was changed if necessary
 	if (label in Dice.Offsets) {

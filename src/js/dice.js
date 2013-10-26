@@ -111,30 +111,24 @@ Dice.printToPopup = function (count) {
 			</table>";
 };
 
-/* 
- * Change the base values of the dice buttons (in contrast to adding offsets)
- * and relabel the buttons to reflect the new base values.
- */
-Dice.rebase = function(active, offset) {
-	if (!active) {
+
+Dice.rebaseDiceButtons = function(offset, remove) {
+	if (remove) {
 		offset = -offset;
 	}
 
 	$('.dicebutton').each(
 		function(index) {
-			var baseval = parseInt($(this).attr("baseval")) + offset;
-			var currval = parseInt($(this).attr("currval")) + offset;
-			var valoffset = currval - baseval;
+			var baseval = parseInt($(this).attr("baseval"));
+			var currval = parseInt($(this).attr("currval"));
 			
-			// update baseval!
-			$(this).attr("baseval", baseval);
-			$(this).attr("currval", currval);
-
-			$(this).find(".ui-btn-text")[0].innerHTML = baseval + 
-				(valoffset != 0 ? "<sub style='color:grey;'>(+"+parseInt($(this).attr("valoffset"))+")</sub>" : "");
+			$(this).attr("baseval", baseval + offset);
+			$(this).attr("currval", currval + offset);
 		}
 	)
-}
+
+	this.updateDiceButtons();
+};
 
 Dice.changeOffset = function(label, value, remove) {
 	if (!remove) {

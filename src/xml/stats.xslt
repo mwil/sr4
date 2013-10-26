@@ -9,23 +9,23 @@
 	        <h2><xsl:text>Attributes</xsl:text></h2>
 	        <ul data-role="listview">
 	            <li>
-	            	<a href="#edge-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
-	            		onClick="$('#edge-slider').attr('value', Stats.Attrib_EDG); $('#edge-slider').slider('refresh')">
+	            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
+	            		onClick="Stats.updateSlider('Edge', Stats.Attrib_EDG);">
 	            		<xsl:text>Edge</xsl:text>
-	            		<span class="ui-li-count med" id="edge"></span>
+	            		<span class="ui-li-count med" id="Attrib_EDG"></span>
 	            	</a>
 	        	</li>
 	        </ul>
 	    </div>
 	</div>
 
-	<div data-role="popup" id="edge-popup" class="ui-content">
-	    <h3 id="edge-poptext" class="poplabel"><xsl:text>New Edge value:</xsl:text></h3>
+	<div data-role="popup" id="stats-popup" class="ui-content">
+	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New FILLME value:</xsl:text></h3>
 		
 		<form style="width:360px;">
-		    <input type="range" id="edge-slider" data-highlight="true" min="1" max="8" value="7"/>
+		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7"/>
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="Stats.update('Attrib_EDG', $('#edge-slider').val());">
+		    	onClick="Stats.update('Attrib_EDG', $('#stats-slider').val());">
 		    	<xsl:text>Set</xsl:text>
 		    </a>
 		</form>

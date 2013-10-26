@@ -53,5 +53,12 @@ Stats.update = function(label, value) {
  * Copy current values to the page contents
  */
 Stats.updatePage = function() {
-	$('#edge')[0].innerHTML = Stats.Attrib_EDG;
+	$('#Attrib_EDG')[0].innerHTML = Stats.Attrib_EDG;
+};
+
+Stats.updatePopup = function(label, value) {
+	$('#stats-slider').attr('value', value);
+	$('#stats-slider').slider('refresh');
+
+	$('#stats-poptext').val("New "+label+" value:");
 };

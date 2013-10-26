@@ -21,7 +21,7 @@
 	    </div>
 	</div>
 
-	<div data-role="popup" id="stats-popup" class="ui-content">
+	<div data-role="popup" id="stats-popup">
 	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
 		<form style="width:360px;">

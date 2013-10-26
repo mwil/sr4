@@ -59,6 +59,12 @@ Stats.updatePage = function() {
 
 Stats.updatePopup = function(label, target, value) {
 	$('#stats-slider').attr('value', value);
+	
+	// dirty hack, bug in jQuery Mobile or am I just stupid?
+	//$('.ui-slider-handle').attr('aria-valuenow', value);
+	//$('.ui-slider-handle').attr('aria-valuetext', value);
+	//$('.ui-slider-handle').attr('title', value);
+	
 	$('#stats-slider').attr('stat-target', target);
 	$('#stats-slider').slider('refresh');
 

@@ -27,7 +27,15 @@
 <!-- generic page markup -->
 <xsl:template match="page">
 	<div data-role="page" id="{@id}">
-		<xsl:copy-of select="document('jQheader.xml')/*"/>
+		<xsl:copy-of select="document('panel.xml')/*"/>
+
+		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
+			<h1><xsl:text>Shadowrun 4 App</xsl:text></h1>
+			<a href="#mypanel" data-icon="bars"><xsl:text>Nav</xsl:text></a>
+			<a href="#" data-rel="back" data-iconpos="right" data-icon="arrow-l"><xsl:text>Back</xsl:text></a>
+		</div><!-- /header -->
+
+		<!-- <xsl:copy-of select="document('jQheader.xml')/*"/> -->
 
 		<div data-role="content">
 			<xsl:apply-templates/>

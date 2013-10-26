@@ -1,7 +1,7 @@
 <div data-role="panel" id="mypanel">
 	<div data-role="controlgroup">
-	    <a href="#dice" data-role="button" data-icon="arrow-r" data-iconpos="right"><xsl:text>Dice Thrower</xsl:text></a>
-	    <a href="#stats" data-role="button" data-icon="arrow-r" data-iconpos="right"><xsl:text>Character Stats</xsl:text></a>
+	    <a href="#dice" data-role="button" data-icon="arrow-r" data-iconpos="right">Dice Thrower</a>
+	    <a href="#stats" data-role="button" data-icon="arrow-r" data-iconpos="right">Character Stats</a>
 	</div>
-	<a href="#theheader" data-rel="close" data-role="button" data-icon="delete" data-iconpos="right"><xsl:text>Close panel</xsl:text></a>
+	<a href="#theheader" data-rel="close" data-role="button" data-icon="delete" data-iconpos="right">Close panel</a>
 </div><!-- /panel -->

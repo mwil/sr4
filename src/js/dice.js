@@ -183,9 +183,7 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 Dice.changeOffset = function(label, value, remove) {
 	if (!remove) {
 		Dice.Offsets[label] = value;
-		alert("add shit");	
 	} else if (label in Dice.Offsets) {
-		alert("remove shit");
 		delete Dice.Offsets[label];
 	}
 
@@ -196,18 +194,14 @@ Dice.updateDiceButtons = function() {
 	$('.dicebutton').each(
 		function(index) {
 			var baseval = parseInt($(this).attr("baseval"));
-			var currval = parseInt($(this).attr("currval"));
-			
 			var offset = 0;
 
 			console.log(Dice.Offsets);
 			for (var prop in Dice.Offsets) {
 				offset += Dice.Offsets[prop];
 			};
-
-			currval += offset;
 			
-			$(this).attr("currval", currval);
+			$(this).attr("currval", baseval + offset);
 			$(this).attr("valoffset", offset);
 
 			$(this).find(".ui-btn-text")[0].innerHTML = baseval + 

@@ -25,8 +25,13 @@ Stats.edge = 7;
 /*
  * Update a single character statistic and update the page
  */
-Stats.update = function(what, value) {
-	this[what] = parseInt(value);
+Stats.update = function(label, value) {
+	this[label] = parseInt(value);
+
+	// Notify dice offsets that a value was changed if necessary
+	if (label in Dice.Offsets) {
+		Dice.changeOffset(label, parseInt(value));
+	}
 
 	Stats.updatePage();
 };

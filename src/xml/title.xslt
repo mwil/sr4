@@ -38,9 +38,9 @@
         	<h3 class="ui-title">Enter a character name ...</h3>
         	<input type="text" id="newchar-txtbx" value="" placeholder="Enter name ..."/>
 
-		    <a href="#" data-role="button" data-rel="back"
-		    	onClick="Stats.renameChar($('#newchar-txtbx').val());">
-		    	<xsl:text>Generate</xsl:text>
+		    <a href="#" data-role="button"
+		    	onClick="Stats.renameChar($('#newchar-txtbx').val());$('#newchar-dialog').popup('close');">
+		    	<xsl:text>Generate!</xsl:text>
 		    </a>
     	</div>
 	</div>

@@ -2,6 +2,10 @@
 <?xml-stylesheet type="text/xsl" href="style.xslt"?>
 
 <app>
+	<page id="title">
+		<title/>
+	</page>
+
 	<page id="dice">
 		<dicemode-cb/>
 		<dice-buttons/>

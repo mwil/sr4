@@ -2,6 +2,7 @@
 	<a href="#theheader" data-rel="close" data-role="button" data-icon="delete" data-iconpos="right">Close panel</a>
 
 	<div data-role="controlgroup">
+		<a href="#title" data-role="button" data-icon="arrow-r" data-iconpos="right">Title Page</a>
 	    <a href="#dice" data-role="button" data-icon="arrow-r" data-iconpos="right">Dice Thrower</a>
 	    <a href="#stats" data-role="button" data-icon="arrow-r" data-iconpos="right">Character Stats</a>
 	    <a href="#monitor" data-role="button" data-icon="arrow-r" data-iconpos="right">Condition Monitor</a>

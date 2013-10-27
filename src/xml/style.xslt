@@ -4,8 +4,9 @@
 <xsl:output method="html" indent="yes"/>
 
 <!-- Page-specific code is now in separate files -->
-<xsl:include href="stats.xslt"/>
+<xsl:include href="title.xslt"/>
 <xsl:include href="dice.xslt"/>
+<xsl:include href="stats.xslt"/>
 
 
 <!-- Root template, generate HTML header and body -->
@@ -35,7 +36,7 @@
 			<a href="#" data-rel="back" data-iconpos="right" data-icon="arrow-l"><xsl:text>Back</xsl:text></a>
 		</div><!-- /header -->
 
-		<!-- <xsl:copy-of select="document('jQheader.xml')/*"/> -->
+		<!-- <xsl:copy-of select="document('jQheader.xml')/*"/> Overkill atm -->
 
 		<div data-role="content">
 			<xsl:apply-templates/>
@@ -52,6 +53,7 @@
     <xsl:copy-of select="."/>
 </xsl:template>
 
+<!-- Ignore data xml that is used for autogenerating lists -->
 <xsl:template match="attribs/*"/>
 
 </xsl:stylesheet>

@@ -35,7 +35,9 @@ Stats.init = function() {
 		// add newchar method to have full char records in store
 		// make # configurable FIELDSELECT="#"
 		// ++ add localStorage cleaner for development
-		var charname = "Mr. Johnson";
+		// let the dialog do its job first ...
+		$('#newchar-dialog').popup("open");
+		return;
 	}
 
 	this.renameChar(charname);

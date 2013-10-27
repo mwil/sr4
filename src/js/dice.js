@@ -90,7 +90,7 @@ Dice.printToPopup = function (count) {
 		}
 	}
 
-	$('#dice-poptext')[0].innerHTML = title+"\
+	$('#dice-poptext').html(title+"\
 			<table class='center'>\
 				<tr>\
 					<td><div class='die'>&#9856;</div></td>\
@@ -108,7 +108,7 @@ Dice.printToPopup = function (count) {
 					<td><div class='die'>&#9861;</div></td>\
 					<td>x</td><td>"+count[6]+"</td>\
 				</tr>\
-			</table>";
+			</table>");
 };
 
 

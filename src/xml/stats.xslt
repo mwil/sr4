@@ -21,8 +21,8 @@
 	    </div>
 	</div>
 
-	<div data-role="popup" id="stats-popup">
-	    <h3 id="stats-poptext" class="poplabel"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
+	<div data-role="popup" id="stats-popup" class="ui-content">
+	    <h3 id="stats-poptext" class="ui-title"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
 		<form style="width:360px;">
 		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7" stat-target="autofilled"/>

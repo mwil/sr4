@@ -27,7 +27,7 @@
 	</div>
 
 	<div data-role="popup" id="dice-popup" class="ui-content">
-	    <p id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></p>
+	    <h3 class="ui-title" id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></h3>
 	    <div data-role="controlgroup" data-type="horizontal" data-theme="c">
 	    	<a href="#" data-role="button" onClick="Dice.addEdge(Stats.Attrib_EDG); $('.pop-edge').toggleClass('ui-disabled');"
 	    		data-icon="plus" data-iconpos="right" class="pop-edge">

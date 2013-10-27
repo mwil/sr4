@@ -65,7 +65,7 @@ Stats.renameChar = function(charname) {
 			var option = key.split("#")[1];
 			var currval = localStorage.getItem(key);
 
-			localStorage.setItem(charname+"#"+currval, currval);
+			localStorage.setItem(charname+"#"+option, currval);
 			localStorage.removeItem(key);
 		}
 	};

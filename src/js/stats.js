@@ -34,6 +34,7 @@ Stats.init = function() {
 		// make # configurable FIELDSELECT="#"
 		// ++ add localStorage cleaner for development
 		// let the dialog do its job first ...
+		$('#newchar-cancel').button("disable");
 		$('#newchar-dialog').popup("open");
 		return;
 	}
@@ -55,7 +56,7 @@ Stats.init = function() {
 Stats.newChar = function(charname) {
 	if (!this.nameOk(charname)) {
 		// FIXME: alert required?
-		alert("Name not possible, try again!")
+		alert("Name not possible, try again!");
 		$('#newchar-dialog').popup("open");
 	}
 
@@ -98,7 +99,7 @@ Stats.renameChar = function(charname) {
 	console.log(localStorage);
 }
 
-Stats.nameOk(charname) {
+Stats.nameOk = function(charname) {
 	if ($.inArray(charname, AppStrings) > -1) {
 		// using internal strings may work, but it will propably not be nice ...
 		alert("Please do not try to bork this app ...");

@@ -14,50 +14,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-jQuery(window).load(function () {
-	Stats.init();
-});
+var FIELDSEP = "#";
+var DEFAULTVAL = 1;
 
 var Stats = {
 	charName: null,
 };
 
-// AutoGen me!
-var StatList = ["Attrib_BOD", "Attrib_EDG"];
-var AppStrings = ["__lastchar__", "__charlist__"];
+Stats.init = function(charname) {
+	this.loadChar(charname);
 
-Stats.init = function() {
-	// find current char ... (there is only one atm)
-	if ("__lastchar__" in localStorage) {
-		var charname = localStorage.getItem("__lastchar__");
-	} else {
-		// make # configurable FIELDSELECT="#"
-		// ++ add localStorage cleaner for development
-		// let the dialog do its job first ...
-		$('#newchar-cancel').button("disable");
-		$('#newchar-dialog').popup("open");
-		return;
-	}
-
-	this.renameChar(charname);
-
-	for (var i = 0; i < StatList.length; i++) {
-		var query = charname+"#"+StatList[i];
-
-		if (query in localStorage) {
-			this.update(StatList[i], localStorage[query]);
-		} else {
-			this.update(StatList[i], 2);
-			localStorage.setItem(query, 2);
-		}
-	}
+	// we have a valid char now, enable the functionality!
+	$('.startup-disabled').removeClass('ui-disabled');
 };
 
 Stats.newChar = function(charname) {
 	if (!this.nameOk(charname)) {
-		// FIXME: alert required?
-		alert("Name not possible, try again!");
-		$('#newchar-dialog').popup("open");
+		return;
 	}
 
 	// Apply name ...
@@ -66,16 +39,34 @@ Stats.newChar = function(charname) {
 	$('.charname').html(Stats.charName);
 
 	// set default values for stats ...
-	for (var i = 0; i < StatList.length; i++) {
-		var query = charname+"#"+StatList[i];
+	for (var i = 0; i < App.StatList.length; i++) {
+		var query = charname+FIELDSEP+App.StatList[i];
 
-		this.update(StatList[i], 2);
-		localStorage.setItem(query, 2);
+		this.update(App.StatList[i], DEFAULTVAL);
+		localStorage.setItem(query, DEFAULTVAL);
 	};
+
+	// we have a valid char now for sure, enable the functionality if disabled!
+	$('.startup-disabled').removeClass('ui-disabled');
+};
+
+Stats.loadChar = function(charname) {
+	this.renameChar(charname);
+
+	for (var i = 0; i < App.StatList.length; i++) {
+		var query = charname+FIELDSEP+App.StatList[i];
+
+		if (query in localStorage) {
+			this.update(App.StatList[i], localStorage[query]);
+		} else {
+			this.update(App.StatList[i], DEFAULTVAL);
+			localStorage.setItem(query, DEFAULTVAL);
+		}
+	}
 };
 
 Stats.renameChar = function(charname) {
-	if (!this.nameOk(charname) || charname == Stats.charName) {
+	if (!this.nameOk(charname)) {
 		return;
 	}
 
@@ -83,10 +74,10 @@ Stats.renameChar = function(charname) {
 	for (var key in localStorage) {
 		if (key.indexOf(Stats.charName) === 0) {
 			// TODO: I hope one level of # is enough ...
-			var option = key.split("#")[1];
+			var option = key.split(FIELDSEP)[1];
 			var currval = localStorage.getItem(key);
 
-			localStorage.setItem(charname+"#"+option, currval);
+			localStorage.setItem(charname+FIELDSEP+option, currval);
 			localStorage.removeItem(key);
 		}
 	};
@@ -95,12 +86,10 @@ Stats.renameChar = function(charname) {
 	localStorage.setItem("__lastchar__", charname);
 
 	$('.charname').html(Stats.charName);
-
-	console.log(localStorage);
-}
+};
 
 Stats.nameOk = function(charname) {
-	if ($.inArray(charname, AppStrings) > -1) {
+	if ($.inArray(charname, App.AppStrings) > -1) {
 		// using internal strings may work, but it will propably not be nice ...
 		alert("Please do not try to bork this app ...");
 		return false;
@@ -117,7 +106,7 @@ Stats.update = function(label, value) {
 	this[label] = parseInt(value);
 
 	// write to localStorage to have the same values next time
-	localStorage.setItem(Stats.charName+"#"+label, value)
+	localStorage.setItem(Stats.charName+FIELDSEP+label, value)
 
 	// Notify dice offsets that a value was changed if necessary
 	if (label in Dice.Offsets) {

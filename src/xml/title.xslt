@@ -5,20 +5,15 @@
 
 <xsl:template match="title">
 	<h1 class="centerhead charname"><xsl:text>No Char found!</xsl:text></h1>
-	<div data-role="controlgroup">
-		<a href="#newchar-dialog" data-rel="popup" data-transition="pop" data-position-to="window"
-			onClick="$('#newchar-cancel').button('enable');"
-			data-role="button" data-icon="arrow-r" data-iconpos="right"> 
-			<xsl:text>New Character</xsl:text>
-		</a>
-		<a href="#rename-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-			data-role="button" data-icon="arrow-r" data-iconpos="right">
-			<xsl:text>Rename Character</xsl:text>
-		</a>
-	</div>
+	
+	<a href="#newchar-dialog" data-rel="popup" data-transition="pop" data-position-to="window"
+		data-role="button" data-icon="arrow-r" data-iconpos="right"> 
+		<xsl:text>New Character</xsl:text>
+	</a>
 
 	<!-- Character load chooser -->
-	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right"  data-inline="false">
+	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right"  
+		data-inline="false" class="ui-disabled startup-disabled">
     	<h2><xsl:text>Load Character</xsl:text></h2>
     	<ul data-role="listview">
         	<li>
@@ -28,27 +23,22 @@
     </div>
     <!-- -->
 
-    <!-- Generate new char window -->
-    <!-- Also appears when __lastchar__ is not set (called from Stats.init.js) -->
-	<div data-role="popup" id="newchar-dialog" data-overlay-theme="c" data-theme="c" data-dismissible="false">
-    	<div data-role="header" data-theme="c" class="ui-corner-top">
-        	<h1>New Character</h1>
-    	</div>
-    
-    	<div data-role="content" data-theme="c" class="ui-corner-bottom ui-content">
-        	<h3 class="ui-title">Enter a character name ...</h3>
-        	<input type="text" id="newchar-txtbx" value="" placeholder="Enter name ..."/>
+	<a href="#rename-popup" data-rel="popup" data-transition="pop" data-position-to="window"
+		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled startup-disabled">
+		<xsl:text>Rename Character</xsl:text>
+	</a>
 
-        	<!-- FIXME: for some reason the char popup is opened twice ... -->
-		    <a href="#" data-role="button" data-inline="true"
-		    	onClick="Stats.newChar($('#newchar-txtbx').val());$('#newchar-dialog').popup('close').popup('close');">
-		    	<xsl:text>Generate!</xsl:text>
-		    </a>
-		    <a href="#" data-role="button" data-rel="back" data-inline="true" id="newchar-cancel">
-		    	<xsl:text>Cancel</xsl:text>
-		    </a>
-    	</div>
-	</div>
+    <!-- Generate new char window -->
+	<div data-role="popup" id="newchar-dialog" data-theme="c">
+    	<h3 class="ui-title">Enter a character name ...</h3>
+    	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
+
+	    <a href="#" data-role="button" data-rel="back"
+	    	onClick="Stats.newChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
+	    	<xsl:text>Generate!</xsl:text>
+	    </a>
+    </div>
+	
 
     <div data-role="popup" id="rename-popup">
 		<form>
@@ -57,7 +47,7 @@
 
 		    <a href="#" data-role="button" data-rel="back" 
 		    	onClick="Stats.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
-		    	<xsl:text>Set</xsl:text>
+		    	<xsl:text>Rename</xsl:text>
 		    </a>
 		</form>
 	</div>

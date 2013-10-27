@@ -6,7 +6,7 @@
 <xsl:template match="title">
 	<h1 class="centerhead charname"><xsl:text>No Char found!</xsl:text></h1>
 	<div data-role="controlgroup">
-		<a href="#newchar-popup" data-rel="popup" data-transition="pop" data-position-to="window"
+		<a href="#newchar-dialog" data-rel="popup" data-transition="pop" data-position-to="window"
 			data-role="button" data-icon="arrow-r" data-iconpos="right"> 
 			<xsl:text>New Character</xsl:text>
 		</a>
@@ -38,8 +38,9 @@
         	<h3 class="ui-title">Enter a character name ...</h3>
         	<input type="text" id="newchar-txtbx" value="" placeholder="Enter name ..."/>
 
+        	<!-- FIXME: for some reason the char popup is opened twice ... -->
 		    <a href="#" data-role="button"
-		    	onClick="Stats.renameChar($('#newchar-txtbx').val());$('#newchar-dialog').popup('close');">
+		    	onClick="Stats.newChar($('#newchar-txtbx').val());$('#newchar-dialog').popup('close').popup('close');">
 		    	<xsl:text>Generate!</xsl:text>
 		    </a>
     	</div>
@@ -55,9 +56,6 @@
 		    	<xsl:text>Set</xsl:text>
 		    </a>
 		</form>
-	</div>
-	 <div data-role="popup" id="newchar-popup">
-			<h3><xsl:text>Currently not implemented.</xsl:text></h3>
 	</div>
 
 	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 

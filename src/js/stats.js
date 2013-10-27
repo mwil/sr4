@@ -24,15 +24,13 @@ var Stats = {
 
 // AutoGen me!
 var StatList = ["Attrib_BOD", "Attrib_EDG"];
-var AppStrings = ["__lastchar__"];
+var AppStrings = ["__lastchar__", "__charlist__"];
 
 Stats.init = function() {
 	// find current char ... (there is only one atm)
 	if ("__lastchar__" in localStorage) {
 		var charname = localStorage.getItem("__lastchar__");
 	} else {
-		// TODO: rather use dialog when no lastchar is set
-		// add newchar method to have full char records in store
 		// make # configurable FIELDSELECT="#"
 		// ++ add localStorage cleaner for development
 		// let the dialog do its job first ...
@@ -49,20 +47,36 @@ Stats.init = function() {
 			this.update(StatList[i], localStorage[query]);
 		} else {
 			this.update(StatList[i], 2);
+			localStorage.setItem(query, 2);
 		}
 	}
 };
 
+Stats.newChar = function(charname) {
+	if (!this.nameOk(charname)) {
+		// FIXME: alert required?
+		alert("Name not possible, try again!")
+		$('#newchar-dialog').popup("open");
+	}
+
+	// Apply name ...
+	Stats.charName = charname;
+	localStorage.setItem("__lastchar__", charname);
+	$('.charname').html(Stats.charName);
+
+	// set default values for stats ...
+	for (var i = 0; i < StatList.length; i++) {
+		var query = charname+"#"+StatList[i];
+
+		this.update(StatList[i], 2);
+		localStorage.setItem(query, 2);
+	};
+};
+
 Stats.renameChar = function(charname) {
-	if (charname == Stats.charName) {
-		// nothing happened.
-		return;
-	} else if ($.inArray(charname, AppStrings) > -1) {
-		// using internal strings may work, but it will propably not be nice ...
-		alert("Please do not try to bork this app ...");
+	if (!this.nameOk(charname) || charname == Stats.charName) {
 		return;
 	}
-	// TODO: check for option-delimiter '#' in the name!
 
 	// This requires some updating of the localStorage later if Values are stored with "Char Name#Attrib_X"
 	for (var key in localStorage) {
@@ -76,12 +90,24 @@ Stats.renameChar = function(charname) {
 		}
 	};
 
-	console.log(localStorage);
 	Stats.charName = charname;
 	localStorage.setItem("__lastchar__", charname);
 
 	$('.charname').html(Stats.charName);
+
+	console.log(localStorage);
 }
+
+Stats.nameOk(charname) {
+	if ($.inArray(charname, AppStrings) > -1) {
+		// using internal strings may work, but it will propably not be nice ...
+		alert("Please do not try to bork this app ...");
+		return false;
+	}
+	// TODO: check for option-delimiter '#' in the name!
+
+	return true;
+};
 
 /*
  * Update a single character statistic and update the page

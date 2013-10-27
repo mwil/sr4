@@ -31,6 +31,10 @@ Stats.init = function() {
 	if ("__lastchar__" in localStorage) {
 		var charname = localStorage.getItem("__lastchar__");
 	} else {
+		// TODO: rather use dialog when no lastchar is set
+		// add newchar method to have full char records in store
+		// make # configurable FIELDSELECT="#"
+		// ++ add localStorage cleaner for development
 		var charname = "Mr. Johnson";
 	}
 

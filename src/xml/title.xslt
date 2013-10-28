@@ -4,7 +4,7 @@
 <!-- Templates for the title (portal) page -->
 
 <xsl:template match="title">
-	<h1 class="centerhead charname"><xsl:text>No Char found!</xsl:text></h1>
+	<h1 class="centerhead charName"><xsl:text>No Char found!</xsl:text></h1>
 	
 	<a href="#newchar-dialog" data-rel="popup" data-transition="pop" data-position-to="window"
 		data-role="button" data-icon="arrow-r" data-iconpos="right"> 
@@ -13,11 +13,11 @@
 
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right"  
-		data-inline="false" class="ui-disabled startup-disabled">
+		data-inline="false" id="loadchar-lv" class="ui-disabled startup-disabled">
     	<h2><xsl:text>Load Character</xsl:text></h2>
     	<ul data-role="listview">
         	<li>
-        		<a href="#" class="charname"></a>
+        		<a href="#" class="charName"></a>
         	</li>
     	</ul>
     </div>

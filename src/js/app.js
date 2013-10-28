@@ -17,6 +17,9 @@
 // load on first pageinit only
 var startup = true;
 
+var APPSTRING = "SR4."
+var FIELDSEP = "#";
+
 //$(window).load( function() {});
 $(document).on('pageinit', function () {
 	if (startup) {
@@ -27,16 +30,59 @@ $(document).on('pageinit', function () {
 
 var App = {
 	StatList: ["Attrib_BOD", "Attrib_EDG"],
-	AppStrings: ["__lastchar__", "__charlist__"],
-	CharList: [],
+	AppStrings: [APPSTRING+"__lastchar__", 
+				 APPSTRING+"__charlist__"],
+	CharList: {},
+	currChar = null;
 };
 
 App.init = function() {
-	if ("__lastchar__" in localStorage) {
-		var charname = localStorage.getItem("__lastchar__");
-		Stats.init(charname);
+	var gotChar = false;
+
+	// load available chars from localStorage
+	if ("SR4.__charlist__" in localStorage) {
+		var charnames = localStorage.getItem(APPSTRING+"__charlist__").split(FIELDSEP);
+
+		for (var i = 0; i < charnames.length; i++) {
+			var tmpchar = new Character(charnames[i], true);
+			this.CharList[charnames[i]] = tmpchar;
+		};
 	}
-	if ("__charlist__" in localStorage) {
-		this.CharList = localStorage.getItem("__charlist__");
+
+	if ("SR4.__lastchar__" in localStorage) {
+		var charname = localStorage.getItem(APPSTRING+"__lastchar__");
+		
+		if (charname in this.CharList) {
+			this.currChar = this.CharList[charname];
+			gotChar = true;
+		} else {
+			// Unknown lastchar, this should not happen ...
+			localStorage.removeItem(APPSTRING+"__lastchar__")
+		}
 	}
+
+	if (gotChar) {
+		// we have a valid char now for sure, enable the functionality if disabled!
+		$('.startup-disabled').removeClass('ui-disabled');
+	}
+};
+
+App.createChar = function(charName) {
+	if (charName in this.CharList) {
+		// Name already exists ...
+		alert("Name already exists!");
+		return;
+	}
+
+	var tmpchar = new Character(charName, false);
+	this.CharList.push(tmpchar);
+
+	var charstring = ""
+	for (var chr in this.CharList) {
+		charstring += chr.charName + FIELDSEP;
+	};
+	// remove trailing FIELDSEP
+	charstring = charstring.slice(0, charstring.length - 2);
+
+	localStorage.setItem(APPSTRING+"__charlist__", charstring);
 };

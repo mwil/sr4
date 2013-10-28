@@ -93,7 +93,7 @@ SR4.createChar = function(charName) {
 	this.numChars += 1;
 	this.currChar = this.CharList[charName];
 
-	this.CharListChanged();
+	this.charListChanged();
 
 	this.updateLoadCharLV();
 	$('.nochar-disabled').removeClass('ui-disabled');

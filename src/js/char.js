@@ -85,7 +85,7 @@ Character.prototype.renameChar = function(charName) {
 
 	// This requires some updating of the localStorage later if Values are stored with "Char Name#Attrib_X"
 	for (var key in localStorage) {
-		if (key.indexOf(Stats.charName) === APPSTRING.length) {
+		if (key.indexOf(this.charName) === APPSTRING.length) {
 			// TODO: I hope one level of # is enough ...
 			var option = key.split(FIELDSEP)[1];
 			var currval = localStorage.getItem(key);
@@ -122,8 +122,11 @@ Character.prototype.updateStat = function(stat, value) {
  * Copy current values to the page contents
  */
 Character.prototype.updatePage = function() {
-	$('#Attrib_EDG').html(this.stats[Attrib_EDG]);
-	$('#Attrib_BOD').html(this.stats[Attrib_BOD]);
+	for (var i = 0; i < App.StatList.length; i++) { 
+		var stat = App.StatList[i];
+		
+		$('#'+stat).html(this.stats[stat]);	
+	};
 };
 
 Character.prototype.updatePopup = function(statName, statTarget, value) {

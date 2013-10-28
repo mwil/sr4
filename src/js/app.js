@@ -97,9 +97,10 @@ App.createChar = function(charName) {
 	this.currChar = tmpchar;
 
 	// update charlist in localStorage
-	var charstring = ""
-	for (var chr in this.CharList) {
-		charstring += chr.charName + FIELDSEP;
+	var charstring = "";
+	for (var character in this.CharList) {
+		console.log(character);
+		charstring += character.charName + FIELDSEP;
 	};
 	// remove trailing FIELDSEP
 	charstring = charstring.slice(0, charstring.length - 2);
@@ -119,7 +120,7 @@ App.updateLoadCharLV = function() {
 
 	$('#loadchar-lv').empty();
 
-	for (var chr in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#'>"+chr.charName+"</a></li>")	
+	for (var character in this.CharList) {
+		$('#loadchar-lv').append("<li><a href='#'>"+character.charName+"</a></li>")	
 	};
 };

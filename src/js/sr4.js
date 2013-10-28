@@ -77,11 +77,6 @@ SR4.init = function() {
 			}
 		}
 	}
-
-	if (gotChar) {
-		// we have a valid char now for sure, enable the functionality if disabled!
-		$('.nochar-disabled').removeClass('ui-disabled');
-	}
 };
 
 SR4.createChar = function(charName) {
@@ -97,8 +92,10 @@ SR4.createChar = function(charName) {
 	this.charListChanged();
 	
 	this.switchToChar(charName);
+};
 
-	$('.nochar-disabled').removeClass('ui-disabled');
+SR4.removeCharacter = function() {
+	// TODO: implemement me!
 };
 
 SR4.switchToChar = function(charName) {
@@ -106,7 +103,9 @@ SR4.switchToChar = function(charName) {
 
 	localStorage.setItem(APPSTRING+"__active_char__", charName);
 
-	$('.charName').html(charName);
+	$.mobile.loading('show');
+	setTimeout($.mobile.loading('hide'), 1000);
+
 	this.refreshTitlePage();
 };
 
@@ -118,8 +117,6 @@ SR4.charNameChanged = function(oldName, newName) {
 	localStorage.setItem(APPSTRING+"__active_char__", newName);
 
 	this.charListChanged();
-	
-	$('.charName').html(newName);
 	this.refreshTitlePage();
 };
 
@@ -136,8 +133,11 @@ SR4.charListChanged = function() {
 }
 
 SR4.refreshTitlePage = function() {
+	$('.charName').html(this.currChar.charName);
+
 	if (this.numChars > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
+		$('.nochar-disabled').removeClass('ui-disabled');
 	} else {
 		$('#loadchar-container').addClass('ui-disabled');
 	}
@@ -145,7 +145,8 @@ SR4.refreshTitlePage = function() {
 	$('#loadchar-lv').empty();
 
 	for (var charname in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button' onClick='SR4.switchToChar(\""+charname+"\")'>"+charname+"</a></li>")	
+		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
+			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
 	};
 
 	$("#loadchar-lv").listview("refresh");

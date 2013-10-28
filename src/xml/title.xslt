@@ -24,6 +24,31 @@
 		<xsl:text>Rename Character</xsl:text>
 	</a>
 
+	<a href="#delete-popup" data-rel="popup" data-transition="pop" data-position-to="window"
+		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled-off">
+		<xsl:text>Remove Character</xsl:text>
+	</a>
+
+
+	<!-- DEGUB buttons (sic) -->
+
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="console.log(localStorage);">
+		<xsl:text>DEBUG: Print localStorage</xsl:text>
+	</a>
+	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 
+	  	data-transition="pop" data-position-to="window"
+	  	onClick="localStorage.clear();">
+		<xsl:text>DEBUG: Clear localStorage</xsl:text>
+	</a>
+	<div data-role="popup" id="done-popup">
+		<h3><xsl:text>Done.</xsl:text></h3>
+	</div>
+
+
+
+	<!-- The POPUPS -->
+
+
     <!-- Generate new char window -->
 	<div data-role="popup" id="newchar-dialog" data-theme="c">
     	<h3 class="ui-title">Enter a character name ...</h3>
@@ -49,17 +74,7 @@
 		</form>
 	</div>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="console.log(localStorage);">
-		<xsl:text>DEBUG: Print localStorage</xsl:text>
-	</a>
-	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 
-	  	data-transition="pop" data-position-to="window"
-	  	onClick="localStorage.clear();">
-		<xsl:text>DEBUG: Clear localStorage</xsl:text>
-	</a>
-	<div data-role="popup" id="done-popup">
-		<h3><xsl:text>Done.</xsl:text></h3>
-	</div>
+
 	
 </xsl:template>
 

@@ -99,19 +99,21 @@ SR4.createChar = function(charName) {
 	$('.nochar-disabled').removeClass('ui-disabled');
 };
 
-SR4.switchChar = function() {
+SR4.switchToChar = function(charName) {
+	this.currChar = this.CharList[charName];
 
+	localStorage.setItem(APPSTRING+"__lastchar__", charName);
+
+	$('.charName').html(charName);
+	this.updateLoadCharLV();
 };
 
 SR4.charNameChanged = function(oldName, newName) {
-	localStorage.setItem(APPSTRING+"__lastchar__", newName);
-
 	this.CharList[newName] = this.CharList[oldName];
 	delete this.CharList[oldName];
+	
 	this.charListChanged();
-
-	$('.charName').html(newName);
-	this.updateLoadCharLV();
+	this.switchToChar(newName);
 };
 
 SR4.charListChanged = function() {
@@ -136,7 +138,7 @@ SR4.updateLoadCharLV = function() {
 	$('#loadchar-lv').empty();
 
 	for (var charname in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button'>"+charname+"</a></li>")	
+		$('#loadchar-lv').append("<li><a href='#' data-role='button' onClick='SR4.switchToChar("+charname+")'>"+charname+"</a></li>")	
 	};
 
 	$("#loadchar-lv").listview("refresh");

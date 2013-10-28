@@ -58,7 +58,7 @@ Character.prototype.newChar = function(charName) {
 	for (var i = 0; i < App.StatList.length; i++) {
 		var query = APPSTRING+charName+FIELDSEP+App.StatList[i];
 
-		this.update(App.StatList[i], DEFAULTVAL);
+		this.updateStat(App.StatList[i], DEFAULTVAL);
 		localStorage.setItem(query, DEFAULTVAL);
 	};
 };
@@ -70,9 +70,9 @@ Character.prototype.loadChar = function(charName) {
 		var query = APPSTRING+charName+FIELDSEP+App.StatList[i];
 
 		if (query in localStorage) {
-			this.update(App.StatList[i], localStorage[query]);
+			this.updateStat(App.StatList[i], localStorage[query]);
 		} else {
-			this.update(App.StatList[i], DEFAULTVAL);
+			this.updateStat(App.StatList[i], DEFAULTVAL);
 			localStorage.setItem(query, DEFAULTVAL);
 		}
 	}

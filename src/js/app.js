@@ -81,7 +81,7 @@ App.init = function() {
 		this.updateLoadCharLV();
 
 		// we have a valid char now for sure, enable the functionality if disabled!
-		$('.startup-disabled').removeClass('ui-disabled');
+		$('.nochar-disabled').removeClass('ui-disabled');
 	}
 };
 
@@ -107,7 +107,7 @@ App.createChar = function(charName) {
 	localStorage.setItem(APPSTRING+"__charlist__", charstring);
 
 	this.updateLoadCharLV();
-	$('.startup-disabled').removeClass('ui-disabled');
+	$('.nochar-disabled').removeClass('ui-disabled');
 };
 
 App.updateLoadCharLV = function() {

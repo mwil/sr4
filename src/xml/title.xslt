@@ -21,7 +21,7 @@
     <!-- -->
 
 	<a href="#rename-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled startup-disabled">
+		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled">
 		<xsl:text>Rename Character</xsl:text>
 	</a>
 

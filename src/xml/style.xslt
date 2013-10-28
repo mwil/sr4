@@ -32,8 +32,8 @@
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>Shadowrun 4 App</xsl:text></h1>
-			<a href="#mypanel" data-icon="bars" class="ui-disabled startup-disabled"><xsl:text>Nav</xsl:text></a>
-			<a href="#" data-rel="back" data-iconpos="right" data-icon="arrow-l" class="ui-disabled startup-disabled">
+			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled"><xsl:text>Nav</xsl:text></a>
+			<a href="#" data-rel="back" data-iconpos="right" data-icon="arrow-l" class="ui-disabled nochar-disabled">
 				<xsl:text>Back</xsl:text>
 			</a>
 		</div><!-- /header -->

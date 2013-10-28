@@ -11,7 +11,7 @@
 	        	<xsl:for-each select="/app/attribs/attr">
 		            <li>
 		            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
-		            		onClick="Stats.updatePopup('{name}', 'Attrib_{id}', Stats.Attrib_{id});">
+		            		onClick="SR4.currChar.updatePopup('{name}', 'Attrib_{id}', Stats.Attrib_{id});">
 		            		<xsl:value-of select="name"/>
 		            		<span class="ui-li-count med" id="Attrib_{id}"></span>
 		            	</a>
@@ -25,10 +25,10 @@
 	    <h3 id="stats-poptext" class="ui-title"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
 		<form style="width:360px;">
-		    <input type="range" id="stats-slider" data-highlight="true" min="1" max="8" value="7" stat-target="autofilled"/>
+		    <input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
 
 		    <a href="#" data-role="button" data-rel="back"
-		    	onClick="Stats.update($('#stats-slider').attr('stat-target'), $('#stats-slider').val());">
+		    	onClick="SR4.currChar.update($('#stats-slider').attr('stat-target'), $('#stats-slider').val());">
 		    	<xsl:text>Set</xsl:text>
 		    </a>
 		</form>

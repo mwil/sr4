@@ -23,12 +23,12 @@ var FIELDSEP = "#";
 //$(window).load( function() {});
 $(document).on('pageinit', function () {
 	if (startup) {
-		App.init();	
+		SR4.init();	
 		startup = false;	
 	}
 });
 
-var App = {
+var SR4 = {
 	StatList: ["Attrib_BOD", 
 			   "Attrib_EDG"],
 	AppStrings: [APPSTRING+"__lastchar__", 
@@ -38,7 +38,7 @@ var App = {
 	currChar: null,
 };
 
-App.init = function() {
+SR4.init = function() {
 	var gotChar = false;
 
 	// load available chars from localStorage
@@ -85,7 +85,7 @@ App.init = function() {
 	}
 };
 
-App.createChar = function(charName) {
+SR4.createChar = function(charName) {
 	if (charName in this.CharList) {
 		// Name already exists ... TODO: in-app notification
 		alert("Character name already exists!");
@@ -110,7 +110,7 @@ App.createChar = function(charName) {
 	$('.nochar-disabled').removeClass('ui-disabled');
 };
 
-App.updateLoadCharLV = function() {
+SR4.updateLoadCharLV = function() {
 	if (this.numChars > 0) {
 		$('loadchar-container').removeClass('ui-disabled');
 	} else {

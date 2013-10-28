@@ -41,7 +41,7 @@ Character.prototype.nameOk = function(charName) {
 		charName.replace(FIELDSEP, ".");
 	}
 
-	if ($.inArray(charName, App.AppStrings) > -1) {
+	if ($.inArray(charName, SR4.AppStrings) > -1) {
 		// using internal strings may work, but it will propably not be nice ...
 		alert("Please do not try to bork this app ...");
 		return false;
@@ -55,10 +55,10 @@ Character.prototype.newChar = function(charName) {
 	this.renameChar(charName);
 
 	// set default values for known stats ...
-	for (var i = 0; i < App.StatList.length; i++) {
-		var query = APPSTRING+charName+FIELDSEP+App.StatList[i];
+	for (var i = 0; i < SR4.StatList.length; i++) {
+		var query = APPSTRING+charName+FIELDSEP+SR4.StatList[i];
 
-		this.updateStat(App.StatList[i], DEFAULTVAL);
+		this.updateStat(SR4.StatList[i], DEFAULTVAL);
 		localStorage.setItem(query, DEFAULTVAL);
 	};
 };
@@ -66,13 +66,13 @@ Character.prototype.newChar = function(charName) {
 Character.prototype.loadChar = function(charName) {
 	this.renameChar(charName);
 
-	for (var i = 0; i < App.StatList.length; i++) {
-		var query = APPSTRING+charName+FIELDSEP+App.StatList[i];
+	for (var i = 0; i < SR4.StatList.length; i++) {
+		var query = APPSTRING+charName+FIELDSEP+SR4.StatList[i];
 
 		if (query in localStorage) {
-			this.updateStat(App.StatList[i], localStorage[query]);
+			this.updateStat(SR4.StatList[i], localStorage[query]);
 		} else {
-			this.updateStat(App.StatList[i], DEFAULTVAL);
+			this.updateStat(SR4.StatList[i], DEFAULTVAL);
 			localStorage.setItem(query, DEFAULTVAL);
 		}
 	}
@@ -122,9 +122,9 @@ Character.prototype.updateStat = function(stat, value) {
  * Copy current values to the page contents
  */
 Character.prototype.updatePage = function() {
-	for (var i = 0; i < App.StatList.length; i++) { 
-		var stat = App.StatList[i];
-		
+	for (var i = 0; i < SR4.StatList.length; i++) { 
+		var stat = SR4.StatList[i];
+
 		$('#'+stat).html(this.stats[stat]);	
 	};
 };

@@ -93,15 +93,7 @@ SR4.createChar = function(charName) {
 	this.numChars += 1;
 	this.currChar = this.CharList[charName];
 
-	// update charlist in localStorage
-	var charstring = "";
-	for (var charname in this.CharList) {
-		charstring += charname + FIELDSEP;
-	};
-	// remove trailing FIELDSEP
-	charstring = charstring.slice(0, charstring.length - 1);
-
-	localStorage.setItem(APPSTRING+"__charlist__", charstring);
+	this.CharListChanged();
 
 	this.updateLoadCharLV();
 	$('.nochar-disabled').removeClass('ui-disabled');
@@ -116,17 +108,30 @@ SR4.charNameChanged = function(oldName, newName) {
 
 	this.CharList[newName] = this.CharList[oldName];
 	delete this.CharList[oldName];
+	this.charListChanged();
 
 	$('.charName').html(newName);
 	this.updateLoadCharLV();
 };
+
+SR4.charListChanged = function() {
+	// update charlist in localStorage
+	var charstring = "";
+	for (var charname in this.CharList) {
+		charstring += charname + FIELDSEP;
+	};
+	// remove trailing FIELDSEP
+	charstring = charstring.slice(0, charstring.length - 1);
+
+	localStorage.setItem(APPSTRING+"__charlist__", charstring);
+}
 
 SR4.updateLoadCharLV = function() {
 	if (this.numChars > 0) {
 		$('loadchar-container').removeClass('ui-disabled');
 		$('loadchar-container').listview('refresh');
 		console.log("enabled ...");
-		console.log($('loadchar-container'));
+		console.log($('loadchar-container')[0]);
 	} else {
 		$('loadchar-container').addClass('ui-disabled');
 	}

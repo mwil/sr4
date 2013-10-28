@@ -113,8 +113,13 @@ SR4.charNameChanged = function(oldName, newName) {
 	this.CharList[newName] = this.CharList[oldName];
 	delete this.CharList[oldName];
 	
+	this.currChar = this.CharList[newName];
+	localStorage.setItem(APPSTRING+"__lastchar__", newName);
+
 	this.charListChanged();
-	this.switchToChar(newName);
+	
+	$('.charName').html(newName);
+	this.updateLoadCharLV();
 };
 
 SR4.charListChanged = function() {

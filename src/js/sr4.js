@@ -128,12 +128,9 @@ SR4.charListChanged = function() {
 
 SR4.updateLoadCharLV = function() {
 	if (this.numChars > 0) {
-		$('loadchar-container').removeClass('ui-disabled');
-		$('loadchar-container').listview('refresh');
-		console.log("enabled ...");
-		console.log($('loadchar-container')[0]);
+		$('#loadchar-container').removeClass('ui-disabled');
 	} else {
-		$('loadchar-container').addClass('ui-disabled');
+		$('#loadchar-container').addClass('ui-disabled');
 	}
 
 	$('#loadchar-lv').empty();

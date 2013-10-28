@@ -28,7 +28,7 @@
 		    <input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
 
 		    <a href="#" data-role="button" data-rel="back"
-		    	onClick="SR4.currChar.updateStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.updateStatsPage();">
+		    	onClick="SR4.currChar.updateStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">
 		    	<xsl:text>Set</xsl:text>
 		    </a>
 		</form>

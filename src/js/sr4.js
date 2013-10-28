@@ -20,12 +20,17 @@ var startup = true;
 var APPSTRING = "SR4."
 var FIELDSEP = "#";
 
-//$(window).load( function() {});
-$(document).on('pagebeforeshow', function () {
+$(document).on('pagebeforeshow', '#title', function () {
 	if (startup) {
 		SR4.init();	
 		startup = false;	
+	} else {
+		SR4.refreshTitlePage();
 	}
+});
+
+$(document).on('pagebeforeshow', '#stats', function () {
+	SR4.refreshStatsPage();
 });
 
 var SR4 = {
@@ -101,9 +106,7 @@ SR4.switchToChar = function(charName) {
 	localStorage.setItem(APPSTRING+"__lastchar__", charName);
 
 	$('.charName').html(charName);
-	this.updateLoadCharLV();
-	this.updateStatsPage();
-	this.updateDicePage();
+	this.refreshTitlePage();
 };
 
 SR4.charNameChanged = function(oldName, newName) {
@@ -116,7 +119,7 @@ SR4.charNameChanged = function(oldName, newName) {
 	this.charListChanged();
 	
 	$('.charName').html(newName);
-	this.updateLoadCharLV();
+	this.refreshTitlePage();
 };
 
 SR4.charListChanged = function() {
@@ -131,7 +134,7 @@ SR4.charListChanged = function() {
 	localStorage.setItem(APPSTRING+"__charlist__", charstring);
 }
 
-SR4.updateLoadCharLV = function() {
+SR4.refreshTitlePage = function() {
 	if (this.numChars > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
 	} else {
@@ -147,10 +150,7 @@ SR4.updateLoadCharLV = function() {
 	$("#loadchar-lv").listview("refresh");
 };
 
-/*
- * Copy current values to the page contents
- */
-SR4.updateStatsPage = function() {
+SR4.refreshStatsPage = function() {
 	for (var i = 0; i < this.StatList.length; i++) { 
 		var stat = this.StatList[i];
 
@@ -158,9 +158,9 @@ SR4.updateStatsPage = function() {
 	};
 };
 
-SR4.updateDicePage = function() {
-	Dice.updateDiceButtons();
-};
+SR4.refreshDicePage = function() {
+	Dice.refreshDiceButtons();
+}
 
 SR4.updateStatsPopup = function(statName, statTarget, value) {
 	$('#stats-slider').val(value);

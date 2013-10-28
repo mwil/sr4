@@ -14,6 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+$(document).on('pagebeforeshow', '#dice', function () {
+	SR4.refreshDicePage();
+});
+
 var Dice = {
 	Offsets: [],
 };
@@ -127,7 +131,7 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 		}
 	)
 
-	this.updateDiceButtons();
+	this.refreshDiceButtons();
 };
 
 Dice.changeOffset = function(stat, remove) {
@@ -141,10 +145,10 @@ Dice.changeOffset = function(stat, remove) {
 		Dice.Offsets.splice($.inArray(stat, Dice.Offsets), 1);
 	}
 
-	this.updateDiceButtons();
+	this.refreshDiceButtons();
 };
 
-Dice.updateDiceButtons = function() {
+Dice.refreshDiceButtons = function() {
 	$('.dicebutton').each(
 		function(index) {
 			var baseval = parseInt($(this).attr("baseval"));
@@ -157,8 +161,8 @@ Dice.updateDiceButtons = function() {
 			$(this).attr("currval", baseval + offset);
 			$(this).attr("valoffset", offset);
 
-			$(this).find(".ui-btn-text")[0].innerHTML = baseval + 
-				(offset != 0 ? "<sub style='color:grey;'>(+"+offset+")</sub>" : "");
+			$(this).find(".ui-btn-text").html(baseval + 
+				(offset != 0 ? "<sub style='color:grey;'>(+"+offset+")</sub>" : ""));
 		}
 	)
 };

@@ -110,7 +110,7 @@ Character.prototype.updateStat = function(stat, value) {
 	localStorage.setItem(APPSTRING+this.charName+FIELDSEP+stat, value)
 
 	// Notify dice offsets that a value was changed if necessary
-	if (stat in Dice.Offsets) {
-		Dice.changeOffset(stat, parseInt(value));
+	if (Dice.Offsets.indexOf(stat) > -1) {
+		Dice.changeOffset(stat, false);
 	}
 };

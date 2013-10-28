@@ -90,7 +90,7 @@ SR4.createChar = function(charName) {
 	this.CharList[charName] = tmpchar;
 	this.numChars += 1;
 	
-	this.switchToChar(charName)
+	this.switchToChar(charName);
 
 	$('.nochar-disabled').removeClass('ui-disabled');
 };
@@ -103,6 +103,7 @@ SR4.switchToChar = function(charName) {
 	$('.charName').html(charName);
 	this.updateLoadCharLV();
 	this.updateStatsPage();
+	this.updateDicePage();
 };
 
 SR4.charNameChanged = function(oldName, newName) {
@@ -155,6 +156,10 @@ SR4.updateStatsPage = function() {
 
 		$('#'+stat).html(this.currChar.stats[stat]);	
 	};
+};
+
+SR4.updateDicePage = function() {
+	Dice.updateDiceButtons();
 };
 
 SR4.updateStatsPopup = function(statName, statTarget, value) {

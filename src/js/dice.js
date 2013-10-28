@@ -133,7 +133,7 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 Dice.changeOffset = function(stat, remove) {
 	if (!remove) {
 		if (Dice.Offsets.indexOf(stat) == -1) {
-			Dice.Offsets.push(stat);	
+			Dice.Offsets.push(stat);
 		}
 	} else if (Dice.Offsets.indexOf(stat) > -1) {
 		// super-obvious solution to delete an array element ... 

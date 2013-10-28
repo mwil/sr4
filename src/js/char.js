@@ -98,8 +98,6 @@ Character.prototype.renameChar = function(charName) {
 	};
 
 	this.charName = charName;
-
-	SR4.charNameChanged(oldName, charName);
 };
 
 /*

@@ -127,7 +127,7 @@ Character.prototype.updatePage = function() {
 };
 
 Character.prototype.updatePopup = function(statName, statTarget, value) {
-	$('#stats-slider').val(value);	
+	$('#stats-slider').val(value);
 	$('#stats-slider').attr('stat-target', statTarget);
 	$('#stats-slider').slider('refresh');
 

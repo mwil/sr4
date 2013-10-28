@@ -12,13 +12,10 @@
 	</a>
 
 	<!-- Character load chooser -->
-	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right"  
-		data-inline="false" id="loadchar-lv" class="ui-disabled startup-disabled">
+	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" id="loadchar-container" 
+		data-inline="false" class="ui-disabled">
     	<h2><xsl:text>Load Character</xsl:text></h2>
-    	<ul data-role="listview">
-        	<li>
-        		<a href="#" class="charName"></a>
-        	</li>
+    	<ul data-role="listview" id="loadchar-lv">
     	</ul>
     </div>
     <!-- -->
@@ -34,7 +31,7 @@
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
 	    <a href="#" data-role="button" data-rel="back"
-	    	onClick="Stats.newChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
+	    	onClick="App.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
 	    	<xsl:text>Generate!</xsl:text>
 	    </a>
     </div>
@@ -46,7 +43,7 @@
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>
 
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="Stats.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
+		    	onClick="App.currChar.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
 		    	<xsl:text>Rename</xsl:text>
 		    </a>
 		</form>

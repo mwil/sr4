@@ -29,39 +29,57 @@ $(document).on('pageinit', function () {
 });
 
 var App = {
-	StatList: ["Attrib_BOD", "Attrib_EDG"],
+	StatList: ["Attrib_BOD", 
+			   "Attrib_EDG"],
 	AppStrings: [APPSTRING+"__lastchar__", 
 				 APPSTRING+"__charlist__"],
 	CharList: {},
-	currChar = null;
+	numChars: 0,
+	currChar: null,
 };
 
 App.init = function() {
 	var gotChar = false;
 
 	// load available chars from localStorage
-	if ("SR4.__charlist__" in localStorage) {
+	if (APPSTRING+"__charlist__" in localStorage) {
 		var charnames = localStorage.getItem(APPSTRING+"__charlist__").split(FIELDSEP);
 
 		for (var i = 0; i < charnames.length; i++) {
 			var tmpchar = new Character(charnames[i], true);
 			this.CharList[charnames[i]] = tmpchar;
+			this.numChars += 1;
 		};
 	}
 
-	if ("SR4.__lastchar__" in localStorage) {
+	if (APPSTRING+"__lastchar__" in localStorage) {
 		var charname = localStorage.getItem(APPSTRING+"__lastchar__");
 		
-		if (charname in this.CharList) {
-			this.currChar = this.CharList[charname];
-			gotChar = true;
-		} else {
+		for (var character in this.CharList) {
+			if (character.charName == charname) {
+				this.currChar = character;
+				gotChar = true;
+			}
+		} 
+
+		if (!gotchar) {
 			// Unknown lastchar, this should not happen ...
-			localStorage.removeItem(APPSTRING+"__lastchar__")
+			if (this.numChars > 0) {
+				// if there are other characters, take a (random) one
+				for (var character in this.CharList) {
+					this.currChar = character;
+					gotChar = true;
+					break;
+				};
+			} else {
+				localStorage.removeItem(APPSTRING+"__lastchar__")	
+			}
 		}
 	}
 
 	if (gotChar) {
+		this.updateLoadCharLV();
+
 		// we have a valid char now for sure, enable the functionality if disabled!
 		$('.startup-disabled').removeClass('ui-disabled');
 	}
@@ -69,14 +87,16 @@ App.init = function() {
 
 App.createChar = function(charName) {
 	if (charName in this.CharList) {
-		// Name already exists ...
-		alert("Name already exists!");
+		// Name already exists ... TODO: in-app notification
+		alert("Character name already exists!");
 		return;
 	}
 
 	var tmpchar = new Character(charName, false);
 	this.CharList.push(tmpchar);
+	this.currChar = tmpchar;
 
+	// update charlist in localStorage
 	var charstring = ""
 	for (var chr in this.CharList) {
 		charstring += chr.charName + FIELDSEP;
@@ -85,4 +105,21 @@ App.createChar = function(charName) {
 	charstring = charstring.slice(0, charstring.length - 2);
 
 	localStorage.setItem(APPSTRING+"__charlist__", charstring);
+
+	this.updateLoadCharLV();
+	$('.startup-disabled').removeClass('ui-disabled');
+};
+
+App.updateLoadCharLV = function() {
+	if (this.numChars > 0) {
+		$('loadchar-container').removeClass('ui-disabled');
+	} else {
+		$('loadchar-container').addClass('ui-disabled');
+	}
+
+	$('#loadchar-lv').empty();
+
+	for (var chr in this.CharList) {
+		$('#loadchar-lv').append("<li><a href='#'>"+chr.charName+"</a></li>")	
+	};
 };

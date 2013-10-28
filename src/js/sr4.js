@@ -36,7 +36,7 @@ $(document).on('pagebeforeshow', '#stats', function () {
 var SR4 = {
 	StatList: ["Attrib_BOD", 
 			   "Attrib_EDG"],
-	AppStrings: [APPSTRING+"__lastchar__", 
+	AppStrings: [APPSTRING+"__active_char__", 
 				 APPSTRING+"__charlist__"],
 	CharList: {},
 	numChars: 0,
@@ -57,14 +57,14 @@ SR4.init = function() {
 		};
 	}
 
-	if (APPSTRING+"__lastchar__" in localStorage) {
-		var lastchar = localStorage.getItem(APPSTRING+"__lastchar__");
+	if (APPSTRING+"__active_char__" in localStorage) {
+		var activechar = localStorage.getItem(APPSTRING+"__active_char__");
 		
-		if (lastchar in this.CharList) {
-			this.switchToChar(lastchar);
+		if (activechar in this.CharList) {
+			this.switchToChar(activechar);
 			gotChar = true;
 		} else {
-			// Unknown lastchar, this should not happen ...
+			// Unknown activechar, this should not happen ...
 			if (this.numChars > 0) {
 				// if there are other characters, take a (random) one
 				for (var charname in this.CharList) {
@@ -73,7 +73,7 @@ SR4.init = function() {
 					break;
 				};
 			} else {
-				localStorage.removeItem(APPSTRING+"__lastchar__");
+				localStorage.removeItem(APPSTRING+"__active_char__");
 			}
 		}
 	}
@@ -104,7 +104,7 @@ SR4.createChar = function(charName) {
 SR4.switchToChar = function(charName) {
 	this.currChar = this.CharList[charName];
 
-	localStorage.setItem(APPSTRING+"__lastchar__", charName);
+	localStorage.setItem(APPSTRING+"__active_char__", charName);
 
 	$('.charName').html(charName);
 	this.refreshTitlePage();
@@ -115,7 +115,7 @@ SR4.charNameChanged = function(oldName, newName) {
 	delete this.CharList[oldName];
 	
 	this.currChar = this.CharList[newName];
-	localStorage.setItem(APPSTRING+"__lastchar__", newName);
+	localStorage.setItem(APPSTRING+"__active_char__", newName);
 
 	this.charListChanged();
 	

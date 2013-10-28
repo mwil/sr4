@@ -101,6 +101,7 @@ App.createChar = function(charName) {
 	for (var character in this.CharList) {
 		console.log(character);
 		charstring += character.charName + FIELDSEP;
+		console.log(charstring);
 	};
 	// remove trailing FIELDSEP
 	charstring = charstring.slice(0, charstring.length - 2);

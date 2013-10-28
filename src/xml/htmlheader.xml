@@ -23,6 +23,6 @@
 		.centerhead { text-align:center; }
 		.dicebutton { height:43px; }
 		td { text-align:center; }
-		#loadchar-lv .ui-btn-inner { text-align: center; }
+		#loadchar-container .ui-btn-inner { text-align: center; }
 	</style>
 </head>

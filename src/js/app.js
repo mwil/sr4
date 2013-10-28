@@ -62,7 +62,7 @@ App.init = function() {
 			}
 		} 
 
-		if (!gotchar) {
+		if (!gotChar) {
 			// Unknown lastchar, this should not happen ...
 			if (this.numChars > 0) {
 				// if there are other characters, take a (random) one

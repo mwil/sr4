@@ -31,7 +31,7 @@
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
 	    <a href="#" data-role="button" data-rel="back"
-	    	onClick="App.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
+	    	onClick="SR4.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
 	    	<xsl:text>Generate!</xsl:text>
 	    </a>
     </div>
@@ -43,7 +43,7 @@
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>
 
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="App.currChar.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
+		    	onClick="SR4.currChar.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
 		    	<xsl:text>Rename</xsl:text>
 		    </a>
 		</form>

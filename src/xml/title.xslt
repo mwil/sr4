@@ -30,7 +30,7 @@
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
 	    <a href="#" data-role="button" data-rel="back"
-	    	onClick="SR4.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
+	    	onClick="SR4.createChar($('#newchar-name-txtbx').val()); SR4.updateStatsPage(); $('#newchar-name-txtbx').val('')">
 	    	<xsl:text>Generate!</xsl:text>
 	    </a>
     </div>

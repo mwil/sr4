@@ -61,8 +61,6 @@ Character.prototype.newChar = function(charName) {
 		this.updateStat(SR4.StatList[i], DEFAULTVAL);
 		localStorage.setItem(query, DEFAULTVAL);
 	};
-
-	SR4.updateStatsPage();
 };
 
 Character.prototype.loadChar = function(charName) {
@@ -78,8 +76,6 @@ Character.prototype.loadChar = function(charName) {
 			localStorage.setItem(query, DEFAULTVAL);
 		}
 	}
-
-	SR4.updateStatsPage();
 };
 
 Character.prototype.renameChar = function(charName) {
@@ -120,5 +116,3 @@ Character.prototype.updateStat = function(stat, value) {
 		Dice.changeOffset(stat, parseInt(value));
 	}
 };
-
-

@@ -74,6 +74,7 @@ SR4.init = function() {
 	}
 
 	if (gotChar) {
+		SR4.updateStatsPage();
 		this.updateLoadCharLV();
 
 		// we have a valid char now for sure, enable the functionality if disabled!

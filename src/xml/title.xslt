@@ -42,7 +42,8 @@
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>
 
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="SR4.currChar.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
+		    	onClick="var oldname = SR4.currChar.charName; SR4.currChar.renameChar($('#charname-txtbx').val()); 
+		    	SR4.charNameChanged(oldname, $('#charname-txtbx').val()); $('#charname-txtbx').val('');">
 		    	<xsl:text>Rename</xsl:text>
 		    </a>
 		</form>

@@ -21,7 +21,7 @@ var APPSTRING = "SR4."
 var FIELDSEP = "#";
 
 //$(window).load( function() {});
-$(document).on('pageinit', function () {
+$(document).on('pagebeforeshow', function () {
 	if (startup) {
 		SR4.init();	
 		startup = false;	
@@ -56,14 +56,14 @@ SR4.init = function() {
 		var lastchar = localStorage.getItem(APPSTRING+"__lastchar__");
 		
 		if (lastchar in this.CharList) {
-			this.currChar = this.CharList[lastchar];
+			this.switchToChar(lastchar);
 			gotChar = true;
 		} else {
 			// Unknown lastchar, this should not happen ...
 			if (this.numChars > 0) {
 				// if there are other characters, take a (random) one
 				for (var charname in this.CharList) {
-					this.currChar = this.CharList[charname];
+					this.switchToChar(charname);
 					gotChar = true;
 					break;
 				};
@@ -74,9 +74,6 @@ SR4.init = function() {
 	}
 
 	if (gotChar) {
-		SR4.updateStatsPage();
-		this.updateLoadCharLV();
-
 		// we have a valid char now for sure, enable the functionality if disabled!
 		$('.nochar-disabled').removeClass('ui-disabled');
 	}
@@ -92,11 +89,9 @@ SR4.createChar = function(charName) {
 	var tmpchar = new Character(charName, false);
 	this.CharList[charName] = tmpchar;
 	this.numChars += 1;
-	this.currChar = this.CharList[charName];
+	
+	this.switchToChar(charName)
 
-	this.charListChanged();
-
-	this.updateLoadCharLV();
 	$('.nochar-disabled').removeClass('ui-disabled');
 };
 

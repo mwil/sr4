@@ -12,7 +12,7 @@
 	    <label for="dicemode-cb-add" style="width:160px;"><xsl:text>+</xsl:text></label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
-	    	onClick="Dice.changeOffset('Attrib_EDG', SR4.currChar.stats['Attrib_EDG'], !$('#dicemode-cb-edge')[0].checked);"/>
+	    	onClick="Dice.changeOffset('Attrib_EDG', !$('#dicemode-cb-edge')[0].checked);"/>
 	    <label for="dicemode-cb-edge" style="width:160px;"><xsl:text>Edge</xsl:text></label>
 	</fieldset>
 	</form>

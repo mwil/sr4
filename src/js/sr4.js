@@ -106,6 +106,7 @@ SR4.switchToChar = function(charName) {
 
 	$('.charName').html(charName);
 	this.updateLoadCharLV();
+	this.updateStatsPage();
 };
 
 SR4.charNameChanged = function(oldName, newName) {
@@ -138,8 +139,27 @@ SR4.updateLoadCharLV = function() {
 	$('#loadchar-lv').empty();
 
 	for (var charname in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button' onClick='SR4.switchToChar('"+charname+"')'>"+charname+"</a></li>")	
+		$('#loadchar-lv').append("<li><a href='#' data-role='button' onClick='SR4.switchToChar(\""+charname+"\")'>"+charname+"</a></li>")	
 	};
 
 	$("#loadchar-lv").listview("refresh");
+};
+
+/*
+ * Copy current values to the page contents
+ */
+SR4.updateStatsPage = function() {
+	for (var i = 0; i < this.StatList.length; i++) { 
+		var stat = this.StatList[i];
+
+		$('#'+stat).html(this.currChar.stats[stat]);	
+	};
+};
+
+SR4.updateStatsPopup = function(statName, statTarget, value) {
+	$('#stats-slider').val(value);
+	$('#stats-slider').attr('stat-target', statTarget);
+	$('#stats-slider').slider('refresh');
+
+	$('#stats-poptext').html("New "+statName+" value:");
 };

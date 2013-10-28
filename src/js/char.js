@@ -116,24 +116,7 @@ Character.prototype.updateStat = function(stat, value) {
 		Dice.changeOffset(stat, parseInt(value));
 	}
 
-	this.updatePage();
+	SR4.updateStatsPage();
 };
 
-/*
- * Copy current values to the page contents
- */
-Character.prototype.updatePage = function() {
-	for (var i = 0; i < SR4.StatList.length; i++) { 
-		var stat = SR4.StatList[i];
 
-		$('#'+stat).html(this.stats[stat]);	
-	};
-};
-
-Character.prototype.updatePopup = function(statName, statTarget, value) {
-	$('#stats-slider').val(value);
-	$('#stats-slider').attr('stat-target', statTarget);
-	$('#stats-slider').slider('refresh');
-
-	$('#stats-poptext').html("New "+statName+" value:");
-};

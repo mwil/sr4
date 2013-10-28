@@ -49,9 +49,7 @@
 		</form>
 	</div>
 
-	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 
-	  	data-transition="pop" data-position-to="window"
-	  	onClick="console.log(localStorage);">
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="console.log(localStorage);">
 		<xsl:text>DEBUG: Print localStorage</xsl:text>
 	</a>
 	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 

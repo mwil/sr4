@@ -136,10 +136,9 @@ Dice.changeOffset = function(stat, remove) {
 			Dice.Offsets.push(stat);	
 		}
 	} else if (Dice.Offsets.indexOf(stat) > -1) {
-			// super-obvious solution to delete an array element ... 
-			// http://stackoverflow.com/questions/3596089/how-to-add-and-remove-array-value-in-jquery
-			Dice.Offsets.splice($.inArray(stat, Dice.Offsets), 1);
-		}
+		// super-obvious solution to delete an array element ... 
+		// http://stackoverflow.com/questions/3596089/how-to-add-and-remove-array-value-in-jquery
+		Dice.Offsets.splice($.inArray(stat, Dice.Offsets), 1);
 	}
 
 	this.updateDiceButtons();
@@ -151,8 +150,8 @@ Dice.updateDiceButtons = function() {
 			var baseval = parseInt($(this).attr("baseval"));
 			var offset = 0;
 
-			for (var stat in Dice.Offsets) {
-				offset += SR4.currChar[stat];
+			for (var i = 0; i < Dice.Offsets.length; i++) {
+				offset += SR4.currChar.stats[Dice.Offsets[i]];
 			};
 			
 			$(this).attr("currval", baseval + offset);

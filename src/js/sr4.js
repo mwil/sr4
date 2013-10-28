@@ -138,7 +138,7 @@ SR4.updateLoadCharLV = function() {
 	$('#loadchar-lv').empty();
 
 	for (var charname in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button' onClick='SR4.switchToChar("+charname+")'>"+charname+"</a></li>")	
+		$('#loadchar-lv').append("<li><a href='#' data-role='button' onClick='SR4.switchToChar('"+charname+"')'>"+charname+"</a></li>")	
 	};
 
 	$("#loadchar-lv").listview("refresh");

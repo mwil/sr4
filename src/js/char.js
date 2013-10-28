@@ -83,6 +83,8 @@ Character.prototype.renameChar = function(charName) {
 		return;
 	}
 
+	var oldName = this.charName;
+
 	// This requires some updating of the localStorage later if Values are stored with "Char Name#Attrib_X"
 	for (var key in localStorage) {
 		if (key.indexOf(this.charName) === APPSTRING.length) {
@@ -96,9 +98,8 @@ Character.prototype.renameChar = function(charName) {
 	};
 
 	this.charName = charName;
-	localStorage.setItem(APPSTRING+"__lastchar__", charName);
 
-	$('.charName').html(this.charName);
+	SR4.charNameChanged(oldName, charName);
 };
 
 /*

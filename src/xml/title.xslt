@@ -12,11 +12,10 @@
 	</a>
 
 	<!-- Character load chooser -->
-	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" id="loadchar-container" 
-		data-inline="false" class="ui-disabled">
+	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
+		id="loadchar-container" data-inline="false" class="ui-disabled">
     	<h2><xsl:text>Load Character</xsl:text></h2>
-    	<ul data-role="listview" id="loadchar-lv">
-    	</ul>
+    	<ul data-role="listview" id="loadchar-lv"></ul>
     </div>
     <!-- -->
 

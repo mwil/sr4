@@ -103,9 +103,6 @@ SR4.switchToChar = function(charName) {
 
 	localStorage.setItem(APPSTRING+"__active_char__", charName);
 
-	$.mobile.loading('show');
-	setTimeout($.mobile.loading('hide'), 1000);
-
 	this.refreshTitlePage();
 };
 

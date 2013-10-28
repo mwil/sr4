@@ -93,7 +93,7 @@ App.createChar = function(charName) {
 	}
 
 	var tmpchar = new Character(charName, false);
-	this.CharList.push(tmpchar);
+	this.CharList[charName] = tmpchar;
 	this.currChar = tmpchar;
 
 	// update charlist in localStorage

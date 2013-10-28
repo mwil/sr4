@@ -51,9 +51,14 @@
 
 	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 
 	  	data-transition="pop" data-position-to="window"
+	  	onClick="console.log(localStorage);">
+		<xsl:text>DEBUG: Print localStorage</xsl:text>
+	</a>
+	<a href="#done-popup" data-role="button" data-icon="arrow-r" data-iconpos="right" data-rel="popup" 
+	  	data-transition="pop" data-position-to="window"
 	  	onClick="localStorage.clear();">
-
-		<xsl:text>DEBUG: Clear localStorage</xsl:text></a>
+		<xsl:text>DEBUG: Clear localStorage</xsl:text>
+	</a>
 	<div data-role="popup" id="done-popup">
 		<h3><xsl:text>Done.</xsl:text></h3>
 	</div>

@@ -94,6 +94,7 @@ SR4.createChar = function(charName) {
 	var tmpchar = new Character(charName, false);
 	this.CharList[charName] = tmpchar;
 	this.numChars += 1;
+	this.charListChanged();
 	
 	this.switchToChar(charName);
 

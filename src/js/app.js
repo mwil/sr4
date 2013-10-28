@@ -99,12 +99,10 @@ App.createChar = function(charName) {
 	// update charlist in localStorage
 	var charstring = "";
 	for (var character in this.CharList) {
-		console.log(character);
-		charstring += character.charName + FIELDSEP;
-		console.log(charstring);
+		charstring += character + FIELDSEP;
 	};
 	// remove trailing FIELDSEP
-	charstring = charstring.slice(0, charstring.length - 2);
+	charstring = charstring.slice(0, charstring.length - 1);
 
 	localStorage.setItem(APPSTRING+"__charlist__", charstring);
 

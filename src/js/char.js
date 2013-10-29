@@ -15,33 +15,34 @@
 */
 
 var APPSTRING = "SR4."
-var FIELDSEP = "#";
 var DEFAULTVAL = 1;
 var DEFAULTNAME = "Character Name";
 
-var Character = function(charName, exists) {
+$(document).on('pagebeforeshow', '#stats', function () {
+	SR4.refreshStatsPage();
+});
+
+var Character = function(charName) {
 	this.charName = DEFAULTNAME;
 	this.stats = {};
 
-	if (exists) {
-		this.loadChar(charName);
-	} else {
-		this.newChar(charName);
-	}
+	// TODO: possible problems if name exists already, prevent this before creation! 
+	this.renameChar(charName);
 
+	// set default values for known stats ...
+	for (var i = 0; i < SR4.StatList.length; i++) {
+		this.stats[SR4.StatList[i]] = DEFAULTVAL;
+	};
+
+	this.charUpdated();
+};
+
+Character.prototype.charUpdated = function() {
+	localStorage.setObject(APPSTRING+"Character."+this.charName, this);
 };
 
 Character.prototype.nameOk = function(charName) {
-	if (!charName) {
-		return false;
-	}
-
-	// Check for option-delimiter '#' in the name, replace silently!
-	if (charName.indexOf(FIELDSEP) > -1) {
-		charName.replace(FIELDSEP, ".");
-	}
-
-	if ($.inArray(charName, SR4.AppStrings) > -1) {
+	if (!charName || $.inArray(charName, SR4.AppStrings) > -1) {
 		// using internal strings may work, but it will propably not be nice ...
 		alert("Please do not try to bork this app ...");
 		return false;
@@ -50,54 +51,12 @@ Character.prototype.nameOk = function(charName) {
 	return true;
 };
 
-Character.prototype.newChar = function(charName) {
-	// TODO: possible problems if name exists already, prevent this before creation! 
-	this.renameChar(charName);
-
-	// set default values for known stats ...
-	for (var i = 0; i < SR4.StatList.length; i++) {
-		var query = APPSTRING+charName+FIELDSEP+SR4.StatList[i];
-
-		this.updateStat(SR4.StatList[i], DEFAULTVAL);
-		localStorage.setItem(query, DEFAULTVAL);
-	};
-};
-
-Character.prototype.loadChar = function(charName) {
-	this.renameChar(charName);
-
-	for (var i = 0; i < SR4.StatList.length; i++) {
-		var query = APPSTRING+charName+FIELDSEP+SR4.StatList[i];
-
-		if (query in localStorage) {
-			this.updateStat(SR4.StatList[i], localStorage[query]);
-		} else {
-			this.updateStat(SR4.StatList[i], DEFAULTVAL);
-			localStorage.setItem(query, DEFAULTVAL);
-		}
-	}
-};
-
 Character.prototype.renameChar = function(charName) {
-	if (!this.nameOk(charName)) {
-		return;
+	if (this.nameOk(charName)) {
+		this.charName = charName;
+
+		this.charUpdated();
 	}
-
-	var oldName = this.charName;
-
-	// This requires some updating of the localStorage later if Values are stored with "Char Name#Attrib_X"
-	for (var key in localStorage) {
-		if (key.indexOf(this.charName) === APPSTRING.length) {
-			// TODO: I hope one level of # is enough ...
-			var option = key.split(FIELDSEP)[1];
-			var currval = localStorage.getItem(key);
-
-			localStorage.setItem(APPSTRING+charName+FIELDSEP+option, currval);
-			localStorage.removeItem(key);
-		}
-	};
-
-	this.charName = charName;
 };
 
 /*
@@ -106,11 +65,5 @@ Character.prototype.renameChar = function(charName) {
 Character.prototype.updateStat = function(stat, value) {
 	this.stats[stat] = parseInt(value);
 
-	// write to localStorage to have the same values next time
-	localStorage.setItem(APPSTRING+this.charName+FIELDSEP+stat, value)
-
-	// Notify dice offsets that a value was changed if necessary
-	if (Dice.Offsets.indexOf(stat) > -1) {
-		Dice.changeOffset(stat, false);
-	}
+	this.charUpdated();
 };

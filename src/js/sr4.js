@@ -18,7 +18,6 @@
 var startup = true;
 
 var APPSTRING = "SR4."
-var FIELDSEP = "#";
 
 $(document).on('pagebeforeshow', '#title', function () {
 	if (startup) {
@@ -27,10 +26,6 @@ $(document).on('pagebeforeshow', '#title', function () {
 	} else {
 		SR4.refreshTitlePage();
 	}
-});
-
-$(document).on('pagebeforeshow', '#stats', function () {
-	SR4.refreshStatsPage();
 });
 
 var SR4 = {
@@ -48,11 +43,10 @@ SR4.init = function() {
 
 	// load available chars from localStorage
 	if (APPSTRING+"__charlist__" in localStorage) {
-		var charnames = localStorage.getItem(APPSTRING+"__charlist__").split(FIELDSEP);
+		var charnames = localStorage.getObject(APPSTRING+"__charlist__");
 
 		for (var i = 0; i < charnames.length; i++) {
-			var tmpchar = new Character(charnames[i], true);
-			this.CharList[charnames[i]] = tmpchar;
+			this.CharList[charnames[i]] = localStorage.getObject(APPSTRING+"Character."+charnames[i]);
 			this.numChars += 1;
 		};
 	}
@@ -86,7 +80,7 @@ SR4.createChar = function(charName) {
 		return;
 	}
 
-	var tmpchar = new Character(charName, false);
+	var tmpchar = new Character(charName);
 	this.CharList[charName] = tmpchar;
 	this.numChars += 1;
 	this.charListChanged();
@@ -119,14 +113,7 @@ SR4.charNameChanged = function(oldName, newName) {
 
 SR4.charListChanged = function() {
 	// update charlist in localStorage
-	var charstring = "";
-	for (var charname in this.CharList) {
-		charstring += charname + FIELDSEP;
-	};
-	// remove trailing FIELDSEP
-	charstring = charstring.slice(0, charstring.length - 1);
-
-	localStorage.setItem(APPSTRING+"__charlist__", charstring);
+	localStorage.setObject(APPSTRING+"__charlist__", this.CharList);
 }
 
 SR4.refreshTitlePage = function() {
@@ -167,4 +154,18 @@ SR4.updateStatsPopup = function(statName, statTarget, value) {
 	$('#stats-slider').slider('refresh');
 
 	$('#stats-poptext').html("New "+statName+" value:");
+};
+
+
+/* ######################### */
+/* Nicer Storage interaction */
+/* ######################### */
+
+Storage.prototype.setObject = function(key, value) {
+    this.setItem(key, JSON.stringify(value));
+};
+
+Storage.prototype.getObject = function(key) {
+    var value = this.getItem(key);
+    return value && JSON.parse(value);
 };

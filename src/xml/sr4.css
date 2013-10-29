@@ -1,0 +1,10 @@
+.die { font-size:xx-large; }
+.diceres { text-align:center; }
+.diceresglitch { text-align:center; color:red; }
+.center { margin-left:auto; margin-right:auto; }
+.med { font-size:medium !important; }
+.poplabel { text-align:center; }
+.centerhead { text-align:center; }
+.dicebutton { height:43px; }
+td { text-align:center; }
+#loadchar-container .ui-btn-inner { text-align: center; }

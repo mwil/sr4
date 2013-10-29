@@ -34,10 +34,10 @@ var Character = function(charName) {
 		this.stats[SR4.StatList[i]] = DEFAULTVAL;
 	};
 
-	this.charUpdated();
+	this.updated();
 };
 
-Character.prototype.charUpdated = function() {
+Character.prototype.updated = function() {
 	localStorage.setObject(APPSTRING+"Character."+this.charName, this);
 };
 
@@ -51,11 +51,11 @@ Character.prototype.nameOk = function(charName) {
 	return true;
 };
 
-Character.prototype.renameChar = function(charName) {
+Character.prototype.rename = function(charName) {
 	if (this.nameOk(charName)) {
 		this.charName = charName;
 
-		this.charUpdated();
+		this.updated();
 	}
 };
 
@@ -65,5 +65,5 @@ Character.prototype.renameChar = function(charName) {
 Character.prototype.updateStat = function(stat, value) {
 	this.stats[stat] = parseInt(value);
 
-	this.charUpdated();
+	this.updated();
 };

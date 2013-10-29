@@ -101,10 +101,15 @@ SR4.switchToChar = function(charName) {
 	this.refreshTitlePage();
 };
 
-SR4.charNameChanged = function(oldName, newName) {
+SR4.renameChar= function(newName) {
+	var oldName = this.currChar.charName;
+	this.currChar.rename(newName);
+
+	// relabel in global character list
 	this.CharList[newName] = this.CharList[oldName];
 	delete this.CharList[oldName];
 	
+	// mark the new name as active again
 	this.currChar = this.CharList[newName];
 	localStorage.setItem(APPSTRING+"__active_char__", newName);
 

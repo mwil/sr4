@@ -6,7 +6,7 @@
 <xsl:template match="title">
 	<h1 class="centerhead charName"><xsl:text>No Char found!</xsl:text></h1>
 	
-	<a href="#newchar-dialog" data-rel="popup" data-transition="pop" data-position-to="window"
+	<a href="#createchar-popup" data-rel="popup" data-transition="pop" data-position-to="window"
 		data-role="button" data-icon="arrow-r" data-iconpos="right"> 
 		<xsl:text>New Character</xsl:text>
 	</a>
@@ -50,7 +50,7 @@
 
 
     <!-- Generate new char window -->
-	<div data-role="popup" id="newchar-dialog" data-theme="c">
+	<div data-role="popup" id="createchar-popup" data-theme="c">
     	<h3 class="ui-title">Enter a character name ...</h3>
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
@@ -59,7 +59,6 @@
 	    	<xsl:text>Generate!</xsl:text>
 	    </a>
     </div>
-	
 
     <div data-role="popup" id="rename-popup">
 		<form>
@@ -67,14 +66,11 @@
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>
 
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="var oldname = SR4.currChar.charName; SR4.currChar.renameChar($('#charname-txtbx').val()); 
-		    	SR4.charNameChanged(oldname, $('#charname-txtbx').val()); $('#charname-txtbx').val('');">
+		    	onClick="SR4.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
 		    	<xsl:text>Rename</xsl:text>
 		    </a>
 		</form>
 	</div>
-
-
 	
 </xsl:template>
 

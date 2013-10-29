@@ -114,7 +114,7 @@ SR4.charNameChanged = function(oldName, newName) {
 SR4.charListChanged = function() {
 	// update charlist in localStorage
 	// keys breaks in old browsers? who cares.
-	localStorage.setObject(APPSTRING+"__charlist__", this.CharList.keys());
+	localStorage.setObject(APPSTRING+"__charlist__", Object.keys(this.CharList));
 }
 
 SR4.refreshTitlePage = function() {

@@ -40,6 +40,9 @@ var SR4 = {
 SR4.init = function() {
 	var gotChar = false;
 
+	this.StatList = $('#StatList').attr("data-stats");
+	console.log(this.StatList);
+
 	// load available chars from localStorage
 	if (APPSTRING+"__charlist__" in localStorage) {
 		var charnames = localStorage.getObject(APPSTRING+"__charlist__");

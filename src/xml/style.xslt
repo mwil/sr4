@@ -58,7 +58,7 @@
 <xsl:template match="attribs">
 	<xsl:element name="div">
 		<xsl:attribute name="id"><xsl:text>StatList</xsl:text></xsl:attribute>
-		<xsl:attribute name="data-attr">
+		<xsl:attribute name="data-stats">
 			<xsl:for-each select="attr">
 				<xsl:text>Attrib_</xsl:text><xsl:value-of select="id"/><xsl:text> </xsl:text>
 			</xsl:for-each>

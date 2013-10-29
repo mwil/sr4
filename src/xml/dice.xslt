@@ -7,13 +7,17 @@
 <xsl:template match="dicemode-cb">
 	<form style="text-align:center;">
 	<fieldset data-role="controlgroup" data-type="horizontal">
-	    <input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
-	    	onClick="Dice.rebaseDiceButtons(24, !$('#dicemode-cb-add')[0].checked);"/>
-	    <label for="dicemode-cb-add" style="width:160px;"><xsl:text>+</xsl:text></label>
+ 		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" 
+	    	onClick="Dice.changeOffset(Monitor, 'conditionModifier', !$('#dicemode-cb-condi')[0].checked);"/>
+	    <label for="dicemode-cb-condi" style="width:110px;"><xsl:text>Monitor</xsl:text></label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
-	    	onClick="Dice.changeOffset('Attrib_EDG', !$('#dicemode-cb-edge')[0].checked);"/>
-	    <label for="dicemode-cb-edge" style="width:160px;"><xsl:text>Edge</xsl:text></label>
+	    	onClick="Dice.changeOffset(SR4.currChar.stats, 'Attrib_EDG', !$('#dicemode-cb-edge')[0].checked);"/>
+	    <label for="dicemode-cb-edge" style="width:110px;"><xsl:text>Edge</xsl:text></label>
+		
+		<input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
+	    	onClick="Dice.rebaseDiceButtons(24, !$('#dicemode-cb-add')[0].checked);"/>
+	    <label for="dicemode-cb-add" style="width:110px;"><xsl:text>+</xsl:text></label>
 	</fieldset>
 	</form>
 </xsl:template>

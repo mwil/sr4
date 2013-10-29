@@ -59,7 +59,6 @@
 <xsl:template match="attribs">
 	<xsl:element name="div">
 		<xsl:attribute name="id"><xsl:text>StatList</xsl:text></xsl:attribute>
-		<xsl:attribute name="onload"><xsl:text>SR4.init(); alert("Blbub");</xsl:text></xsl:attribute>
 		<xsl:attribute name="data-stats">
 			<xsl:for-each select="attr">
 				<xsl:text>Attrib_</xsl:text><xsl:value-of select="id"/><xsl:text> </xsl:text>

@@ -19,7 +19,7 @@ $(document).on('pagebeforeshow', '#dice', function () {
 });
 
 var Dice = {
-	Offsets: [],
+	Offsets: {},
 };
 
 Dice.roll = function(num_dice, edge) {
@@ -134,17 +134,14 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 	this.refreshDiceButtons();
 };
 
-Dice.changeOffset = function(stat, remove) {
+Dice.changeOffset = function(obj, prop, remove) {
 	if (!remove) {
-		if (Dice.Offsets.indexOf(stat) == -1) {
-			Dice.Offsets.push(stat);
-		}
-	} else if (Dice.Offsets.indexOf(stat) > -1) {
-		// super-obvious solution to delete an array element ... 
-		// http://stackoverflow.com/questions/3596089/how-to-add-and-remove-array-value-in-jquery
-		Dice.Offsets.splice($.inArray(stat, Dice.Offsets), 1);
+		this.Offsets[prop] = obj;
+	} else if (prop in this.Offsets) {
+		delete this.Offsets[prop];
 	}
 
+	console.log(this.Offsets);
 	this.refreshDiceButtons();
 };
 
@@ -154,8 +151,9 @@ Dice.refreshDiceButtons = function() {
 			var baseval = parseInt($(this).attr("baseval"));
 			var offset = 0;
 
-			for (var i = 0; i < Dice.Offsets.length; i++) {
-				offset += SR4.currChar.stats[Dice.Offsets[i]];
+			//console.log(Dice.Offsets);
+			for (var prop in Dice.Offsets) {
+				offset += Dice.Offsets[prop][prop];
 			};
 			
 			$(this).attr("currval", baseval + offset);

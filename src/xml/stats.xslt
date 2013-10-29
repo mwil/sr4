@@ -27,23 +27,23 @@
 	<div data-role="popup" id="stats-popup" class="ui-content">
 	    <h3 id="stats-poptext" class="ui-title"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
-		<form>
+		<form style="width:320px;">
+			<input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
+
 			<div class="ui-grid-a">
-		    	<div class="ui-block-a" style="width:280px;">
-		    		<input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
-		    	</div>
-		    	<div class="ui-block-b" style="width:120px;">
-		    		<a href="#" data-role="button" data-icon="plus" data-iconpos="left"
-		    			onClick="$('#stats-slider').attr('max', parseInt($('#stats-slider').attr('max'))+5); $('#stats-slider').slider('refresh');">
-		    			<xsl:text>Max</xsl:text>
+				<div class="ui-block-a">
+		    		<a href="#" data-role="button" data-rel="back"
+		    			onClick="SR4.currChar.updateStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">
+		    		<xsl:text>Set</xsl:text>
 		    		</a>
 		    	</div>
-			</div>
-
-		    <a href="#" data-role="button" data-rel="back"
-		    	onClick="SR4.currChar.updateStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">
-		    	<xsl:text>Set</xsl:text>
-		    </a>
+		    	<div class="ui-block-b">
+    				<a href="#" data-role="button" data-icon="plus" data-iconpos="left"
+    					onClick="$('#stats-slider').attr('max', parseInt($('#stats-slider').attr('max'))+5); $('#stats-slider').slider('refresh');">
+    					<xsl:text>Max</xsl:text>
+    				</a>
+    			</div>
+    		</div>
 		</form>
 	</div>
 </xsl:template>

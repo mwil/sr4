@@ -14,9 +14,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var startup = true;
 var APPSTRING = "SR4."
 
 $(document).on('pagebeforeshow', '#title', function () {
+	if (startup) {
+		SR4.init();
+		startup = false;
+	}
 	SR4.refreshTitlePage();
 });
 
@@ -68,7 +73,6 @@ SR4.init = function() {
 			}
 		}
 	}
-	this.refreshTitlePage();
 };
 
 SR4.createChar = function(charName) {

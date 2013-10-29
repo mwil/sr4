@@ -57,7 +57,10 @@
 
 <xsl:template match="attribs">
 	<script type="text/javascript">
-		<xsl:text>SR4.StatList = ["Attrib_BOD", "Attrib_WIL", "Attrib_EDG"];</xsl:text>
+		<xsl:text>SR4.StatList = [];</xsl:text>
+		<xsl:for-each select="attr">
+			<xsl:text>SR.StatList.push("Attrib_{id}");</xsl:text>
+		</xsl:for-each>
 	</script>
 </xsl:template>
 

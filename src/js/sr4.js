@@ -21,7 +21,8 @@ var APPSTRING = "SR4."
 
 $(document).on('pagebeforeshow', '#title', function () {
 	if (startup) {
-		SR4.init();	
+		SR4.init();
+		alert("init");
 		startup = false;	
 	} else {
 		SR4.refreshTitlePage();
@@ -29,8 +30,7 @@ $(document).on('pagebeforeshow', '#title', function () {
 });
 
 var SR4 = {
-	StatList: ["Attrib_BOD", 
-			   "Attrib_EDG"],
+	StatList: [],
 	AppStrings: [APPSTRING+"__active_char__", 
 				 APPSTRING+"__charlist__"],
 	CharList: {},

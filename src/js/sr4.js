@@ -19,7 +19,7 @@ var startup = true;
 
 var APPSTRING = "SR4."
 
-$(document).on('pagebeforeshow', '#title', function () {
+$(document).on('pagebeforeshow', function () {
 	if (startup) {
 		SR4.init();
 		startup = false;	
@@ -102,8 +102,9 @@ SR4.removeChar = function() {
 			break;	
 		}
 	} else {
-		// disable all links again
+		// remove and disable all links again
 		this.currChar = null;
+		localStorage.removeItem(APPSTRING+"__active_char__");
 		this.refreshTitlePage();
 	}
 };

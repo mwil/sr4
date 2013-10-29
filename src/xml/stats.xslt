@@ -4,6 +4,7 @@
 <!-- Templates for the stats page -->
 
 <xsl:template match="stats">
+	<!-- autogen the stats list from the <attribs> element tree in sr4.xml -->
 	<div data-role="collapsible-set" data-theme="c" data-content-theme="d" data-inset="true">
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>
@@ -18,14 +19,26 @@
 		            </li>
 		        </xsl:for-each>
 	        </ul>
+	        <!-- TODO: add more collapsibles from skills data, possible from the Chummer xml files -->
 	    </div>
 	</div>
 
-	<div data-role="popup" id="stats-popup">
+	<!-- the popup to change character stats values, it is reused and automatically filled refreshed by SR4.updateStatsPopup.js -->
+	<div data-role="popup" id="stats-popup" class="ui-content">
 	    <h3 id="stats-poptext" class="ui-title"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
-		<form style="width:360px;">
-		    <input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
+		<form>
+			<div class="ui-grid-a">
+		    	<div class="ui-block-a" style="width:280px;">
+		    		<input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
+		    	</div>
+		    	<div class="ui-block-b" style="width:120px;">
+		    		<a href="#" data-role="button" data-icon="plus" data-iconpos="left"
+		    			onClick="$('#stats-slider').attr('max', $('#stats-slider').attr('max')+5).slider('refresh');">
+		    			<xsl:text>Max</xsl:text>
+		    		</a>
+		    	</div>
+			</div>
 
 		    <a href="#" data-role="button" data-rel="back"
 		    	onClick="SR4.currChar.updateStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">

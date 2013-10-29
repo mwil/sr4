@@ -14,7 +14,7 @@
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
 		id="loadchar-container" data-inline="false" class="ui-disabled nochar-disabled">
-    	<h2><xsl:text>Load Character</xsl:text></h2>
+    	<h2><xsl:text>&#160;&#160;Load Character</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="loadchar-lv"></ul>
     </div>
     <!-- -->

@@ -27,7 +27,7 @@ var Character = function(charName) {
 	this.stats = {};
 
 	// TODO: possible problems if name exists already, prevent this before creation! 
-	this.renameChar(charName);
+	this.rename(charName);
 
 	// set default values for known stats ...
 	for (var i = 0; i < SR4.StatList.length; i++) {

@@ -29,6 +29,10 @@
 			<name>Body</name>
 		</attr>
 		<attr>
+			<id>WIL</id>
+			<name>Willpower</name>
+		</attr>
+		<attr>
 			<id>EDG</id>
 			<name>Edge</name>
 		</attr>

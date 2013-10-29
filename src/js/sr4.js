@@ -40,8 +40,7 @@ var SR4 = {
 SR4.init = function() {
 	var gotChar = false;
 
-	this.StatList = $('#StatList').attr("data-stats").trim().split("\\s+");
-	console.log(this.StatList);
+	this.StatList = $('#StatList').attr("data-stats").trim().split(/\s+/);
 
 	// load available chars from localStorage
 	if (APPSTRING+"__charlist__" in localStorage) {

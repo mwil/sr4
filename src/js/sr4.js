@@ -22,7 +22,6 @@ var APPSTRING = "SR4."
 $(document).on('pagebeforeshow', '#title', function () {
 	if (startup) {
 		SR4.init();
-		alert("init");
 		startup = false;	
 	} else {
 		SR4.refreshTitlePage();

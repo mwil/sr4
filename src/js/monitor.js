@@ -61,13 +61,15 @@ Monitor.hitPhy = function(hits) {
 Monitor.refresh = function() {
 	var maxStun = (8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2));
 	var maxPhy  = (8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2));
+	var stunMod = -Math.floor(this.currStun/3);
+	var phyMod  = -Math.floor(this.currPhy/3);
 
 	// TODO: detect stunned, coma, dead here
 
 	// TODO: provide active modifiers for the current char
-	this.conditionModifier = -(Math.floor(this.currStun/3) + Math.floor(this.currPhy/3));
+	this.conditionModifier = stunMod + phyMod;
 
-	$('#stun-monitor .ui-btn-text').text("("+this.currStun+" / "+(8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2))+")")
+	$('#stun-monitor .ui-btn-text').text("("+this.currStun+" / "+maxStun+") Mod: "+stunMod);
 
-	$('#phy-monitor .ui-btn-text').text("("+this.currPhy+" / "+(8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2))+")")
+	$('#phy-monitor .ui-btn-text').text("("+this.currPhy+" / "+maxPhy+") Mod "+phyMod);
 };

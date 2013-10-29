@@ -141,7 +141,6 @@ Dice.changeOffset = function(obj, prop, remove) {
 		delete this.Offsets[prop];
 	}
 
-	console.log(this.Offsets);
 	this.refreshDiceButtons();
 };
 
@@ -151,16 +150,23 @@ Dice.refreshDiceButtons = function() {
 			var baseval = parseInt($(this).attr("baseval"));
 			var offset = 0;
 
-			//console.log(Dice.Offsets);
+			// ugly hack, why is there no sane way to access nested objects ??
 			for (var prop in Dice.Offsets) {
-				offset += Dice.Offsets[prop][prop];
+				var proplist = prop.split('.');
+				var currobj  = Dice.Offsets[prop];
+				
+				for (var i = 0; i < proplist.length; i++) {
+					currobj = currobj[proplist[i]];
+				};
+				
+				offset += currobj;
 			};
 			
 			$(this).attr("currval", baseval + offset);
 			$(this).attr("valoffset", offset);
 
 			$(this).find(".ui-btn-text").html(baseval + 
-				(offset != 0 ? "<sub style='color:grey;'>(+"+offset+")</sub>" : ""));
+				(offset != 0 ? "<sub style='color:grey;'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
 		}
 	)
 };

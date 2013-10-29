@@ -55,6 +55,12 @@
     <xsl:copy-of select="."/>
 </xsl:template>
 
+<xsl:template match="attribs">
+	<script type="text/javascript">
+		<xsl:text>SR4.StatList = ["Attrib_BOD", "Attrib_WIL", "Attrib_EDG"];</xsl:text>
+	</script>
+</xsl:template>
+
 <!-- Ignore data xml that is used for autogenerating lists -->
 <xsl:template match="attribs/*"/>
 

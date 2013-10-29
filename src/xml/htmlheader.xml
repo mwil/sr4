@@ -5,6 +5,7 @@
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1"/>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css"/>
+	<link rel="stylesheet" type="text/css" href="sr4.css"/>
 
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
@@ -12,17 +13,4 @@
 	<script src="../js/sr4.js"></script>
 	<script src="../js/dice.js"></script>
 	<script src="../js/char.js"></script>
-
-	<style type="text/css">
-		.die { font-size:xx-large; }
-		.diceres { text-align:center; }
-		.diceresglitch { text-align:center; color:red; }
-		.center { margin-left:auto; margin-right:auto; }
-		.med { font-size:medium !important; }
-		.poplabel { text-align:center; }
-		.centerhead { text-align:center; }
-		.dicebutton { height:43px; }
-		td { text-align:center; }
-		#loadchar-container .ui-btn-inner { text-align: center; }
-	</style>
 </head>

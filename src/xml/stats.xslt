@@ -34,7 +34,7 @@
 		    	</div>
 		    	<div class="ui-block-b" style="width:120px;">
 		    		<a href="#" data-role="button" data-icon="plus" data-iconpos="left"
-		    			onClick="$('#stats-slider').attr('max', parseInt($('#stats-slider').attr('max'))+5).slider('refresh');">
+		    			onClick="$('#stats-slider').attr('max', parseInt($('#stats-slider').attr('max'))+5); $('#stats-slider').slider('refresh');">
 		    			<xsl:text>Max</xsl:text>
 		    		</a>
 		    	</div>

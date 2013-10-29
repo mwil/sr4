@@ -176,8 +176,15 @@ SR4.refreshDicePage = function() {
 }
 
 SR4.updateStatsPopup = function(statName, statTarget, value) {
+	// auto-adjust the maxval to repair a too loose maxval
+	var maxval = 9;
+	while (maxval < value) {
+		maxval += 5;
+	}
+
 	$('#stats-slider').val(value);
 	$('#stats-slider').attr('stat-target', statTarget);
+	$('#stats-slider').attr('max', maxval);
 	$('#stats-slider').slider('refresh');
 
 	$('#stats-poptext').html("New "+statName+" value:");

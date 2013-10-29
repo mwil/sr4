@@ -88,8 +88,24 @@ SR4.createChar = function(charName) {
 	this.switchToChar(charName);
 };
 
-SR4.removeCharacter = function() {
-	// TODO: implemement me!
+SR4.removeChar = function() {
+	// cleanup 
+	localStorage.removeItem(APPSTRING+"Character."+this.currChar.charName);
+	delete this.CharList[this.currChar.charName];
+	this.numChars -= 1;
+
+	this.charListChanged();
+	if (this.numChars > 0) {
+		// pick up someone (possibly random) TODO: is there a less ugly way?
+		for (var charname in this.CharList) {
+			this.switchToChar(charname);
+			break;	
+		}
+	} else {
+		// disable all links again
+		this.currChar = null;
+		this.refreshTitlePage();
+	}
 };
 
 SR4.switchToChar = function(charName) {
@@ -123,23 +139,27 @@ SR4.charListChanged = function() {
 }
 
 SR4.refreshTitlePage = function() {
-	$('.charName').html(this.currChar.charName);
+	if (this.currChar) {
+		$('.charName').html(this.currChar.charName);
+	} else {
+		$('.charName').html("No Char found!");
+	}
 
 	if (this.numChars > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
 		$('.nochar-disabled').removeClass('ui-disabled');
+
+		$('#loadchar-lv').empty();
+
+		for (var charname in this.CharList) {
+			$('#loadchar-lv').append("<li><a href='#' data-role='button'\
+				onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
+		};
+
+		$("#loadchar-lv").listview("refresh");
 	} else {
-		$('#loadchar-container').addClass('ui-disabled');
+		$('.nochar-disabled').addClass('ui-disabled');
 	}
-
-	$('#loadchar-lv').empty();
-
-	for (var charname in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
-			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
-	};
-
-	$("#loadchar-lv").listview("refresh");
 };
 
 SR4.refreshStatsPage = function() {

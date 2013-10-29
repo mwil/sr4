@@ -13,7 +13,7 @@
 
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
-		id="loadchar-container" data-inline="false" class="ui-disabled">
+		id="loadchar-container" data-inline="false" class="ui-disabled nochar-disabled">
     	<h2><xsl:text>Load Character</xsl:text></h2>
     	<ul data-role="listview" id="loadchar-lv"></ul>
     </div>
@@ -25,7 +25,8 @@
 	</a>
 
 	<a href="#delete-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled-off">
+		onClick="SR4.removeChar();"
+		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled">
 		<xsl:text>Remove Character</xsl:text>
 	</a>
 

@@ -1,16 +1,16 @@
 $(document).on('pagebeforeshow', '#monitor', function () {	
-	if (startup) {
+	if (window.startup) {
 		SR4.init();
-		startup = false;
+		window.startup = false;
 	}
 
 	SR4.refreshMonitorPage();
 });
 
-Monitor = {
+var Monitor = {
 	currStun: 0,
 	currPhy: 0,
-	conditionModifier: 0,
+	conditionModifier: 0
 }
 
 Monitor.hitStun = function(hits) {

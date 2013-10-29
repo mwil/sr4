@@ -19,7 +19,7 @@ $(document).on('pagebeforeshow', '#dice', function () {
 });
 
 var Dice = {
-	Offsets: {},
+	Offsets: {}
 };
 
 Dice.roll = function(num_dice, edge) {
@@ -27,7 +27,7 @@ Dice.roll = function(num_dice, edge) {
 	var adds  = 0;
 	
 	for (var i = 0; i < (num_dice + adds); i++) {
-		roll = 1 + Math.floor(Math.random() * 6);
+		var roll = 1 + Math.floor(Math.random() * 6);
 		count[roll] += 1;
 
 		// Rule of Six with Edge
@@ -41,8 +41,8 @@ Dice.roll = function(num_dice, edge) {
 };
 
 Dice.reroll = function() {
-	count = this.prev_count;
-	num_reroll = 0;
+	var count = this.prev_count;
+	var num_reroll = 0;
 
 	for (var i = 0; i < 5; i++) {
 		num_reroll += count[i];
@@ -50,7 +50,7 @@ Dice.reroll = function() {
 	};
 
 	for (var i = 0; i < num_reroll; i++) {
-		roll = 1 + Math.floor(Math.random() * 6);
+		var roll = 1 + Math.floor(Math.random() * 6);
 		count[roll] += 1;
 	};
 
@@ -62,7 +62,7 @@ Dice.addEdge = function(num_edge) {
 	var adds = 0;
 
 	for (var i = 0; i < (num_edge + adds); i++) {
-		roll = 1 + Math.floor(Math.random() * 6);
+		var roll = 1 + Math.floor(Math.random() * 6);
 		count[roll] += 1;
 
 		// Rule of Six only on the Edge dice
@@ -77,7 +77,7 @@ Dice.addEdge = function(num_edge) {
 Dice.printToPopup = function (count) {
 	var num_dice = count.reduce(function(a, b) { return a + b })
 	var hits     = count[5] + count[6];
-	console.log(count)
+	console.log(count);
 
 	if (hits > 0) {
 		if (count[1] >= (num_dice)/2) {

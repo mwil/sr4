@@ -14,13 +14,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var startup = true;
+window.startup = true;
 var APPSTRING = "SR4."
 
 $(document).on('pagebeforeshow', '#title', function () {
-	if (startup) {
+	if (window.startup) {
 		SR4.init();
-		startup = false;
+		window.startup = false;
 	}
 	SR4.refreshTitlePage();
 });
@@ -31,7 +31,7 @@ var SR4 = {
 				 APPSTRING+"__charlist__"],
 	CharList: {},
 	numChars: 0,
-	currChar: null,
+	currChar: null
 };
 
 SR4.init = function() {
@@ -63,8 +63,8 @@ SR4.init = function() {
 			if (this.numChars > 0) {
 				// if there are other characters, take a (random) one
 				for (var charname in this.CharList) {
-					this.currChar = this.CharList[charName];
-					localStorage.setItem(APPSTRING+"__active_char__", charName);
+					this.currChar = this.CharList[charname];
+					localStorage.setItem(APPSTRING+"__active_char__", charname);
 					gotChar = true;
 					break;
 				};

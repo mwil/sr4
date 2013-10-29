@@ -3,6 +3,7 @@
 .diceresglitch { text-align:center; color:red; }
 .center { margin-left:auto; margin-right:auto; }
 .med { font-size:medium !important; }
+.txtcenter { text-align: center }
 .poplabel { text-align:center; }
 .centerhead { text-align:center; }
 .dicebutton { height:43px; }

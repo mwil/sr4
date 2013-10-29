@@ -14,18 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// load on first pageinit only
-var startup = true;
-
 var APPSTRING = "SR4."
 
-$(document).on('pagebeforeshow', function () {
-	if (startup) {
-		SR4.init();
-		startup = false;	
-	} else {
-		SR4.refreshTitlePage();
-	}
+$(document).on('pagebeforeshow', '#title', function () {
+	SR4.refreshTitlePage();
 });
 
 var SR4 = {
@@ -48,6 +40,7 @@ SR4.init = function() {
 
 		for (var i = 0; i < charnames.length; i++) {
 			this.CharList[charnames[i]] = localStorage.getObject(APPSTRING+"Character."+charnames[i]);
+			this.CharList[charnames[i]].__proto__ = Character.prototype // add prototype functions again (I hope)
 			this.numChars += 1;
 		};
 	}
@@ -56,14 +49,17 @@ SR4.init = function() {
 		var activechar = localStorage.getItem(APPSTRING+"__active_char__");
 		
 		if (activechar in this.CharList) {
-			this.switchToChar(activechar);
+			this.currChar = this.CharList[activechar];
+			localStorage.setItem(APPSTRING+"__active_char__", activechar);
+
 			gotChar = true;
 		} else {
 			// Unknown activechar, this should not happen ...
 			if (this.numChars > 0) {
 				// if there are other characters, take a (random) one
 				for (var charname in this.CharList) {
-					this.switchToChar(charname);
+					this.currChar = this.CharList[charName];
+					localStorage.setItem(APPSTRING+"__active_char__", charName);
 					gotChar = true;
 					break;
 				};
@@ -72,6 +68,7 @@ SR4.init = function() {
 			}
 		}
 	}
+	this.refreshTitlePage();
 };
 
 SR4.createChar = function(charName) {
@@ -188,6 +185,10 @@ SR4.updateStatsPopup = function(statName, statTarget, value) {
 	$('#stats-slider').slider('refresh');
 
 	$('#stats-poptext').html("New "+statName+" value:");
+};
+
+SR4.refreshMonitorPage = function() {
+	Monitor.refresh();
 };
 
 

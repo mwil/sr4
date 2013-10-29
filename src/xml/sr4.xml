@@ -16,7 +16,7 @@
 	</page>
 
 	<page id="monitor">
-		<p>Coming up: Condition Monitor</p>
+		<monitor/>
 	</page>
 
 	<page id="ammo">

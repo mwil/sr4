@@ -56,12 +56,12 @@
 </xsl:template>
 
 <xsl:template match="attribs">
-	<script type="text/javascript">
-		<xsl:text>SR4.StatList = [];</xsl:text>
+	<xsl:element name="div">
+		<xsl:attribute name="id"><xsl:text>StatList</xsl:text></xsl:attribute>
 		<xsl:for-each select="attr">
-			<xsl:text>SR.StatList.push("Attrib_{id}");</xsl:text>
+			<xsl:attribute name="Attrib_{id}"/>
 		</xsl:for-each>
-	</script>
+	</xsl:element>
 </xsl:template>
 
 <!-- Ignore data xml that is used for autogenerating lists -->

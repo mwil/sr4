@@ -75,9 +75,8 @@ SR4.init = function() {
 };
 
 SR4.createChar = function(charName) {
-	if (charName in this.CharList) {
+	if (charName in this.CharList || !charName) {
 		// Name already exists ... TODO: in-app notification
-		alert("Character name already exists!");
 		return;
 	}
 

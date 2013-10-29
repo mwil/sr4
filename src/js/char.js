@@ -41,22 +41,9 @@ Character.prototype.updated = function() {
 	localStorage.setObject(APPSTRING+"Character."+this.charName, this);
 };
 
-Character.prototype.nameOk = function(charName) {
-	if (!charName || $.inArray(charName, SR4.AppStrings) > -1) {
-		// using internal strings may work, but it will propably not be nice ...
-		alert("Please do not try to bork this app ...");
-		return false;
-	}
-
-	return true;
-};
-
 Character.prototype.rename = function(charName) {
-	if (this.nameOk(charName)) {
-		this.charName = charName;
-
-		this.updated();
-	}
+	this.charName = charName;
+	this.updated();
 };
 
 /*
@@ -64,6 +51,5 @@ Character.prototype.rename = function(charName) {
  */
 Character.prototype.updateStat = function(stat, value) {
 	this.stats[stat] = parseInt(value);
-
 	this.updated();
 };

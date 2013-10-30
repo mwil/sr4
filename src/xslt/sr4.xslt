@@ -16,7 +16,7 @@
 	<html>
 
 	<!-- the HTML header is kept in a separate file -->
-	<xsl:copy-of select="document('htmlheader.xml')/*"/>
+	<xsl:copy-of select="document('../xml/htmlheader.xml')/*"/>
 
 	<body>
 		<xsl:apply-templates/>
@@ -29,7 +29,7 @@
 <!-- generic page markup -->
 <xsl:template match="page">
 	<div data-role="page" id="{@id}">
-		<xsl:copy-of select="document('panel.xml')/*"/>
+		<xsl:copy-of select="document('../xml/panel.xml')/*"/>
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>Shadowrun 4 App</xsl:text></h1>
@@ -38,8 +38,6 @@
 				<xsl:text>Back</xsl:text>
 			</a>
 		</div><!-- /header -->
-
-		<!-- <xsl:copy-of select="document('jQheader.xml')/*"/> Overkill atm -->
 
 		<div data-role="content">
 			<xsl:apply-templates/>

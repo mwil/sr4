@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="style.xslt"?>
-
-<mytext>
-<myhead>Demo: How To Include Xsl in Xml</myhead>
-<mypara>This demonstrates the way to include the xslt so it
- renders in the browser with a readable format.</mypara>
-</mytext>

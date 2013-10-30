@@ -22,7 +22,19 @@ $(document).on('pagebeforeshow', '#title', function () {
 		SR4.init();
 		window.startup = false;
 	}
+
+	$('#title').bind('swipeleft', function(event, ui) {
+    	$.mobile.changePage("#stats", "slide");
+	});
+	$('#title').bind('swiperight', function(event, ui) {
+    	$.mobile.changePage("#monitor", "slide");
+	});
+
 	SR4.refreshTitlePage();
+});
+
+$(document).on('pagehide', '#title', function () { 
+	$(this).off('swipeleft swiperight'); 
 });
 
 var SR4 = {

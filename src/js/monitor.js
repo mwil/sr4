@@ -14,15 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$(document).on('pagebeforeshow', '#monitor', function () {	
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	SR4.refreshMonitorPage();
-});
-
 var Monitor = {}
 
 Monitor.hitStun = function(hits) {
@@ -85,3 +76,26 @@ Monitor.refresh = function() {
 
 	SR4.currChar.updated();
 };
+
+
+// jQuery event registration
+
+$(document).on('pagebeforeshow', '#monitor', function () {	
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+
+	$('#monitor').bind('swipeleft', function(event, ui) {
+    	$.mobile.changePage("#dice", "slide");
+	});
+	$('#dice').bind('swiperight', function(event, ui) {
+    	$.mobile.changePage("#title", "slide");
+	});
+
+	SR4.refreshMonitorPage();
+});
+
+$(document).on('pagehide', '#monitor', function () { 
+	$(this).off('swipeleft swiperight'); 
+});

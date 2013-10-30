@@ -14,15 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$(document).on('pagebeforeshow', '#dice', function () {
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	SR4.refreshDicePage();
-});
-
 var Dice = {
 	Offsets: {}
 };
@@ -182,3 +173,26 @@ Dice.refreshDiceButtons = function() {
 		}
 	)
 };
+
+
+// jQuery event registration
+
+$(document).on('pagebeforeshow', '#dice', function () {
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+
+	$('#dice').bind('swipeleft', function(event, ui) {
+    	$.mobile.changePage("#stats", "slide");
+	});
+	$('#dice').bind('swiperight', function(event, ui) {
+    	$.mobile.changePage("#monitor", "slide");
+	});
+
+	SR4.refreshDicePage();
+});
+
+$(document).on('pagehide', '#dice', function () { 
+	$(this).off('swipeleft swiperight'); 
+});

@@ -17,15 +17,6 @@
 var DEFAULTVAL = 1;
 var DEFAULTNAME = "Character Name";
 
-$(document).on('pagebeforeshow', '#stats', function () {
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	SR4.refreshStatsPage();
-});
-
 var Character = function(charName) {
 	this.charName  = DEFAULTNAME;
 	this.stats     = {};
@@ -58,3 +49,26 @@ Character.prototype.updateStat = function(stat, value) {
 	this.stats[stat] = parseInt(value);
 	this.updated();
 };
+
+
+// jQuery event registration
+
+$(document).on('pagebeforeshow', '#stats', function () {
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+
+	$('#stats').bind('swipeleft', function(event, ui) {
+    	$.mobile.changePage("#title", "slide");
+	});
+	$('#stats').bind('swiperight', function(event, ui) {
+    	$.mobile.changePage("#dice", "slide");
+	});
+
+	SR4.refreshStatsPage();
+});
+
+$(document).on('pagehide', '#stats', function () { 
+	$(this).off('swipeleft swiperight'); 
+});

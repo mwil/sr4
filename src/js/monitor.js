@@ -80,20 +80,6 @@ Monitor.refresh = function() {
 
 // jQuery event registration
 
-$(document).on('pagebeforeshow', '#monitor', function () {	
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	if (window.withSwipe) {
-		$('#monitor').bind('swipeleft', function(event, ui) {
-	    	$.mobile.changePage("#dice", "slide");
-		});
-		$('#dice').bind('swiperight', function(event, ui) {
-	    	$.mobile.changePage("#title", "slide");
-		});
-	}
-
+$(document).on('pageshow', '#monitor', function () {	
 	SR4.refreshMonitorPage();
 });

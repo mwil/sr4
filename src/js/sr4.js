@@ -14,8 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-window.startup = true;
-window.withSwipe = false;
 window.APPSTRING = "SR4."
 
 var SR4 = {
@@ -216,20 +214,6 @@ Storage.prototype.getObject = function(key) {
     jQuery event registration
    ########################### */
 
-$(document).on('pagebeforeshow', '#title', function () {
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	if (window.withSwipe) {
-		$('#title').bind('swipeleft', function(event, ui) {
-	    	$.mobile.changePage("#stats", "slide");
-		});
-		$('#title').bind('swiperight', function(event, ui) {
-	    	$.mobile.changePage("#monitor", "slide");
-		});
-	}
-
+$(document).on('pageshow', '#title', function () {
 	SR4.refreshTitlePage();
 });

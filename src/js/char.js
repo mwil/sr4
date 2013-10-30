@@ -53,20 +53,6 @@ Character.prototype.updateStat = function(stat, value) {
 
 // jQuery event registration
 
-$(document).on('pagebeforeshow', '#stats', function () {
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	if (window.withSwipe) {
-		$('#stats').bind('swipeleft', function(event, ui) {
-	    	$.mobile.changePage("#title", "slide");
-		});
-		$('#stats').bind('swiperight', function(event, ui) {
-	    	$.mobile.changePage("#dice", "slide");
-		});
-	}
-
+$(document).on('pageshow', '#stats', function () {
 	SR4.refreshStatsPage();
 });

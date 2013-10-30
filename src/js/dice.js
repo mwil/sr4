@@ -177,20 +177,6 @@ Dice.refreshDiceButtons = function() {
 
 // jQuery event registration
 
-$(document).on('pagebeforeshow', '#dice', function () {
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	if (window.withSwipe) {
-		$('#dice').bind('swipeleft', function(event, ui) {
-	    	$.mobile.changePage("#stats", "slide");
-		});
-		$('#dice').bind('swiperight', function(event, ui) {
-	    	$.mobile.changePage("#monitor", "slide");
-		});
-	}
-
+$(document).on('pageshow', '#dice', function () {
 	SR4.refreshDicePage();
 });

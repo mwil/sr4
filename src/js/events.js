@@ -14,11 +14,30 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+window.startup = true;
+window.withSwipe = true;
+
 $(document).on('pagebeforeshow', "[data-role='page']", function () { 
-	$('#next-button').prop('href', '#'+$(this).jqmData('next'));
-	console.log($(this));
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+
+	$('.next-button').attr('href', '#'+$(this).jqmData('next'));
+
+	if (window.withSwipe) {
+		$(this).bind('swipeleft', function(event, ui) {
+	    	$.mobile.changePage('#'+$(this).jqmData('next'), "slide");
+		});
+
+		$(this).bind('swiperight', function(event, ui) {
+	    	$.mobile.changePage('#'+$(this).jqmData('prev'), "slide");
+		});
+	}
 });
 
 $(document).on('pagebeforehide', "[data-role='page']", function () { 		
-	$(this).off('swipeleft swiperight');
+	if (window.withSwipe) {
+		$(this).off('swipeleft swiperight');
+	}
 });

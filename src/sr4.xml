@@ -1,18 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <?xml-stylesheet type="text/xsl" href="xslt/sr4.xslt"?>
+
+<!DOCTYPE app [
+	<!ENTITY include_attribs SYSTEM "xml/attribs.xml">
+]>
+
 
 <app>
 	<page id="title">
 		<title/>
 	</page>
 
+	<page id="stats">
+		<stats/>
+	</page>
+
 	<page id="dice">
 		<dicemode-cb/>
 		<dice-buttons/>
-	</page>
-
-	<page id="stats">
-		<stats/>
 	</page>
 
 	<page id="monitor">
@@ -23,18 +28,6 @@
 		<p>Coming up: Ammo tracking</p>
 	</page>
 
-	<attribs>
-		<attr>
-			<id>BOD</id>
-			<name>Body</name>
-		</attr>
-		<attr>
-			<id>WIL</id>
-			<name>Willpower</name>
-		</attr>
-		<attr>
-			<id>EDG</id>
-			<name>Edge</name>
-		</attr>
-	</attribs>
+	<!-- read attributes from data XML file -->
+	&include_attribs;>
 </app>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<attribs>
+	<attr>
+		<id>BOD</id>
+		<name>Body</name>
+	</attr>
+	<attr>
+		<id>WIL</id>
+		<name>Willpower</name>
+	</attr>
+	<attr>
+		<id>EDG</id>
+		<name>Edge</name>
+	</attr>
+</attribs>

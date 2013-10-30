@@ -19,7 +19,7 @@ $(document).on('pagebeforeshow', '#dice', function () {
 		SR4.init();
 		window.startup = false;
 	}
-	
+
 	SR4.refreshDicePage();
 });
 
@@ -169,6 +169,13 @@ Dice.refreshDiceButtons = function() {
 			
 			$(this).attr("currval", baseval + offset);
 			$(this).attr("valoffset", offset);
+
+			// disable buttons that have no dice available anyway
+			if (baseval+offset <= 0) {
+				//$(this).addClass('ui-disabled');
+			} else {
+				//$(this).removeClass('ui-disabled');
+			}
 
 			$(this).find(".ui-btn-text").html(baseval + 
 				(offset != 0 ? "<sub style='color:grey;'>("+(offset>0?"+":"")+offset+")</sub>" : ""));

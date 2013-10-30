@@ -15,7 +15,7 @@
 */
 
 window.startup = true;
-var APPSTRING = "SR4."
+window.APPSTRING = "SR4."
 
 $(document).on('pagebeforeshow', '#title', function () {
 	if (window.startup) {
@@ -27,8 +27,8 @@ $(document).on('pagebeforeshow', '#title', function () {
 
 var SR4 = {
 	StatList: [],
-	AppStrings: [APPSTRING+"__active_char__", 
-				 APPSTRING+"__charlist__"],
+	AppStrings: [window.APPSTRING+"__active_char__", 
+				 window.APPSTRING+"__charlist__"],
 	CharList: {},
 	numChars: 0,
 	currChar: null
@@ -40,22 +40,22 @@ SR4.init = function() {
 	this.StatList = $('#StatList').attr("data-stats").trim().split(/\s+/);
 
 	// load available chars from localStorage
-	if (APPSTRING+"__charlist__" in localStorage) {
-		var charnames = localStorage.getObject(APPSTRING+"__charlist__");
+	if (window.APPSTRING+"__charlist__" in localStorage) {
+		var charnames = localStorage.getObject(window.APPSTRING+"__charlist__");
 
 		for (var i = 0; i < charnames.length; i++) {
-			this.CharList[charnames[i]] = localStorage.getObject(APPSTRING+"Character."+charnames[i]);
+			this.CharList[charnames[i]] = localStorage.getObject(window.APPSTRING+"Character."+charnames[i]);
 			this.CharList[charnames[i]].__proto__ = Character.prototype // add prototype functions again (I hope)
 			this.numChars += 1;
 		};
 	}
 
-	if (APPSTRING+"__active_char__" in localStorage) {
-		var activechar = localStorage.getItem(APPSTRING+"__active_char__");
+	if (window.APPSTRING+"__active_char__" in localStorage) {
+		var activechar = localStorage.getItem(window.APPSTRING+"__active_char__");
 		
 		if (activechar in this.CharList) {
 			this.currChar = this.CharList[activechar];
-			localStorage.setItem(APPSTRING+"__active_char__", activechar);
+			localStorage.setItem(window.APPSTRING+"__active_char__", activechar);
 
 			gotChar = true;
 		} else {
@@ -64,15 +64,17 @@ SR4.init = function() {
 				// if there are other characters, take a (random) one
 				for (var charname in this.CharList) {
 					this.currChar = this.CharList[charname];
-					localStorage.setItem(APPSTRING+"__active_char__", charname);
+					localStorage.setItem(window.APPSTRING+"__active_char__", charname);
 					gotChar = true;
 					break;
 				};
 			} else {
-				localStorage.removeItem(APPSTRING+"__active_char__");
+				localStorage.removeItem(window.APPSTRING+"__active_char__");
 			}
 		}
 	}
+
+	this.refreshHeader();
 };
 
 SR4.createChar = function(charName) {
@@ -91,7 +93,7 @@ SR4.createChar = function(charName) {
 
 SR4.removeChar = function() {
 	// cleanup 
-	localStorage.removeItem(APPSTRING+"Character."+this.currChar.charName);
+	localStorage.removeItem(window.APPSTRING+"Character."+this.currChar.charName);
 	delete this.CharList[this.currChar.charName];
 	this.numChars -= 1;
 
@@ -105,7 +107,7 @@ SR4.removeChar = function() {
 	} else {
 		// remove and disable all links again
 		this.currChar = null;
-		localStorage.removeItem(APPSTRING+"__active_char__");
+		localStorage.removeItem(window.APPSTRING+"__active_char__");
 		this.refreshTitlePage();
 	}
 };
@@ -113,7 +115,7 @@ SR4.removeChar = function() {
 SR4.switchToChar = function(charName) {
 	this.currChar = this.CharList[charName];
 
-	localStorage.setItem(APPSTRING+"__active_char__", charName);
+	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
 
 	this.refreshTitlePage();
 };
@@ -125,10 +127,13 @@ SR4.renameChar= function(newName) {
 	// relabel in global character list
 	this.CharList[newName] = this.CharList[oldName];
 	delete this.CharList[oldName];
+
+	// clear character from localStorage
+	localStorage.removeItem(window.APPSTRING+"Character."+oldName);
 	
 	// mark the new name as active again
 	this.currChar = this.CharList[newName];
-	localStorage.setItem(APPSTRING+"__active_char__", newName);
+	localStorage.setItem(window.APPSTRING+"__active_char__", newName);
 
 	this.charListChanged();
 	this.refreshTitlePage();
@@ -137,8 +142,12 @@ SR4.renameChar= function(newName) {
 SR4.charListChanged = function() {
 	// update charlist in localStorage
 	// keys breaks in old browsers? who cares.
-	localStorage.setObject(APPSTRING+"__charlist__", Object.keys(this.CharList));
+	localStorage.setObject(window.APPSTRING+"__charlist__", Object.keys(this.CharList));
 }
+
+SR4.refreshHeader = function() {
+	$('.inheader').removeClass('ui-disabled');
+};
 
 SR4.refreshTitlePage = function() {
 	if (this.currChar) {

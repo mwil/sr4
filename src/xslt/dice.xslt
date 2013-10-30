@@ -8,7 +8,7 @@
 	<form style="text-align:center;">
 	<fieldset data-role="controlgroup" data-type="horizontal">
  		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" 
-	    	onClick="Dice.changeOffset(Monitor, 'conditionModifier', !$('#dicemode-cb-condi')[0].checked);"/>
+	    	onClick="Dice.changeOffset(SR4, 'currChar.condition.mods', !$('#dicemode-cb-condi')[0].checked);"/>
 	    <label for="dicemode-cb-condi" style="width:110px;"><xsl:text>Monitor</xsl:text></label>
 
 	    <input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 

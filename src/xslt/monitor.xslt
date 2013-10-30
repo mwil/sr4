@@ -6,7 +6,7 @@
 <!-- Templates for the condition monitor page -->
 
 <xsl:template match="monitor">
-	<h3 class="txtcenter"><xsl:text>Stun Monitor</xsl:text></h3>
+	<h3 class="txtcenter"><xsl:text>Stun Damage Track</xsl:text></h3>
 
 	<form class="txtcenter">
 	<fieldset data-role="controlgroup" data-type="horizontal">
@@ -24,7 +24,7 @@
 	</fieldset>
 	</form>
 
-	<h3 class="txtcenter"><xsl:text>Physical Monitor</xsl:text></h3>
+	<h3 class="txtcenter"><xsl:text>Physical Damage Track</xsl:text></h3>
 	
 	<form class="txtcenter">
 	<fieldset data-role="controlgroup" data-type="horizontal">

@@ -15,6 +15,11 @@
 */
 
 $(document).on('pagebeforeshow', '#dice', function () {
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+	
 	SR4.refreshDicePage();
 });
 

@@ -14,17 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var APPSTRING = "SR4."
 var DEFAULTVAL = 1;
 var DEFAULTNAME = "Character Name";
 
 $(document).on('pagebeforeshow', '#stats', function () {
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+
 	SR4.refreshStatsPage();
 });
 
 var Character = function(charName) {
-	this.charName = DEFAULTNAME;
-	this.stats = {};
+	this.charName  = DEFAULTNAME;
+	this.stats     = {};
+	this.condition = {currStun:0, currPhy:0, mods:0};
 
 	// TODO: possible problems if name exists already, prevent this before creation! 
 	this.rename(charName);
@@ -38,7 +43,7 @@ var Character = function(charName) {
 };
 
 Character.prototype.updated = function() {
-	localStorage.setObject(APPSTRING+"Character."+this.charName, this);
+	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);
 };
 
 Character.prototype.rename = function(charName) {

@@ -97,7 +97,3 @@ $(document).on('pagebeforeshow', '#monitor', function () {
 
 	SR4.refreshMonitorPage();
 });
-
-$(document).on('pagehide', '#monitor', function () { 
-	$(this).off('swipeleft swiperight'); 
-});

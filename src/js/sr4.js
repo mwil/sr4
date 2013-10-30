@@ -222,8 +222,6 @@ $(document).on('pagebeforeshow', '#title', function () {
 		window.startup = false;
 	}
 
-	//$('#next-button').prop('href', $(this).jqmData('next'));
-
 	if (window.withSwipe) {
 		$('#title').bind('swipeleft', function(event, ui) {
 	    	$.mobile.changePage("#stats", "slide");
@@ -235,8 +233,3 @@ $(document).on('pagebeforeshow', '#title', function () {
 
 	SR4.refreshTitlePage();
 });
-
-$(document).on('pagehide', '#title', function () { 
-	$(this).off('swipeleft swiperight'); 
-});
-

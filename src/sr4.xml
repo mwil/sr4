@@ -11,7 +11,7 @@
 		<title/>
 	</page>
 
-	<page id="stats" prev="title", next="dice">
+	<page id="stats" prev="title" next="dice">
 		<stats/>
 	</page>
 
@@ -24,7 +24,7 @@
 		<monitor/>
 	</page>
 
-	<page id="ammo" prev="monitor" next="title">
+	<page id="ammo">
 		<p>Coming up: Ammo tracking</p>
 	</page>
 

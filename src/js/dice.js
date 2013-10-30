@@ -194,7 +194,3 @@ $(document).on('pagebeforeshow', '#dice', function () {
 
 	SR4.refreshDicePage();
 });
-
-$(document).on('pagehide', '#dice', function () { 
-	$(this).off('swipeleft swiperight'); 
-});

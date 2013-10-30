@@ -70,7 +70,3 @@ $(document).on('pagebeforeshow', '#stats', function () {
 
 	SR4.refreshStatsPage();
 });
-
-$(document).on('pagehide', '#stats', function () { 
-	$(this).off('swipeleft swiperight'); 
-});

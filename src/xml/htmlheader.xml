@@ -15,8 +15,5 @@
 	<script src="js/char.js"></script>
 	<script src="js/monitor.js"></script>
 	<script src="js/dice.js"></script>
-	<script src="js/sr4.js"></script>
-
-	<script src="js/swipe.js"></script> 
-	
+	<script src="js/sr4.js"></script> 
 </head>

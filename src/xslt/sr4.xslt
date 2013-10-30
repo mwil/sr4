@@ -28,14 +28,14 @@
 
 <!-- generic page markup -->
 <xsl:template match="page">
-	<div data-role="page" id="{@id}">
+	<div data-role="page">
 		<xsl:copy-of select="document('../xml/panel.xml')/*"/>
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>Shadowrun 4 App</xsl:text></h1>
 			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled inheader"><xsl:text>Nav</xsl:text></a>
-			<a href="#" data-rel="back" data-iconpos="right" data-icon="arrow-l" class="ui-disabled nochar-disabled inheader">
-				<xsl:text>Back</xsl:text>
+			<a href="#" id="next-button" data-iconpos="right" data-icon="arrow-r" class="ui-disabled nochar-disabled inheader">
+				<xsl:text>Next</xsl:text>
 			</a>
 		</div><!-- /header -->
 

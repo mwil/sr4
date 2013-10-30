@@ -59,12 +59,14 @@ $(document).on('pagebeforeshow', '#stats', function () {
 		window.startup = false;
 	}
 
-	$('#stats').bind('swipeleft', function(event, ui) {
-    	$.mobile.changePage("#title", "slide");
-	});
-	$('#stats').bind('swiperight', function(event, ui) {
-    	$.mobile.changePage("#dice", "slide");
-	});
+	if (window.withSwipe) {
+		$('#stats').bind('swipeleft', function(event, ui) {
+	    	$.mobile.changePage("#title", "slide");
+		});
+		$('#stats').bind('swiperight', function(event, ui) {
+	    	$.mobile.changePage("#dice", "slide");
+		});
+	}
 
 	SR4.refreshStatsPage();
 });

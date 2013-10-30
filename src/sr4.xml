@@ -7,24 +7,24 @@
 
 
 <app>
-	<page id="title">
+	<page id="title" prev="monitor" next="stats">
 		<title/>
 	</page>
 
-	<page id="stats">
+	<page id="stats" prev="title", next="dice">
 		<stats/>
 	</page>
 
-	<page id="dice">
+	<page id="dice" prev="stats" next="monitor">
 		<dicemode-cb/>
 		<dice-buttons/>
 	</page>
 
-	<page id="monitor">
+	<page id="monitor" prev="dice" next="title">
 		<monitor/>
 	</page>
 
-	<page id="ammo">
+	<page id="ammo" prev="monitor" next="title">
 		<p>Coming up: Ammo tracking</p>
 	</page>
 

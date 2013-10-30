@@ -86,12 +86,14 @@ $(document).on('pagebeforeshow', '#monitor', function () {
 		window.startup = false;
 	}
 
-	$('#monitor').bind('swipeleft', function(event, ui) {
-    	$.mobile.changePage("#dice", "slide");
-	});
-	$('#dice').bind('swiperight', function(event, ui) {
-    	$.mobile.changePage("#title", "slide");
-	});
+	if (window.withSwipe) {
+		$('#monitor').bind('swipeleft', function(event, ui) {
+	    	$.mobile.changePage("#dice", "slide");
+		});
+		$('#dice').bind('swiperight', function(event, ui) {
+	    	$.mobile.changePage("#title", "slide");
+		});
+	}
 
 	SR4.refreshMonitorPage();
 });

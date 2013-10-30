@@ -183,12 +183,14 @@ $(document).on('pagebeforeshow', '#dice', function () {
 		window.startup = false;
 	}
 
-	$('#dice').bind('swipeleft', function(event, ui) {
-    	$.mobile.changePage("#stats", "slide");
-	});
-	$('#dice').bind('swiperight', function(event, ui) {
-    	$.mobile.changePage("#monitor", "slide");
-	});
+	if (window.withSwipe) {
+		$('#dice').bind('swipeleft', function(event, ui) {
+	    	$.mobile.changePage("#stats", "slide");
+		});
+		$('#dice').bind('swiperight', function(event, ui) {
+	    	$.mobile.changePage("#monitor", "slide");
+		});
+	}
 
 	SR4.refreshDicePage();
 });

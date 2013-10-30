@@ -15,27 +15,8 @@
 */
 
 window.startup = true;
+window.withSwipe = false;
 window.APPSTRING = "SR4."
-
-$(document).on('pagebeforeshow', '#title', function () {
-	if (window.startup) {
-		SR4.init();
-		window.startup = false;
-	}
-
-	$('#title').bind('swipeleft', function(event, ui) {
-    	$.mobile.changePage("#stats", "slide");
-	});
-	$('#title').bind('swiperight', function(event, ui) {
-    	$.mobile.changePage("#monitor", "slide");
-	});
-
-	SR4.refreshTitlePage();
-});
-
-$(document).on('pagehide', '#title', function () { 
-	$(this).off('swipeleft swiperight'); 
-});
 
 var SR4 = {
 	StatList: [],
@@ -229,3 +210,33 @@ Storage.prototype.getObject = function(key) {
     var value = this.getItem(key);
     return value && JSON.parse(value);
 };
+
+
+/* ###########################
+    jQuery event registration
+   ########################### */
+
+$(document).on('pagebeforeshow', '#title', function () {
+	if (window.startup) {
+		SR4.init();
+		window.startup = false;
+	}
+
+	//$('#next-button').prop('href', $(this).jqmData('next'));
+
+	if (window.withSwipe) {
+		$('#title').bind('swipeleft', function(event, ui) {
+	    	$.mobile.changePage("#stats", "slide");
+		});
+		$('#title').bind('swiperight', function(event, ui) {
+	    	$.mobile.changePage("#monitor", "slide");
+		});
+	}
+
+	SR4.refreshTitlePage();
+});
+
+$(document).on('pagehide', '#title', function () { 
+	$(this).off('swipeleft swiperight'); 
+});
+

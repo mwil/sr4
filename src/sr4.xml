@@ -29,5 +29,5 @@
 	</page>
 
 	<!-- read attributes from data XML file -->
-	&include_attribs;>
+	&include_attribs;
 </app>

@@ -172,9 +172,9 @@ Dice.refreshDiceButtons = function() {
 
 			// disable buttons that have no dice available anyway
 			if (baseval+offset <= 0) {
-				//$(this).addClass('ui-disabled');
+				$(this).addClass('ui-disabled');
 			} else {
-				//$(this).removeClass('ui-disabled');
+				$(this).removeClass('ui-disabled');
 			}
 
 			$(this).find(".ui-btn-text").html(baseval + 

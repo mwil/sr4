@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <div data-role="panel" id="mypanel" data-display="overlay">
-	<a href="#theheader" data-rel="close" data-role="button" data-icon="delete" data-iconpos="right">Close panel</a>
+	<!--<a href="#theheader" data-rel="close" data-role="button" data-icon="delete" data-iconpos="right">Close panel</a>-->
 
 	<div data-role="controlgroup">
 		<a href="#title"   data-role="button" data-icon="arrow-r" data-iconpos="right">Title Page</a>
@@ -17,6 +17,10 @@
 		</a>
 		<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="localStorage.clear();">
 			DEBUG: Clear Storage
+		</a>
+		<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" 
+			onClick="$.post('../cgi-bin/sr4.py', {mode: 'push', char: JSON.stringify(SR4.currChar), charname: SR4.currChar.charName}, function(data) {console.log(data);});">
+			DEBUG: CGI Test
 		</a>
 	</div>
 

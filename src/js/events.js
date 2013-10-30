@@ -17,21 +17,23 @@
 window.startup = true;
 window.withSwipe = true;
 
-$(document).on('pagebeforeshow', "[data-role='page']", function () { 
+$(document).on('pageinit', "[data-role='page']", function () {
 	if (window.startup) {
 		SR4.init();
 		window.startup = false;
 	}
+});
 
+$(document).on('pagebeforeshow', "[data-role='page']", function () { 
 	$('.next-button').attr('href', '#'+$(this).jqmData('next'));
 
 	if (window.withSwipe) {
 		$(this).bind('swipeleft', function(event, ui) {
-	    	$.mobile.changePage('#'+$(this).jqmData('next'), "slide");
+	    	$.mobile.changePage('#'+$(this).jqmData('next'), {transition: "slide"});
 		});
 
 		$(this).bind('swiperight', function(event, ui) {
-	    	$.mobile.changePage('#'+$(this).jqmData('prev'), "slide");
+	    	$.mobile.changePage('#'+$(this).jqmData('prev'), {transition: "slide", reverse: true});
 		});
 	}
 });

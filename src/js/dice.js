@@ -177,6 +177,6 @@ Dice.refreshDiceButtons = function() {
 
 // jQuery event registration
 
-$(document).on('pageshow', '#dice', function () {
+$(document).on('pagebeforeshow', '#dice', function () {
 	SR4.refreshDicePage();
 });

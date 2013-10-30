@@ -214,6 +214,6 @@ Storage.prototype.getObject = function(key) {
     jQuery event registration
    ########################### */
 
-$(document).on('pageshow', '#title', function () {
+$(document).on('pagebeforeshow', '#title', function () {
 	SR4.refreshTitlePage();
 });

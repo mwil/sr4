@@ -10,4 +10,15 @@
 	    <a href="#monitor" data-role="button" data-icon="arrow-r" data-iconpos="right">Condition Monitor</a>
 	    <a href="#ammo"    data-role="button" data-icon="arrow-r" data-iconpos="right">Ammo Tracking</a>
 	</div>
+
+	<div data-role="controlgroup">
+	    <a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="console.log(localStorage);">
+			DEBUG: Print Storage
+		</a>
+		<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="localStorage.clear();">
+			DEBUG: Clear Storage
+		</a>
+	</div>
+
+	<a href="#about" data-role="button" data-icon="info" data-iconpos="right">About</a>
 </div>

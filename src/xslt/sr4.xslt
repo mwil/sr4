@@ -34,7 +34,7 @@
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>Shadowrun 4 App</xsl:text></h1>
 			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled inheader"><xsl:text>Nav</xsl:text></a>
-			<a href="#" data-iconpos="right" data-icon="arrow-r" class="next-button ui-disabled nochar-disabled inheader">
+			<a href="#" data-iconpos="right" data-icon="arrow-r" data-transition="slide" class="next-button ui-disabled nochar-disabled inheader">
 				<xsl:text>Next</xsl:text>
 			</a>
 		</div><!-- /header -->
@@ -45,7 +45,9 @@
 	</div>
 </xsl:template>
 
-
+<xsl:template match="about">
+	<xsl:copy-of select="document('../xml/about.xml')/*"/>
+</xsl:template>
 
 <!-- Markup elements that should not appear later ... -->
 

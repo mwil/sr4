@@ -80,6 +80,6 @@ Monitor.refresh = function() {
 
 // jQuery event registration
 
-$(document).on('pageshow', '#monitor', function () {	
+$(document).on('pagebeforeshow', '#monitor', function () {	
 	SR4.refreshMonitorPage();
 });

@@ -28,6 +28,10 @@
 		<p>Coming up: Ammo tracking</p>
 	</page>
 
+	<page id="about" prev="title" next="title">
+		<about/>
+	</page>
+
 	<!-- read attributes from data XML file -->
 	&include_attribs;
 </app>

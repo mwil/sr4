@@ -53,6 +53,6 @@ Character.prototype.updateStat = function(stat, value) {
 
 // jQuery event registration
 
-$(document).on('pageshow', '#stats', function () {
+$(document).on('pagebeforeshow', '#stats', function () {
 	SR4.refreshStatsPage();
 });

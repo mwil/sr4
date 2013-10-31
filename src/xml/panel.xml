@@ -19,7 +19,7 @@
 			DEBUG: Clear Storage
 		</a>
 		<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" 
-			onClick="$.post('../cgi-bin/sr4.py', {mode: 'push', char: JSON.stringify(SR4.currChar), charname: SR4.currChar.charName}, function(data) {console.log(data);});">
+			onClick="SR4.Remote.fetchCharList();">
 			DEBUG: CGI Test
 		</a>
 	</div>

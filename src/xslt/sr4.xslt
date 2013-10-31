@@ -32,7 +32,7 @@
 		<xsl:copy-of select="document('../xml/panel.xml')/*"/>
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
-			<h1><xsl:text>Shadowrun 4 App</xsl:text></h1>
+			<h1><xsl:text>SR4.Datajack</xsl:text></h1>
 			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled inheader"><xsl:text>Nav</xsl:text></a>
 			<a href="#" data-iconpos="right" data-icon="arrow-r" data-transition="slide" class="next-button ui-disabled nochar-disabled inheader">
 				<xsl:text>Next</xsl:text>

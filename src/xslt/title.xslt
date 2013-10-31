@@ -30,17 +30,11 @@
 		<xsl:text>Remove Character</xsl:text>
 	</a>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">
-		<xsl:attribute name="onClick">
-			if (SR4.currChar) {$.post('../cgi-bin/sr4.py', {mode: 'push', char: JSON.stringify(SR4.currChar), charname: SR4.currChar.charName}, function(data) {});}
-		</xsl:attribute>
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="">
 		<xsl:text>Push to Server</xsl:text>
 	</a>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right">
-		<xsl:attribute name="onClick">
-			$.post('../cgi-bin/sr4.py', {mode: 'pull'}, function(data) {SR4.currChar=JSON.parse(data); SR4.refreshTitlePage();});
-		</xsl:attribute>
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.fetchCharList();">
 		<xsl:text>Pull from Server</xsl:text>
 	</a>
 

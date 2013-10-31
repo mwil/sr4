@@ -14,12 +14,14 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-window.APPSTRING = "SR4."
+window.APPSTRING = "Datajack."
 
 var SR4 = {
 	StatList: [],
 	AppStrings: [window.APPSTRING+"__active_char__", 
 				 window.APPSTRING+"__charlist__"],
+	Remote: {CharList: {}, numChars:0},
+	Local: {Chars: {}, numChars:0},
 	CharList: {},
 	numChars: 0,
 	currChar: null
@@ -140,6 +142,17 @@ SR4.refreshHeader = function() {
 	$('.inheader').removeClass('ui-disabled');
 };
 
+SR4.refreshCharList = function() {
+	$('#loadchar-lv').empty();
+
+	for (var charname in this.CharList) {
+		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
+			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
+	};
+
+	$("#loadchar-lv").listview("refresh");
+};
+
 SR4.refreshTitlePage = function() {
 	if (this.currChar) {
 		$('.charName').html(this.currChar.charName);
@@ -151,14 +164,7 @@ SR4.refreshTitlePage = function() {
 		$('#loadchar-container').removeClass('ui-disabled');
 		$('.nochar-disabled').removeClass('ui-disabled');
 
-		$('#loadchar-lv').empty();
-
-		for (var charname in this.CharList) {
-			$('#loadchar-lv').append("<li><a href='#' data-role='button'\
-				onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
-		};
-
-		$("#loadchar-lv").listview("refresh");
+		this.refreshCharList();
 	} else {
 		$('.nochar-disabled').addClass('ui-disabled');
 	}

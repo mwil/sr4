@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <head>
-	<title>SR 4 App</title>
+	<title>SR4.Datajack</title>
 
     <meta charset="utf-8"/>
 	
@@ -16,6 +16,7 @@
 	<script src="js/monitor.js"></script>
 	<script src="js/dice.js"></script>
 	<script src="js/sr4.js"></script>
+	<script src="js/sr4-remote.js"></script>
 
 	<script src="js/events.js"></script>
 </head>

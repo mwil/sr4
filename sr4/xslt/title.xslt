@@ -36,9 +36,8 @@
 
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
-		id="rem-loadchar-container" data-inline="false" class="char-container"
-		onClick="SR4.Remote.fetchCharList();">
-    	<h2><xsl:text>&#160;&#160;Load Character from Server</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
+		id="rem-lc-collap" data-inline="false" class="char-container">
+    	<h2><xsl:text>&#160;&#160;Load Character (Server)</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="rem-loadchar-lv"></ul>
     </div>
 

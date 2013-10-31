@@ -15,6 +15,8 @@
 */
 
 SR4.Remote.fetchCharList = function() {
+	$.mobile.showPageLoadingMsg(true);
+
 	$.post('../cgi-bin/sr4.py', {group: 'devel', command: 'list'}, function(data) {
 		SR4.Remote.Chars = data && JSON.parse(data);
 
@@ -24,6 +26,8 @@ SR4.Remote.fetchCharList = function() {
 		console.log('in fetch:', SR4.Remote.Chars);
 
 		SR4.Remote.refreshCharList();
+
+		$.mobile.hidePageLoadingMsg();
 	});
 };
 
@@ -31,9 +35,13 @@ SR4.Remote.refreshCharList = function() {
 	$('#rem-loadchar-lv').empty();
 
 	for (var charname in this.Chars) {
-		$('#rem-loadchar-lv').append("<li><a href='#' data-role='button'\
-			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#rem-loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
+		$('#rem-loadchar-lv').append(
+			"<li><a href='#' data-role='button' onClick='SR4.switchToChar(\""+charname+"\"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+charname+"</a></li>")	
 	};
 
 	$("#rem-loadchar-lv").listview("refresh");
 };
+
+$(document).on('expand', '#rem-lc-collap', function (event) {
+    SR4.Remote.fetchCharList();
+});

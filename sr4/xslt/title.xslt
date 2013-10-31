@@ -13,7 +13,7 @@
 
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
-		id="loadchar-container" data-inline="false" class="ui-disabled nochar-disabled">
+		id="loadchar-container" data-inline="false" class="char-container ui-disabled nochar-disabled">
     	<h2><xsl:text>&#160;&#160;Load Character</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="loadchar-lv"></ul>
     </div>
@@ -30,13 +30,17 @@
 		<xsl:text>Remove Character</xsl:text>
 	</a>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="">
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.fetchCharList();">
 		<xsl:text>Push to Server</xsl:text>
 	</a>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.fetchCharList();">
-		<xsl:text>Pull from Server</xsl:text>
-	</a>
+	<!-- Character load chooser -->
+	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
+		id="rem-loadchar-container" data-inline="false" class="char-container"
+		onClick="SR4.Remote.fetchCharList();">
+    	<h2><xsl:text>&#160;&#160;Load Character from Server</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
+    	<ul data-role="listview" id="rem-loadchar-lv"></ul>
+    </div>
 
 	<!-- The POPUPS -->
 

@@ -20,8 +20,8 @@ var SR4 = {
 	StatList: [],
 	AppStrings: [window.APPSTRING+"__active_char__", 
 				 window.APPSTRING+"__charlist__"],
-	Remote: {CharList: {}, numChars:0},
-	Local: {Chars: {}, numChars:0},
+	Remote: {Chars: {}, numChars:0},
+	Local:  {Chars: {}, numChars:0},
 	CharList: {},
 	numChars: 0,
 	currChar: null
@@ -38,7 +38,7 @@ SR4.init = function() {
 
 		for (var i = 0; i < charnames.length; i++) {
 			this.CharList[charnames[i]] = localStorage.getObject(window.APPSTRING+"Character."+charnames[i]);
-			this.CharList[charnames[i]].__proto__ = Character.prototype // add prototype functions again (I hope)
+			this.CharList[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)
 			this.numChars += 1;
 		};
 	}

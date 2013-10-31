@@ -8,6 +8,7 @@
 import cgi
 import cgitb
 
+import base64
 import os.path
 
 cgitb.enable()
@@ -17,7 +18,7 @@ cgitb.enable()
 groups = ['devel']
 
 
-def read_charlist(path):
+def load_charlist(path):
 	clist = []
 
 	try:
@@ -33,16 +34,35 @@ def read_charlist(path):
 
 	return clist
 
-
-def write_charlist(clist, path):
+def save_charlist(clist, path):
 	try:
 		clist_file = open(clist_path, 'w')
-		clist_file.writelines(testchars)
+		clist_file.savelines(testchars)
 		clist_file.close()
 	except IOError:
 		# problems accessing the file, probably group not existing or dir not writable
 		# TODO: respond with failure message
 		pass
+
+
+def load_char(cname):
+	char = ''
+
+	# http://stackoverflow.com/a/295150/2699475
+	char_path = os.path.join(group_path, 'char001.txt')#base64.urlsafe_b64encode(cname)+'.txt')
+
+	try:
+		char_file = open(char_path, 'r')
+		char = char_file.read()
+		char_file.close()
+	except IOError:
+		# problems accessing the file, probably group not existing or dir not writable -> no chars
+		pass
+
+	return char.strip()
+
+def save_char(chame, char):
+	pass
 
 
 form = cgi.FieldStorage()
@@ -67,12 +87,20 @@ print                           # blank line, end of headers
 command = form["command"].value
 
 if command == "list":
-	clist = read_charlist(group_path)
-	print '[', ','.join(['"%s"'%(name) for name in clist]), ']'
+	clist = load_charlist(group_path)
+	result = '{'
+
+	for cname in clist:
+		result += '"%s":%s,'%(cname, load_char(cname))
+
+	# get rid of the last trailing comma
+	result = result[:-1] + '}'
+
+	print result
 
 elif command == "push":
-	testchars = ['Ginji A\n', 'Host Horst\n']
-	write_charlist(testchars, clist_path)
+	testchars = ['Ginji\n', 'Host Horst\n']
+	save_charlist(testchars, clist_path)
 
 elif command == "pull":
 	pass

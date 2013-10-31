@@ -15,20 +15,25 @@
 */
 
 SR4.Remote.fetchCharList = function() {
-	$.post('../cgi-bin/sr4.py', {command: 'list'}, function(data) {
-		var clist = data && JSON.parse(data);
-		console.log(this);
-		console.log(clist);
+	$.post('../cgi-bin/sr4.py', {group: 'devel', command: 'list'}, function(data) {
+		SR4.Remote.Chars = data && JSON.parse(data);
+
+		for (var cname in SR4.Remote.Chars) {
+		 	SR4.Remote.Chars[cname].__proto__ = Character.prototype;
+		}
+		console.log('in fetch:', SR4.Remote.Chars);
+
+		SR4.Remote.refreshCharList();
 	});
 };
 
 SR4.Remote.refreshCharList = function() {
 	$('#rem-loadchar-lv').empty();
 
-	for (var charname in this.rem_CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
-			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
+	for (var charname in this.Chars) {
+		$('#rem-loadchar-lv').append("<li><a href='#' data-role='button'\
+			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#rem-loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
 	};
 
-	$("#loadchar-lv").listview("refresh");
+	$("#rem-loadchar-lv").listview("refresh");
 };

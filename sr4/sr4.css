@@ -8,4 +8,4 @@
 .centerhead { text-align:center; }
 .dicebutton { height:43px; }
 td { text-align:center; }
-#loadchar-container .ui-btn-inner { text-align: center; }
+.char-container .ui-btn-inner { text-align: center; }

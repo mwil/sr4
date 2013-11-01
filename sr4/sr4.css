@@ -9,3 +9,15 @@
 .dicebutton { height:43px; }
 td { text-align:center; }
 .char-container .ui-btn-inner { text-align: center; }
+
+#tworow-stun-cg a {   
+	float:none;
+ 	display:table-cell;
+	vertical-align:middle;
+}
+
+#tworow-phy-cg a {   
+	float:none;
+ 	display:table-cell;
+	vertical-align:middle;
+}

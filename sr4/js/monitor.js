@@ -14,7 +14,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var Monitor = {}
+var Monitor = {
+	knock_msg: "<div style='color:grey;'>Knocked Out!<div>",
+	coma_msg:  "<div style='color:red;'>In Coma!<div>",
+	dead_msg:  "<div style='color:red;'>!DEAD!<div>"
+}
 
 Monitor.hitStun = function(hits) {
 	var maxStun = (8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2));
@@ -71,9 +75,23 @@ Monitor.refresh = function() {
 	
 	cond.mods = stunMod + phyMod;
 
-	$('#stun-monitor .ui-btn-text').text("("+cond.currStun+" / "+maxStun+") Mod: "+stunMod);
+	var stun_msg = "<div>Stun Damage <span style='color:grey;'>("+stunMod+")</span></div>";
+	var phy_msg  = "<div>Physical Damage <span style='color:grey;'>("+phyMod+")</span></div>";
 
-	$('#phy-monitor .ui-btn-text').text("("+cond.currPhy+" / "+maxPhy+") Mod "+phyMod);
+	if (cond.currStun >= maxStun) {
+		stun_msg = this.knock_msg;
+	}
+
+	if (cond.currPhy > maxPhy) {
+		if (cond.currPhy <= (maxPhy + SR4.currChar.stats['Attrib_BOD'])) {
+			phy_msg = this.coma_msg;
+		} else {
+			phy_msg = this.dead_msg;
+		}
+	}
+
+	$('#stun-monitor .ui-btn-text').html(stun_msg+"<div><sub style='color:grey;'>("+cond.currStun+" / "+maxStun+")</sub></div>");
+	$('#phy-monitor  .ui-btn-text').html(phy_msg+ "<div><sub style='color:grey;'>("+cond.currPhy+" / " +maxPhy+ ")</sub></div>");
 
 	SR4.currChar.updated();
 };

@@ -64,12 +64,16 @@ SR4.Remote.pushChar = function() {
 SR4.Remote.removeChar = function() {
 	$.mobile.showPageLoadingMsg(true);
 
+	delete this.Chars[SR4.currChar.charName];
+	this.CharList = Object.keys(this.Chars);
+
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': auths, 
 								 'cname': JSON.stringify(SR4.currChar.charName)}, function(data) {
 		response = data;
 		console.log('In delChar: ', response);
 
 		$('#rem-lc-collap').trigger('collapse');
+		SR4.Remote.refreshCharList();
 
 		$.mobile.hidePageLoadingMsg();
 	});

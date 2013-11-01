@@ -32,6 +32,8 @@ SR4.Local.init = function() {
 				this.Chars[charnames[i]].upgrade();
 			}
 		};
+
+		this.CharList = Object.keys(this.Chars);
 	}
 
 	if (window.APPSTRING+"__active_char__" in localStorage) {

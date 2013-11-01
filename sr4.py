@@ -1,6 +1,6 @@
 #! /usr/local/bin/python
 
-# CGI script to interact with SR4\Datajack
+# CGI script to interact with SR4.Datajack
 # Supported options:
 # - command: {list, push, pull, delete}
 # - group:   controls sub-directory to store chars to, only 'devel' is currently available

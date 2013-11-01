@@ -36,13 +36,8 @@ SR4.switchToChar = function(charName) {
 };
 
 SR4.switchToCharIndex = function(index) {
-	var charName = this.Local.CharList[index];
-
-	this.currChar = this.Local.Chars[charName];
-
-	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
-
-	this.refreshTitlePage();
+	// save to call from JS onClicks, even with evil unescaped names
+	this.switchToChar(this.Local.CharList[index]);
 };
 
 

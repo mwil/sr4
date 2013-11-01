@@ -33,7 +33,7 @@
 			<div class="ui-grid-a">
 				<div class="ui-block-a">
 		    		<a href="#" data-role="button" data-rel="back"
-		    			onClick="SR4.currChar.updateStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">
+		    			onClick="SR4.currChar.setStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">
 		    		<xsl:text>Set</xsl:text>
 		    		</a>
 		    	</div>

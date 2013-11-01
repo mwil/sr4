@@ -33,6 +33,17 @@ var Character = function(charName) {
 	this.updated();
 };
 
+// Bring character to the newest 'version', i.e., add Stats from SR4.StatList when missing
+Character.prototype.upgrade = function() {
+	for (var i = 0; i < SR4.StatList.length; i++) {
+		if (!(SR4.StatList[i] in this.stats)) {
+			this.stats[SR4.StatList[i]] = DEFAULTVAL;
+		}
+	}
+
+	this.updated();
+}
+
 Character.prototype.updated = function() {
 	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);
 };
@@ -45,7 +56,7 @@ Character.prototype.rename = function(charName) {
 /*
  * Update a single character statistic and update the page
  */
-Character.prototype.updateStat = function(stat, value) {
+Character.prototype.setStat = function(stat, value) {
 	this.stats[stat] = parseInt(value);
 	this.updated();
 };

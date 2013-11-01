@@ -33,10 +33,10 @@ SR4.Remote.pullChar = function(index) {
 	$.mobile.showPageLoadingMsg(true);
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': JSON.stringify(charName), 'auth': auths}, function(data) {
-		console.log('fetch me ', charName);
-		console.log('fetch me (json)', JSON.stringify(charName));
 		SR4.Remote.Chars[charName] = data && JSON.parse(data);
 		SR4.Remote.Chars[charName].__proto__ = Character.prototype;
+		SR4.Remote.Chars[charName].upgrade();
+
 		SR4.Remote.refreshCharList();
 
 		// Overwrite local chars with the same name with remote chars // TODO: ask for confirmation
@@ -55,7 +55,7 @@ SR4.Remote.pushChar = function() {
 								 'cname': JSON.stringify(SR4.currChar.charName), 
 								 'char':JSON.stringify(SR4.currChar)}, function(data) {
 		response = data;
-		console.log('In pushChar, response: ', response);
+		console.log('In pushChar: ', response);
 
 		$.mobile.hidePageLoadingMsg();
 	});
@@ -67,7 +67,7 @@ SR4.Remote.removeChar = function() {
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': auths, 
 								 'cname': JSON.stringify(SR4.currChar.charName)}, function(data) {
 		response = data;
-		console.log('In delChar, response: ', response);
+		console.log('In delChar: ', response);
 
 		$('#rem-lc-collap').trigger('collapse');
 

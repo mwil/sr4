@@ -27,7 +27,9 @@ SR4.Local.init = function() {
 		for (var i = 0; i < charnames.length; i++) {
 			if (window.APPSTRING_C+charnames[i] in localStorage) {
 				this.Chars[charnames[i]] = localStorage.getObject(window.APPSTRING_C+charnames[i]);
-				this.Chars[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)	
+				this.Chars[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)
+
+				this.Chars[charnames[i]].upgrade();
 			}
 		};
 	}

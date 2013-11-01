@@ -14,18 +14,45 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+auths = 'cornholio'
+
 SR4.Remote.fetchCharList = function() {
 	$.mobile.showPageLoadingMsg(true);
 
-	$.post('../cgi-bin/sr4.py', {group: 'devel', command: 'list'}, function(data) {
-		SR4.Remote.Chars = data && JSON.parse(data);
-
-		for (var cname in SR4.Remote.Chars) {
-		 	SR4.Remote.Chars[cname].__proto__ = Character.prototype;
-		}
-		console.log('in fetch:', SR4.Remote.Chars);
-
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'list', 'auth': auths}, function(data) {
+		SR4.Remote.CharList = data && JSON.parse(data);
 		SR4.Remote.refreshCharList();
+
+		$.mobile.hidePageLoadingMsg();
+	});
+};
+
+SR4.Remote.pullChar = function(charName) {
+	$.mobile.showPageLoadingMsg(true);
+
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': charName, 'auth': auths}, function(data) {
+		SR4.Remote.Chars[charName] = data && JSON.parse(data);
+		SR4.Remote.Chars[charName].__proto__ = Character.prototype;
+		SR4.Remote.refreshCharList();
+
+		// Overwrite local chars with the same name with remote chars // TODO: ask for confirmation
+		SR4.Local.Chars[charName] = SR4.Remote.Chars[charName];
+		SR4.Local.refreshCharList();
+		SR4.switchToChar(charName);
+
+		$.mobile.hidePageLoadingMsg();
+	});
+};
+
+SR4.Remote.pushChar = function() {
+	$.mobile.showPageLoadingMsg(true);
+
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'push', 'auth': auths, 
+								 'cname': JSON.stringify(SR4.currChar.charName), 
+								 'char':JSON.stringify(SR4.currChar)}, function(data) {
+		response = data;
+
+		console.log('In pushChar, response: ', response);
 
 		$.mobile.hidePageLoadingMsg();
 	});
@@ -34,9 +61,10 @@ SR4.Remote.fetchCharList = function() {
 SR4.Remote.refreshCharList = function() {
 	$('#rem-loadchar-lv').empty();
 
-	for (var charname in this.Chars) {
+	for (var i = 0; i < this.CharList.length; i++) {
 		$('#rem-loadchar-lv').append(
-			"<li><a href='#' data-role='button' onClick='SR4.switchToChar(\""+charname+"\"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+charname+"</a></li>")	
+			"<li><a href='#' data-role='button' onClick='SR4.Remote.pullChar(\""+this.CharList[i]+
+				"\"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
 	};
 
 	$("#rem-loadchar-lv").listview("refresh");

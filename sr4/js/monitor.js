@@ -18,21 +18,20 @@ var Monitor = {}
 
 Monitor.hitStun = function(hits) {
 	var maxStun = (8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2));
+	var cond    = SR4.currChar.condition;
 
 	if (hits >= 0) {
-		if ((SR4.currChar.currStun + hits) > maxStun) {
-			var overflow = (SR4.currChar.condition.currStun + hits) - maxStun;
+		if ((cond.currStun + hits) > maxStun) {
+			var overflow = (cond.currStun + hits) - maxStun;
 			
 			this.hitPhy(overflow);
-			SR4.currChar.condition.currStun = maxStun;
+			cond.currStun = maxStun;
 		} else {
-			SR4.currChar.condition.currStun += hits;
+			cond.currStun += hits;
 		}
 	} else {
-		if (SR4.currChar.condition.currStun == 0) {
-			return;
-		} else {
-			SR4.currChar.condition.currStun -= 1;
+		if (cond.currStun > 0) {
+			cond.currStun -= 1;
 		}
 	}
 
@@ -41,19 +40,20 @@ Monitor.hitStun = function(hits) {
 
 Monitor.hitPhy = function(hits) {
 	var maxPhy = (8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2));
+	var cond   = SR4.currChar.condition;
 
 	if (hits >= 0) {
-		if ((SR4.currChar.condition.currPhy + hits) > maxPhy) {
-			var overflow = (SR4.currChar.condition.currPhy + hits) - maxPhy;
-			SR4.currChar.condition.currPhy += hits;
+		if ((cond.currPhy + hits) > maxPhy) {
+			var overflow = (cond.currPhy + hits) - maxPhy;
+			cond.currPhy += hits;
 		} else {
-			SR4.currChar.condition.currPhy += hits;
+			cond.currPhy += hits;
 		}
 	} else {
-		if (SR4.currChar.condition.currPhy == 0) {
+		if (cond.currPhy == 0) {
 			return;
 		} else {
-			SR4.currChar.condition.currPhy -= 1;
+			cond.currPhy -= 1;
 		}
 	}
 
@@ -65,14 +65,15 @@ Monitor.refresh = function() {
 	var maxPhy  = (8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2));
 	var stunMod = -Math.floor(SR4.currChar.condition.currStun/3);
 	var phyMod  = -Math.floor(SR4.currChar.condition.currPhy/3);
+	var cond    = SR4.currChar.condition;
 
 	// TODO: detect stunned, coma, dead here
 	
-	SR4.currChar.condition.mods = stunMod + phyMod;
+	cond.mods = stunMod + phyMod;
 
-	$('#stun-monitor .ui-btn-text').text("("+SR4.currChar.condition.currStun+" / "+maxStun+") Mod: "+stunMod);
+	$('#stun-monitor .ui-btn-text').text("("+cond.currStun+" / "+maxStun+") Mod: "+stunMod);
 
-	$('#phy-monitor .ui-btn-text').text("("+SR4.currChar.condition.currPhy+" / "+maxPhy+") Mod "+phyMod);
+	$('#phy-monitor .ui-btn-text').text("("+cond.currPhy+" / "+maxPhy+") Mod "+phyMod);
 
 	SR4.currChar.updated();
 };

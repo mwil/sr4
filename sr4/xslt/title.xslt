@@ -14,7 +14,7 @@
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
 		id="loadchar-container" data-inline="false" class="char-container ui-disabled nochar-disabled">
-    	<h2><xsl:text>&#160;&#160;Load Character</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
+    	<h2><xsl:text>&#160;&#160;Switch Characters</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="loadchar-lv"></ul>
     </div>
     <!-- -->
@@ -25,24 +25,28 @@
 	</a>
 
 	<a href="#delete-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		onClick="SR4.removeChar();"
+		onClick="SR4.Local.removeChar();"
 		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled">
 		<xsl:text>Remove Character</xsl:text>
 	</a>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.fetchCharList();">
-		<xsl:text>Push to Server</xsl:text>
+	<a href="#popup-success" data-role="button" data-rel="popup" data-transition="pop" data-position-to="window"
+		data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.pushChar();">
+		<xsl:text>Push Character (Server)</xsl:text>
 	</a>
 
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
 		id="rem-lc-collap" data-inline="false" class="char-container">
-    	<h2><xsl:text>&#160;&#160;Load Character (Server)</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
+    	<h2><xsl:text>&#160;&#160;Fetch Character (Server)</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="rem-loadchar-lv"></ul>
     </div>
 
 	<!-- The POPUPS -->
 
+	<div data-role="popup" id="popup-success">
+	    <p>Success</p>
+	</div>
 
     <!-- Generate new char window -->
 	<div data-role="popup" id="createchar-popup" data-theme="c">
@@ -50,7 +54,7 @@
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
 	    <a href="#" data-role="button" data-rel="back"
-	    	onClick="SR4.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
+	    	onClick="SR4.Local.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
 	    	<xsl:text>Generate!</xsl:text>
 	    </a>
     </div>
@@ -61,7 +65,7 @@
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>
 
 		    <a href="#" data-role="button" data-rel="back" 
-		    	onClick="SR4.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
+		    	onClick="SR4.Local.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
 		    	<xsl:text>Rename</xsl:text>
 		    </a>
 		</form>

@@ -14,143 +14,35 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-window.APPSTRING = "Datajack."
+window.APPSTRING   = "Datajack."
+window.APPSTRING_C = window.APPSTRING + "Character."
 
 var SR4 = {
 	StatList: [],
 	AppStrings: [window.APPSTRING+"__active_char__", 
 				 window.APPSTRING+"__charlist__"],
-	Remote: {Chars: {}, numChars:0},
-	Local:  {Chars: {}, numChars:0},
-	CharList: {},
-	numChars: 0,
+	Remote: {Chars: {}, CharList:[]},
+	Local:  {Chars: {}},
 	currChar: null
 };
 
-SR4.init = function() {
-	var gotChar = false;
 
-	this.StatList = $('#StatList').attr("data-stats").trim().split(/\s+/);
 
-	// load available chars from localStorage
-	if (window.APPSTRING+"__charlist__" in localStorage) {
-		var charnames = localStorage.getObject(window.APPSTRING+"__charlist__");
-
-		for (var i = 0; i < charnames.length; i++) {
-			this.CharList[charnames[i]] = localStorage.getObject(window.APPSTRING+"Character."+charnames[i]);
-			this.CharList[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)
-			this.numChars += 1;
-		};
-	}
-
-	if (window.APPSTRING+"__active_char__" in localStorage) {
-		var activechar = localStorage.getItem(window.APPSTRING+"__active_char__");
-		
-		if (activechar in this.CharList) {
-			this.currChar = this.CharList[activechar];
-			localStorage.setItem(window.APPSTRING+"__active_char__", activechar);
-
-			gotChar = true;
-		} else {
-			// Unknown activechar, this should not happen ...
-			if (this.numChars > 0) {
-				// if there are other characters, take a (random) one
-				for (var charname in this.CharList) {
-					this.currChar = this.CharList[charname];
-					localStorage.setItem(window.APPSTRING+"__active_char__", charname);
-					gotChar = true;
-					break;
-				};
-			} else {
-				localStorage.removeItem(window.APPSTRING+"__active_char__");
-			}
-		}
-	}
-
-	this.refreshHeader();
-};
-
-SR4.createChar = function(charName) {
-	if (charName in this.CharList || !charName) {
-		// Name already exists ... TODO: in-app notification
-		return;
-	}
-
-	var tmpchar = new Character(charName);
-	this.CharList[charName] = tmpchar;
-	this.numChars += 1;
-	this.charListChanged();
-	
-	this.switchToChar(charName);
-};
-
-SR4.removeChar = function() {
-	// cleanup 
-	localStorage.removeItem(window.APPSTRING+"Character."+this.currChar.charName);
-	delete this.CharList[this.currChar.charName];
-	this.numChars -= 1;
-
-	this.charListChanged();
-	if (this.numChars > 0) {
-		// pick up someone (possibly random) TODO: is there a less ugly way?
-		for (var charname in this.CharList) {
-			this.switchToChar(charname);
-			break;	
-		}
-	} else {
-		// remove and disable all links again
-		this.currChar = null;
-		localStorage.removeItem(window.APPSTRING+"__active_char__");
-		this.refreshTitlePage();
-	}
+SR4.sanitizeCharName = function(charName) {
+	return charName;
 };
 
 SR4.switchToChar = function(charName) {
-	this.currChar = this.CharList[charName];
+	this.currChar = this.Local.Chars[charName];
 
 	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
 
 	this.refreshTitlePage();
 };
 
-SR4.renameChar= function(newName) {
-	var oldName = this.currChar.charName;
-	this.currChar.rename(newName);
-
-	// relabel in global character list
-	this.CharList[newName] = this.CharList[oldName];
-	delete this.CharList[oldName];
-
-	// clear character from localStorage
-	localStorage.removeItem(window.APPSTRING+"Character."+oldName);
-	
-	// mark the new name as active again
-	this.currChar = this.CharList[newName];
-	localStorage.setItem(window.APPSTRING+"__active_char__", newName);
-
-	this.charListChanged();
-	this.refreshTitlePage();
-};
-
-SR4.charListChanged = function() {
-	// update charlist in localStorage
-	// keys breaks in old browsers? who cares.
-	localStorage.setObject(window.APPSTRING+"__charlist__", Object.keys(this.CharList));
-}
 
 SR4.refreshHeader = function() {
 	$('.inheader').removeClass('ui-disabled');
-};
-
-SR4.refreshCharList = function() {
-	$('#loadchar-lv').empty();
-
-	for (var charname in this.CharList) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
-			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
-	};
-
-	$("#loadchar-lv").listview("refresh");
 };
 
 SR4.refreshTitlePage = function() {
@@ -160,11 +52,11 @@ SR4.refreshTitlePage = function() {
 		$('.charName').html("No Char found!");
 	}
 
-	if (this.numChars > 0) {
+	if (Object.keys(this.Local.Chars).length > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
 		$('.nochar-disabled').removeClass('ui-disabled');
 
-		this.refreshCharList();
+		this.Local.refreshCharList();
 	} else {
 		$('.nochar-disabled').addClass('ui-disabled');
 	}
@@ -202,6 +94,7 @@ SR4.refreshMonitorPage = function() {
 };
 
 
+
 /* ######################### */
 /* Nicer Storage interaction */
 /* ######################### */
@@ -214,6 +107,7 @@ Storage.prototype.getObject = function(key) {
     var value = this.getItem(key);
     return value && JSON.parse(value);
 };
+
 
 
 /* ###########################

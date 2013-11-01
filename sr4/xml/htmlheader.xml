@@ -17,6 +17,7 @@
 	<script src="js/dice.js"></script>
 	<script src="js/sr4.js"></script>
 	<script src="js/sr4-remote.js"></script>
+	<script src="js/sr4-local.js"></script>
 
 	<script src="js/events.js"></script>
 </head>

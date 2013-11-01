@@ -14,7 +14,7 @@
 			onClick="Monitor.hitStun(-1);">
 			<xsl:text>Heal</xsl:text>
 		</a>
-	    <a href="#" id="stun-monitor" data-role="button" style="width:160px;">
+	    <a href="#" id="stun-monitor" data-role="button" style="width:180px;">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
 	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right"
@@ -32,7 +32,7 @@
 			onClick="Monitor.hitPhy(-1);">
 			<xsl:text>Heal</xsl:text>
 		</a>
-	    <a href="#" id="phy-monitor" data-role="button" style="width:160px;">
+	    <a href="#" id="phy-monitor" data-role="button" style="width:180px;">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
 	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" 

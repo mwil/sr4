@@ -2,54 +2,41 @@
 
 # CGI script to interact with SR4\Datajack
 # Supported options:
-# - command: {list, push, pull}
-# - group: sub-directory to store chars to, only 'devel' is currently available
+# - command: {list, push, pull, delete}
+# - group:   controls sub-directory to store chars to, only 'devel' is currently available
+# - cname:   character name used when pull/push characters
+# - char:    JSON object with the character inside
+# - auth:    token in the app that ensures that not some random scripter can exploit this script
 
 import cgi
 import cgitb
 
 import base64
-import os.path
+import errno
+import os
+import sys
 
 cgitb.enable()
-#cgi.test()
+# cgi.test()
 
-# list of existing groups registered in Datajack, TODO: save + fetch from file ...
-groups = ['devel']
-
-
-def load_charlist(path):
+def get_charlist(path):
 	clist = []
 
 	try:
-		clist_file = open(clist_path, 'r')
-
-		for name in clist_file:
-			clist.append(name.strip().encode('unicode_escape'))
-
-		clist_file.close()
+		for name in os.listdir(path):
+			cname, ext = os.path.splitext(name)
+			clist.append(base64.urlsafe_b64decode(cname))
 	except IOError:
-		# problems accessing the file, probably group not existing or dir not writable -> no chars
+		# problems accessing the dir list (shouldn't happen?) -> no chars
 		pass
 
 	return clist
 
-def save_charlist(clist, path):
-	try:
-		clist_file = open(clist_path, 'w')
-		clist_file.savelines(testchars)
-		clist_file.close()
-	except IOError:
-		# problems accessing the file, probably group not existing or dir not writable
-		# TODO: respond with failure message
-		pass
-
-
-def load_char(cname):
+def load_char(path, cname):
 	char = ''
 
 	# http://stackoverflow.com/a/295150/2699475
-	char_path = os.path.join(group_path, 'char001.txt')#base64.urlsafe_b64encode(cname)+'.txt')
+	char_path = os.path.join(path, base64.urlsafe_b64encode(cname)+'.txt')
 
 	try:
 		char_file = open(char_path, 'r')
@@ -61,59 +48,104 @@ def load_char(cname):
 
 	return char.strip()
 
-def save_char(chame, char):
-	pass
+def save_char(path, cname, char):
+	char_path = os.path.join(path, base64.urlsafe_b64encode(cname.strip())+'.txt')
+
+	try:
+		char_file = open(char_path, 'w')
+		char_file.write(char.strip())
+		char_file.close()
+	except IOError:
+		print 'IOError in sr4.py/savechar'
+
+def del_char(path, cname):
+	char_path = os.path.join(path, base64.urlsafe_b64encode(cname.strip())+'.txt')
+
+	try:
+		os.remove(char_path)
+	except IOError:
+		# Error while deleting the file, probably doesn't exist anyway
+		pass
 
 
-form = cgi.FieldStorage()
 
-# sanity-check for the desired group since it is used in path construction
-if 'group' in form and form['group'].value in groups:
-	group = form['group'].value
-else:
-	# TODO: send back error?
-	group = 'devel'
-	
-group_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sr4-chars', group))
-clist_path = os.path.join(group_path, 'charlist.txt')
-
-# filepath = os.path.join(group_path, "char001.txt")
-
+################################################
+# Parameter handling
+################################################
 
 print "Content-Type: text/plain"
 print                           # blank line, end of headers
 
+form = cgi.FieldStorage()
 
-command = form["command"].value
+# get form values and set sane defaults if missing
+group   = form.getvalue('group', 'devel')
+command = form.getvalue('command', 'list')
+cname   = form.getvalue('cname', '')
+char    = form.getvalue('char', '')
+auth    = form.getvalue('auth')
 
-if command == "list":
-	clist = load_charlist(group_path)
-	result = '{'
+# silent fail if someone is just spamming the script ...
+if auth != 'cornholio':
+	print '.'
+	sys.exit(0)
+################################################
 
-	for cname in clist:
-		result += '"%s":%s,'%(cname, load_char(cname))
 
-	# get rid of the last trailing comma
-	result = result[:-1] + '}'
+
+################################################
+# Group handling
+################################################
+group_enc  = base64.urlsafe_b64encode(group)
+
+group_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'sr4-chars', group_enc))
+
+# create group if it currently missing    
+try:
+	os.mkdir(group_path)
+except OSError, e:
+	# don't do anything if it already exists, for other problems raise again
+	if e.errno != errno.EEXIST:
+		raise
+################################################
+
+
+
+################################################
+# Command handling
+################################################
+if command == 'list':
+	clist = get_charlist(group_path)
+
+	# fake a JSON list ...
+	result  = '['
+	result += ', '.join(['"%s"'%(cname) for cname in clist])
+	result += ']'
 
 	print result
 
-elif command == "push":
-	testchars = ['Ginji\n', 'Host Horst\n']
-	save_charlist(testchars, clist_path)
+elif command == 'push':
+	if cname and char:
+		save_char(group_path, cname, char)
+		print "push: success."
+	else:
+		print "push: incomplete command!"
 
 elif command == "pull":
-	pass
+	char = load_char(group_path, cname)
 
+	if char:
+		print char
+	else:
+		print '{}'
 
-# if mode in ("push",):
-# 	f = open(filepath, "w")
-# 	print >>f, form["char"].value
-# 	f.close()
-# elif mode in ("pull",):
-# 	try:
-# 		f = open(filepath, "r")
-# 		print f.read()
-# 		f.close()
-# 	except IOError:
-# 		print "{}"
+elif command == 'delete':
+	if cname:
+		del_char(cname)
+		print('delete: success.')
+	else:
+		print('delete: incomplete command!')
+
+else:
+	print command + ': unknown command!'
+################################################

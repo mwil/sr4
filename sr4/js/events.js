@@ -19,7 +19,7 @@ window.withSwipe = true;
 
 $(document).on('pageinit', "[data-role='page']", function () {
 	if (window.startup) {
-		SR4.init();
+		SR4.Local.init();
 		window.startup = false;
 	}
 });

@@ -25,8 +25,10 @@ SR4.Local.init = function() {
 		var charnames = localStorage.getObject(window.APPSTRING+"__charlist__");
 
 		for (var i = 0; i < charnames.length; i++) {
-			this.Chars[charnames[i]] = localStorage.getObject(window.APPSTRING_C+charnames[i]);
-			this.Chars[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)
+			if (window.APPSTRING_C+charnames[i] in localStorage) {
+				this.Chars[charnames[i]] = localStorage.getObject(window.APPSTRING_C+charnames[i]);
+				this.Chars[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)	
+			}
 		};
 	}
 
@@ -58,8 +60,6 @@ SR4.Local.init = function() {
 };
 
 SR4.Local.createChar = function(charName) {
-	charName = SR4.sanitizeCharName(charName);
-
 	if (charName in this.Chars || !charName) {
 		// Name already exists ... TODO: in-app notification
 		return;
@@ -109,21 +109,23 @@ SR4.Local.renameChar = function(newName) {
 	localStorage.setItem(window.APPSTRING+"__active_char__", newName);
 
 	this.charListChanged();
-	SR4.refreshTitlePage();
 };
 
 SR4.Local.charListChanged = function() {
 	// update charlist in localStorage
 	// keys breaks in old browsers? who cares. This already breaks in Firefox.
 	localStorage.setObject(window.APPSTRING+"__charlist__", Object.keys(this.Chars));
+	this.CharList = Object.keys(this.Chars);
+
+	this.refreshCharList();
 };
 
 SR4.Local.refreshCharList = function() {
 	$('#loadchar-lv').empty();
 
-	for (var charname in this.Chars) {
+	for (var i = 0; i < this.CharList.length; i++) {
 		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
-			onClick='SR4.switchToChar(\""+charname+"\"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+charname+"</a></li>")	
+			onClick='SR4.switchToCharIndex("+i+"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
 	};
 
 	$("#loadchar-lv").listview("refresh");

@@ -22,17 +22,22 @@ var SR4 = {
 	AppStrings: [window.APPSTRING+"__active_char__", 
 				 window.APPSTRING+"__charlist__"],
 	Remote: {Chars: {}, CharList:[]},
-	Local:  {Chars: {}},
+	Local:  {Chars: {}, CharList:[]},
 	currChar: null
 };
 
 
+SR4.switchToChar = function(charName) {
+	this.currChar = this.Local.Chars[charName];
 
-SR4.sanitizeCharName = function(charName) {
-	return charName;
+	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
+
+	this.refreshTitlePage();
 };
 
-SR4.switchToChar = function(charName) {
+SR4.switchToCharIndex = function(index) {
+	var charName = this.Local.CharList[index];
+
 	this.currChar = this.Local.Chars[charName];
 
 	localStorage.setItem(window.APPSTRING+"__active_char__", charName);

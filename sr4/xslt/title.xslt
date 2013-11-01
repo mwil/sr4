@@ -30,8 +30,8 @@
 		<xsl:text>Remove Character</xsl:text>
 	</a>
 
-	<a href="#popup-success" data-role="button" data-rel="popup" data-transition="pop" data-position-to="window"
-		data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.pushChar();">
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="SR4.Remote.pushChar();"
+		class="ui-disabled nochar-disabled">
 		<xsl:text>Push Character (Server)</xsl:text>
 	</a>
 
@@ -41,6 +41,12 @@
     	<h2><xsl:text>&#160;&#160;Fetch Character (Server)</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="rem-loadchar-lv"></ul>
     </div>
+
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" 
+		onClick="SR4.Remote.removeChar();"
+		class="ui-disabled nochar-disabled">
+		<xsl:text>Remove Character (Server)</xsl:text>
+	</a>
 
 	<!-- The POPUPS -->
 

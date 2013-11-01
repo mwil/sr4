@@ -63,8 +63,10 @@ def del_char(path, cname):
 
 	try:
 		os.remove(char_path)
-	except IOError:
+	except OSError:
 		# Error while deleting the file, probably doesn't exist anyway
+		pass
+	except IOError:
 		pass
 
 
@@ -119,7 +121,7 @@ if command == 'list':
 
 	# fake a JSON list ...
 	result  = '['
-	result += ', '.join(['"%s"'%(cname) for cname in clist])
+	result += ', '.join([cname for cname in clist])
 	result += ']'
 
 	print result
@@ -141,7 +143,7 @@ elif command == "pull":
 
 elif command == 'delete':
 	if cname:
-		del_char(cname)
+		del_char(group_path, cname)
 		print('delete: success.')
 	else:
 		print('delete: incomplete command!')

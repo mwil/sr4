@@ -28,20 +28,31 @@
 
 <!-- generic page markup -->
 <xsl:template match="page">
-	<div data-role="page" id="{@id}" data-prev="{@prev}" data-next="{@next}">
+	<div data-role="page" id="{@id}" data-prev="{@prev}" data-next="{@next}" data-theme="c" data-content-theme="c">
 		<xsl:copy-of select="document('../xml/panel.xml')/*"/>
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>SR4.Datajack</xsl:text></h1>
 			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled inheader"><xsl:text>Nav</xsl:text></a>
-			<a href="#" data-iconpos="right" data-icon="arrow-r" data-transition="slide" class="next-button ui-disabled nochar-disabled inheader">
-				<xsl:text>Next</xsl:text>
+			<a href="#" data-iconpos="right" data-icon="refresh" class="ui-disabled remote-disabled">
+				<xsl:text>Sync</xsl:text>
 			</a>
 		</div><!-- /header -->
 
 		<div data-role="content">
 			<xsl:apply-templates/>
 		</div>
+
+		<div data-role="footer" data-id="myfoot" data-position="fixed" data-theme="b">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#title"><xsl:text>Chars</xsl:text></a></li>
+					<li><a href="#stats"   class="ui-disabled nochar-disabled inheader"><xsl:text>Stats</xsl:text></a></li>
+					<li><a href="#dice"    class="ui-disabled nochar-disabled inheader"><xsl:text>Dicer</xsl:text></a></li>
+					<li><a href="#monitor" class="ui-disabled nochar-disabled inheader"><xsl:text>Monitor</xsl:text></a></li>
+				</ul>
+			</div><!-- /navbar -->
+		</div><!-- /footer -->
 	</div>
 </xsl:template>
 

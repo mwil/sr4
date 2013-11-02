@@ -12,8 +12,7 @@
 	</a>
 
 	<!-- Character load chooser -->
-	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
-		id="loadchar-container" data-inline="false" class="char-container ui-disabled nochar-disabled">
+	<div data-role="collapsible" data-iconpos="right" id="loadchar-container" data-inline="false" class="char-container ui-disabled nochar-disabled">
     	<h2><xsl:text>&#160;&#160;Switch Characters</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="loadchar-lv"></ul>
     </div>
@@ -35,27 +34,25 @@
 	</a>
 
 	<!-- Character load chooser -->
-	<div data-role="collapsible" data-theme="c" data-content-theme="c" data-iconpos="right" 
-		id="rem-lc-collap" data-inline="false" class="char-container">
+	<div data-role="collapsible" data-iconpos="right" id="rem-lc-collap" data-inline="false" class="char-container">
     	<h2><xsl:text>&#160;&#160;Fetch Character (Server)</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="rem-loadchar-lv"></ul>
     </div>
 
-	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" 
-		onClick="SR4.Remote.removeChar();"
-		class="ui-disabled nochar-disabled">
+	<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled"
+		onClick="SR4.Remote.removeChar();">
 		<xsl:text>Remove Character (Server)</xsl:text>
 	</a>
 
 	<!-- The POPUPS -->
 
-	<div data-role="popup" id="title-popup-success">
-	    <p>Success</p>
+	<div data-role="popup" id="remote-status-popup" class="ui-content">
+	    <h3><xsl:text>AUTOFILLED</xsl:text></h3>
 	</div>
 
     <!-- Generate new char window -->
-	<div data-role="popup" id="createchar-popup" data-theme="c" data-transition="pop" data-position-to="window">
-    	<h3 class="ui-title">Enter a character name ...</h3>
+	<div data-role="popup" id="createchar-popup" data-transition="pop" data-position-to="window" class="ui-content">
+    	<h3 class="ui-title"><xsl:text>Enter a character name ...</xsl:text></h3>
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
 	    <a href="#" data-role="button" data-rel="back"
@@ -64,7 +61,7 @@
 	    </a>
     </div>
 
-    <div data-role="popup" id="rename-popup" data-transition="pop" data-position-to="window">
+    <div data-role="popup" id="rename-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<form>
 			<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>

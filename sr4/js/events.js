@@ -15,7 +15,7 @@
 */
 
 window.startup = true;
-window.withSwipe = true;
+window.withSwipe = false;
 
 $(document).on('pageinit', "[data-role='page']", function () {
 	if (window.startup) {

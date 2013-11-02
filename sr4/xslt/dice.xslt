@@ -32,7 +32,7 @@
 
 	<div data-role="popup" id="dice-popup" class="ui-content" data-transition="pop" data-position-to="window">
 	    <h3 class="ui-title" id="dice-poptext"><xsl:text>JavaScript not working?</xsl:text></h3>
-	    <div data-role="controlgroup" data-type="horizontal" data-theme="c">
+	    <div data-role="controlgroup" data-type="horizontal">
 	    	<a href="#" data-role="button" 
 	    		onClick="Dice.addEdge(SR4.currChar.stats['Attrib_EDG']); $('.pop-edge').toggleClass('ui-disabled');"
 	    		data-icon="plus" data-iconpos="right" class="pop-edge">

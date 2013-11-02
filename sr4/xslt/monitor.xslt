@@ -8,39 +8,39 @@
 <xsl:template match="monitor">
 	<h3 class="txtcenter"><xsl:text>Damage Monitors</xsl:text></h3>
 
-	<form class="txtcenter">
+	<form class="txtcenter fullwidth">
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-stun-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left"
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitStun(-1);">
 		</a>
-	    <a href="#" id="stun-monitor" data-role="button" style="width:220px;">
+	    <a href="#" id="stun-monitor" data-role="button" class="btn-in">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
-	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right"
+	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
 	    	onClick="Monitor.hitStun(1);">
 	    </a>
 	</fieldset>
 	
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-phy-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left"
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitPhy(-1);">
 		</a>
-	    <a href="#" id="phy-monitor" data-role="button" style="width:220px;">
+	    <a href="#" id="phy-monitor" data-role="button" class="btn-in">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
-	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" 
+	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
 	    	onClick="Monitor.hitPhy(1);">
 	    </a>
 	</fieldset>
 
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-misc-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" 
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.incMisc(-1);">
 		</a>
-	    <a href="#" id="misc-monitor" data-role="button" style="width:220px;">
+	    <a href="#" id="misc-monitor" data-role="button" class="btn-in">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
-	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" 
+	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
 	    	onClick="Monitor.incMisc(1);">
 	    </a>
 	</fieldset>
@@ -49,7 +49,7 @@
 	<h3 class="txtcenter"><xsl:text>Combat Utilities</xsl:text></h3>
 
 	<div data-role="collapsible" data-collapsed="false">
-	    <h2><xsl:text>Combat Tests</xsl:text></h2>
+	    <h2><xsl:text>Combat Test Quicklinks</xsl:text></h2>
 
         <ul data-role="listview">
         	<li data-icon="refresh">

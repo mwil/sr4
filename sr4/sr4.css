@@ -17,3 +17,15 @@ td { text-align:center; }
  	display:table-cell;
 	vertical-align:middle;
 }
+
+.btn-out {
+    width: 10%;
+}
+
+.btn-in {
+    width: 80%;
+}
+
+.fullwidth {
+    margin:0px !important;
+}

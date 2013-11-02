@@ -27,5 +27,3 @@ Test.asString = function(stat_a, stat_b, offset) {
 		return (res.hits + offset) + (res.glitch?" (+glitch!)":"");
 	}
 };
-
-

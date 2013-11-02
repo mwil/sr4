@@ -19,9 +19,16 @@ auths = 'cornholio'
 SR4.Remote.fetchCharList = function() {
 	$.mobile.showPageLoadingMsg(true);
 
-	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'list', 'auth': auths}, function(data) {
-		SR4.Remote.CharList = data && JSON.parse(data);
-		SR4.Remote.refreshCharList();
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'list', 'auth': auths}, function(response) {
+		response = $.trim(response);
+
+		if (response.indexOf('err:') === 0) {
+			$('#remote-status-popup').html('Listing failed!<br/>Message: '+response).popup('open');
+			$('#rem-lc-collap').trigger('collapse');
+		} else {
+			SR4.Remote.CharList = response && JSON.parse(response);
+			SR4.Remote.refreshCharList();	
+		}
 
 		$.mobile.hidePageLoadingMsg();
 	});
@@ -32,19 +39,25 @@ SR4.Remote.pullChar = function(index) {
 
 	$.mobile.showPageLoadingMsg(true);
 
-	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': JSON.stringify(charName), 'auth': auths}, function(data) {
-		SR4.Remote.Chars[charName] = data && JSON.parse(data);
-		SR4.Remote.Chars[charName].__proto__ = Character.prototype;
-		SR4.Remote.Chars[charName].upgrade();
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': JSON.stringify(charName), 'auth': auths}, function(response) {
+		response = $.trim(response);
 
-		SR4.Remote.refreshCharList();
+		if (response.indexOf('err:') === 0) {
+			$('#remote-status-popup').html('Pull failed!<br/>Message: '+response).popup('open');
+		} else {
+			SR4.Remote.Chars[charName] = response && JSON.parse(response);
+			SR4.Remote.Chars[charName].__proto__ = Character.prototype;
+			SR4.Remote.Chars[charName].upgrade();
 
-		// Overwrite local chars with the same name with remote chars // TODO: ask for confirmation
-		SR4.Local.Chars[charName] = SR4.Remote.Chars[charName];
-		SR4.Local.charListChanged();
-		SR4.switchToChar(charName);
+			SR4.Remote.refreshCharList();
 
-		$('#title-popup-success').popup('open');
+			// Overwrite local chars with the same name with remote chars // TODO: ask for confirmation
+			SR4.Local.Chars[charName] = SR4.Remote.Chars[charName];
+			SR4.Local.charListChanged();
+			SR4.switchToChar(charName);
+
+			$('#remote-status-popup').text('Pull successful!').popup('open');
+		}
 
 		$.mobile.hidePageLoadingMsg();
 	});
@@ -55,9 +68,15 @@ SR4.Remote.pushChar = function() {
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'push', 'auth': auths, 
 								 'cname': JSON.stringify(SR4.currChar.charName), 
-								 'char':JSON.stringify(SR4.currChar)}, function(data) {
-		response = data;
-		console.log('In pushChar: ', response);
+								 'char':JSON.stringify(SR4.currChar)}, function(response) 
+	{
+		response = $.trim(response);
+
+		if (response === "ok:push:saved") {
+			$('#remote-status-popup').text('Push successful!').popup('open');
+		} else {
+			$('#remote-status-popup').html('Push failed!<br/>Message: '+response).popup('open');	
+		}
 
 		$.mobile.hidePageLoadingMsg();
 	});
@@ -70,9 +89,15 @@ SR4.Remote.removeChar = function() {
 	this.CharList = Object.keys(this.Chars);
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': auths, 
-								 'cname': JSON.stringify(SR4.currChar.charName)}, function(data) {
-		response = data;
-		console.log('In delChar: ', response);
+								 'cname': JSON.stringify(SR4.currChar.charName)}, function(response)
+	{
+	 	response = $.trim(response);
+
+		if (response === "ok:delete:deleted") {
+			$('#remote-status-popup').text('Remove successful!').popup('open');
+		} else {
+			$('#remote-status-popup').html('Remove failed!<br/>Message: '+response).popup('open');	
+		}
 
 		$('#rem-lc-collap').trigger('collapse');
 		SR4.Remote.refreshCharList();

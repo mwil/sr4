@@ -12,9 +12,6 @@
 	</div>
 
 	<div data-role="controlgroup">
-	    <a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="console.log(localStorage);">
-			DEBUG: Print Storage
-		</a>
 		<a href="#" data-role="button" data-icon="arrow-r" data-iconpos="right" onClick="localStorage.clear();">
 			DEBUG: Clear Storage
 		</a>

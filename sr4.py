@@ -33,8 +33,6 @@ def get_charlist(path):
 	return clist
 
 def load_char(path, cname):
-	char = ''
-
 	# http://stackoverflow.com/a/295150/2699475
 	char_path = os.path.join(path, base64.urlsafe_b64encode(cname)+'.txt')
 
@@ -44,7 +42,7 @@ def load_char(path, cname):
 		char_file.close()
 	except IOError:
 		# problems accessing the file, probably group not existing or dir not writable -> no chars
-		pass
+		return ''
 
 	return char.strip()
 
@@ -55,19 +53,21 @@ def save_char(path, cname, char):
 		char_file = open(char_path, 'w')
 		char_file.write(char.strip())
 		char_file.close()
+		return True
 	except IOError:
-		print 'IOError in sr4.py/savechar'
+		return False
 
 def del_char(path, cname):
 	char_path = os.path.join(path, base64.urlsafe_b64encode(cname.strip())+'.txt')
 
 	try:
 		os.remove(char_path)
+		return True
 	except OSError:
 		# Error while deleting the file, probably doesn't exist anyway
-		pass
+		return False
 	except IOError:
-		pass
+		return False
 
 
 
@@ -89,7 +89,7 @@ auth    = form.getvalue('auth')
 
 # silent fail if someone is just spamming the script ...
 if auth != 'cornholio':
-	print '.'
+	print 'err:'+command+':autherr'
 	sys.exit(0)
 ################################################
 
@@ -108,7 +108,7 @@ try:
 except OSError, e:
 	# don't do anything if it already exists, for other problems raise again
 	if e.errno != errno.EEXIST:
-		raise
+		print 'err'+command+':grouperr'
 ################################################
 
 
@@ -128,10 +128,12 @@ if command == 'list':
 
 elif command == 'push':
 	if cname and char:
-		save_char(group_path, cname, char)
-		print "push: success."
+		if save_char(group_path, cname, char):
+			print 'ok:push:saved'
+		else:
+			print 'err:push:failure'
 	else:
-		print "push: incomplete command!"
+		print "err:push:incomplete"
 
 elif command == "pull":
 	char = load_char(group_path, cname)
@@ -139,15 +141,17 @@ elif command == "pull":
 	if char:
 		print char
 	else:
-		print '{}'
+		print 'err:pull:failure'
 
 elif command == 'delete':
 	if cname:
-		del_char(group_path, cname)
-		print('delete: success.')
+		if del_char(group_path, cname):
+			print('ok:delete:deleted')
+		else:
+			print('err:delete:failure')
 	else:
-		print('delete: incomplete command!')
+		print('err:delete:incomplete')
 
 else:
-	print command + ': unknown command!'
+	print 'err:'+command+':unknown'
 ################################################

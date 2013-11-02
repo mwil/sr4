@@ -8,15 +8,10 @@
 .centerhead { text-align:center; }
 .dicebutton { height:43px; }
 td { text-align:center; }
+.grey {color:grey;}
 .char-container .ui-btn-inner { text-align: center; }
 
-#tworow-stun-cg a {   
-	float:none;
- 	display:table-cell;
-	vertical-align:middle;
-}
-
-#tworow-phy-cg a {   
+#tworow-stun-cg a, #tworow-misc-cg a, #tworow-phy-cg a {   
 	float:none;
  	display:table-cell;
 	vertical-align:middle;

@@ -20,7 +20,7 @@ var DEFAULTNAME = "Character Name";
 var Character = function(charName) {
 	this.charName  = DEFAULTNAME;
 	this.stats     = {};
-	this.condition = {currStun:0, currPhy:0, mods:0};
+	this.condition = {currStun:0, currPhy:0, currMisc:0, mods:0};
 
 	// TODO: possible problems if name exists already, prevent this before creation! 
 	this.rename(charName);
@@ -38,6 +38,13 @@ Character.prototype.upgrade = function() {
 	for (var i = 0; i < SR4.StatList.length; i++) {
 		if (!(SR4.StatList[i] in this.stats)) {
 			this.stats[SR4.StatList[i]] = DEFAULTVAL;
+		}
+	}
+
+	var condlist = ['currStun', 'currPhy', 'currMisc', 'mods'];
+	for (var i = 0; i < condlist.length; i++) {
+		if (!(condlist[i] in this.condition)) {
+			this.condition[condlist[i]] = 0;
 		}
 	}
 
@@ -65,5 +72,9 @@ Character.prototype.setStat = function(stat, value) {
 // jQuery event registration
 
 $(document).on('pagebeforeshow', '#stats', function () {
-	SR4.refreshStatsPage();
+	if (SR4.currChar) {
+		SR4.refreshStatsPage();	
+	} else {
+		$.mobile.changePage('#title', {transition: "none"});
+	}
 });

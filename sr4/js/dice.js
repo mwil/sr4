@@ -178,5 +178,9 @@ Dice.refreshDiceButtons = function() {
 // jQuery event registration
 
 $(document).on('pagebeforeshow', '#dice', function () {
-	SR4.refreshDicePage();
+	if (SR4.currChar) {
+		SR4.refreshDicePage();
+	} else {
+		$.mobile.changePage('#title', {transition: "none"});
+	}
 });

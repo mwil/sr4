@@ -16,8 +16,8 @@
 
 var Monitor = {
 	knock_msg: "<div style='color:grey;'>Knocked Out!<div>",
-	coma_msg:  "<div style='color:red;'>In Coma!<div>",
-	dead_msg:  "<div style='color:red;'>!DEAD!<div>"
+	coma_msg:  "<div style='color:red;'>Character in Coma!<div>",
+	dead_msg:  "<div style='color:red;'>! DEAD !<div>"
 }
 
 Monitor.hitStun = function(hits) {
@@ -64,19 +64,25 @@ Monitor.hitPhy = function(hits) {
 	this.refresh();
 };
 
+Monitor.incMisc = function(value) {
+	var cond = SR4.currChar.condition;
+
+	cond.currMisc += value;
+
+	this.refresh();
+};
+
 Monitor.refresh = function() {
 	var maxStun = (8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2));
 	var maxPhy  = (8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2));
 	var stunMod = -Math.floor(SR4.currChar.condition.currStun/3);
 	var phyMod  = -Math.floor(SR4.currChar.condition.currPhy/3);
 	var cond    = SR4.currChar.condition;
-
-	// TODO: detect stunned, coma, dead here
 	
-	cond.mods = stunMod + phyMod;
+	cond.mods = stunMod + phyMod + cond.currMisc;
 
-	var stun_msg = "<div>Stun Damage <span style='color:grey;'>("+stunMod+")</span></div>";
-	var phy_msg  = "<div>Physical Damage <span style='color:grey;'>("+phyMod+")</span></div>";
+	var stun_msg = "<div>Stun Track <span style='color:grey;'>("+stunMod+")</span></div>";
+	var phy_msg  = "<div>Physical Track <span style='color:grey;'>("+phyMod+")</span></div>";
 
 	if (cond.currStun >= maxStun) {
 		stun_msg = this.knock_msg;
@@ -88,10 +94,13 @@ Monitor.refresh = function() {
 		} else {
 			phy_msg = this.dead_msg;
 		}
+	} else if (cond.currPhy == maxPhy) {
+		phy_msg = this.knock_msg;
 	}
 
-	$('#stun-monitor .ui-btn-text').html(stun_msg+"<div><sub style='color:grey;'>("+cond.currStun+" / "+maxStun+")</sub></div>");
-	$('#phy-monitor  .ui-btn-text').html(phy_msg+ "<div><sub style='color:grey;'>("+cond.currPhy+" / " +maxPhy+ ")</sub></div>");
+	$('#stun-monitor .ui-btn-text').html(stun_msg+"<div><sub class='grey'>("+cond.currStun+" / "+maxStun+")</sub></div>");
+	$('#phy-monitor  .ui-btn-text').html(phy_msg+ "<div><sub class='grey'>("+cond.currPhy+" / " +maxPhy+ ")</sub></div>");
+	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="grey">('+cond.currMisc+')</span>');
 
 	SR4.currChar.updated();
 };
@@ -100,5 +109,9 @@ Monitor.refresh = function() {
 // jQuery event registration
 
 $(document).on('pagebeforeshow', '#monitor', function () {	
-	SR4.refreshMonitorPage();
+	if (SR4.currChar) {
+		SR4.refreshMonitorPage();	
+	} else {
+		$.mobile.changePage('#title', {transition: "none"});
+	}
 });

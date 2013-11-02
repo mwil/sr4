@@ -78,8 +78,6 @@ Monitor.refresh = function() {
 	var stunMod = -Math.floor(SR4.currChar.condition.currStun/3);
 	var phyMod  = -Math.floor(SR4.currChar.condition.currPhy/3);
 	var cond    = SR4.currChar.condition;
-	
-	cond.mods = stunMod + phyMod + cond.currMisc;
 
 	var stun_msg = "<div>Stun Track <span style='color:grey;'>("+stunMod+")</span></div>";
 	var phy_msg  = "<div>Physical Track <span style='color:grey;'>("+phyMod+")</span></div>";
@@ -97,6 +95,11 @@ Monitor.refresh = function() {
 	} else if (cond.currPhy == maxPhy) {
 		phy_msg = this.knock_msg;
 	}
+
+	// update the dice pool modifiers of the current character
+	SR4.currChar.mods['stunMod'] = stunMod;
+	SR4.currChar.mods['phyMod']  = phyMod;
+	SR4.currChar.mods['miscMod'] = cond.currMisc;
 
 	$('#stun-monitor .ui-btn-text').html(stun_msg+"<div><sub class='grey'>("+cond.currStun+" / "+maxStun+")</sub></div>");
 	$('#phy-monitor  .ui-btn-text').html(phy_msg+ "<div><sub class='grey'>("+cond.currPhy+" / " +maxPhy+ ")</sub></div>");

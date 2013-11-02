@@ -34,7 +34,7 @@
 	</fieldset>
 
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-misc-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left"
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" 
 			onClick="Monitor.incMisc(-1);">
 		</a>
 	    <a href="#" id="misc-monitor" data-role="button" style="width:220px;">
@@ -53,9 +53,10 @@
 
         <ul data-role="listview">
         	<li data-icon="refresh">
-    			<a href="#" id="roll-initiative" onClick="">
+    			<a href="#" id="roll-initiative" 
+    				onClick="$('#currInitiative').html(Test.asString('Attrib_REA', 'Attrib_INT', SR4.currChar.stats['Attrib_REA'] + SR4.currChar.stats['Attrib_INT']));">
     				<xsl:text>Roll Initiative</xsl:text>
-    				<span class="ui-li-count med" id="currInitiative">12</span>
+    				<span class="ui-li-count med" id="currInitiative">--</span>
     			</a>
     		</li>
     	</ul>

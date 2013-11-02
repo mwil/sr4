@@ -44,6 +44,8 @@ SR4.Remote.pullChar = function(index) {
 		SR4.Local.charListChanged();
 		SR4.switchToChar(charName);
 
+		$('#title-popup-success').popup('open');
+
 		$.mobile.hidePageLoadingMsg();
 	});
 };

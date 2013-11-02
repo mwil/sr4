@@ -11,7 +11,7 @@
 	        <ul data-role="listview">
 	        	<xsl:for-each select="/app/attribs/attr">
 		            <li>
-		            	<a href="#stats-popup" data-rel="popup" data-transition="pop" data-position-to="window" 
+		            	<a href="#stats-popup" data-rel="popup"
 		            		onClick="SR4.updateStatsPopup('{name}', 'Attrib_{id}', SR4.currChar.stats['Attrib_{id}']);">
 		            		<xsl:value-of select="name"/>
 		            		<span class="ui-li-count med" id="Attrib_{id}"></span>
@@ -24,7 +24,7 @@
 	</div>
 
 	<!-- the popup to change character stats values, it is reused and automatically filled refreshed by SR4.updateStatsPopup.js -->
-	<div data-role="popup" id="stats-popup" class="ui-content">
+	<div data-role="popup" id="stats-popup" class="ui-content" data-transition="pop" data-position-to="window">
 	    <h3 id="stats-poptext" class="ui-title"><xsl:text>New AUTOFILLED value:</xsl:text></h3>
 		
 		<form style="width:320px;">

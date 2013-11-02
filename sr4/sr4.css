@@ -9,6 +9,7 @@
 .dicebutton { height:43px; }
 td { text-align:center; }
 .grey {color:grey;}
+.red {color:red;}
 .char-container .ui-btn-inner { text-align: center; }
 
 #tworow-stun-cg a, #tworow-misc-cg a, #tworow-phy-cg a {   

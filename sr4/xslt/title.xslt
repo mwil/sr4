@@ -19,13 +19,12 @@
     </div>
     <!-- -->
 
-	<a href="#rename-popup" data-rel="popup" data-transition="pop" data-position-to="window"
+	<a href="#rename-popup" data-rel="popup"
 		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled">
 		<xsl:text>Rename Character</xsl:text>
 	</a>
 
-	<a href="#delete-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		onClick="SR4.Local.removeChar();"
+	<a href="#delete-popup" data-rel="popup" onClick="SR4.Local.removeChar();"
 		data-role="button" data-icon="arrow-r" data-iconpos="right" class="ui-disabled nochar-disabled">
 		<xsl:text>Remove Character</xsl:text>
 	</a>
@@ -50,12 +49,12 @@
 
 	<!-- The POPUPS -->
 
-	<div data-role="popup" id="popup-success">
+	<div data-role="popup" id="title-popup-success">
 	    <p>Success</p>
 	</div>
 
     <!-- Generate new char window -->
-	<div data-role="popup" id="createchar-popup" data-theme="c">
+	<div data-role="popup" id="createchar-popup" data-theme="c" data-transition="pop" data-position-to="window">
     	<h3 class="ui-title">Enter a character name ...</h3>
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
@@ -65,7 +64,7 @@
 	    </a>
     </div>
 
-    <div data-role="popup" id="rename-popup">
+    <div data-role="popup" id="rename-popup" data-transition="pop" data-position-to="window">
 		<form>
 			<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
      		<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>

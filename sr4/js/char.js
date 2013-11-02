@@ -20,7 +20,8 @@ var DEFAULTNAME = "Character Name";
 var Character = function(charName) {
 	this.charName  = DEFAULTNAME;
 	this.stats     = {};
-	this.condition = {currStun:0, currPhy:0, currMisc:0, mods:0};
+	this.condition = {currStun:0, currPhy:0, currMisc:0};
+	this.mods      = {};
 
 	// TODO: possible problems if name exists already, prevent this before creation! 
 	this.rename(charName);
@@ -30,22 +31,31 @@ var Character = function(charName) {
 		this.stats[SR4.StatList[i]] = DEFAULTVAL;
 	};
 
+	for (var i = 0; i < SR4.CondList.length; i++) {
+		this.condition[SR4.CondList[i]] = 0;
+	};
+
 	this.updated();
 };
 
 // Bring character to the newest 'version', i.e., add Stats from SR4.StatList when missing
 Character.prototype.upgrade = function() {
+	// TODO: also remove props that were refactored along the way!
+
 	for (var i = 0; i < SR4.StatList.length; i++) {
 		if (!(SR4.StatList[i] in this.stats)) {
 			this.stats[SR4.StatList[i]] = DEFAULTVAL;
 		}
 	}
 
-	var condlist = ['currStun', 'currPhy', 'currMisc', 'mods'];
-	for (var i = 0; i < condlist.length; i++) {
-		if (!(condlist[i] in this.condition)) {
-			this.condition[condlist[i]] = 0;
+	for (var i = 0; i < SR4.CondList.length; i++) {
+		if (!(SR4.CondList[i] in this.condition)) {
+			this.condition[SR4.CondList[i]] = 0;
 		}
+	}
+
+	if (!('mods' in this)) {
+		this.mods = {};
 	}
 
 	this.updated();
@@ -66,6 +76,16 @@ Character.prototype.rename = function(charName) {
 Character.prototype.setStat = function(stat, value) {
 	this.stats[stat] = parseInt(value);
 	this.updated();
+};
+
+Character.prototype.getMods = function() {
+	var mods = 0;
+
+	for (var mod in this.mods) {
+		mods += this.mods[mod];
+	};
+
+	return mods;
 };
 
 

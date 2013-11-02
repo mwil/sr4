@@ -15,31 +15,23 @@
 */
 
 var Dice = {
-	Offsets: {}
+	Offsets: {},
+	use_cmods: false,
+	prev_count: []
 };
 
-Dice.roll = function(num_dice, edge) {
-	var count = new Array(0, 0, 0, 0, 0, 0, 0);
-	var adds  = 0;
-	
-	for (var i = 0; i < (num_dice + adds); i++) {
-		var roll = 1 + Math.floor(Math.random() * 6);
-		count[roll] += 1;
-
-		// Rule of Six with Edge
-		if (edge && roll == 6) {
-			adds += 1;
-		}
-	};
+Dice.rollToPopup = function(num_dice, edge) {
+	var count = this.roll(num_dice, edge);
 
 	this.prev_count = count;
 	this.printToPopup(count);
 };
 
-Dice.reroll = function() {
+Dice.rerollToPopup = function() {
 	var count = this.prev_count;
 	var num_reroll = 0;
 
+	// reroll dice that did not score a hit
 	for (var i = 0; i < 5; i++) {
 		num_reroll += count[i];
 		count[i] = 0;
@@ -57,36 +49,61 @@ Dice.addEdge = function(num_edge) {
 	var count = this.prev_count;
 	var adds = 0;
 
-	for (var i = 0; i < (num_edge + adds); i++) {
-		var roll = 1 + Math.floor(Math.random() * 6);
-		count[roll] += 1;
+	var edge_count = this.roll(num_edge, true);
 
-		// Rule of Six only on the Edge dice
-		if (roll == 6) {
-			adds += 1;
-		}
+	for (var i = 0; i < count.length; i++) {
+		count[i] += edge_count[i];
 	};
 
 	this.printToPopup(count);
 };
 
-Dice.printToPopup = function (count) {
-	var num_dice = count.reduce(function(a, b) { return a + b })
-	var hits     = count[5] + count[6];
-	console.log(count);
+Dice.roll = function(num_dice, rule_of_six) {
+	var count = new Array(0, 0, 0, 0, 0, 0, 0);
+	var adds  = 0;
+	
+	for (var i = 0; i < (num_dice + adds); i++) {
+		var roll = 1 + Math.floor(Math.random() * 6);
+		count[roll] += 1;
 
-	if (hits > 0) {
-		if (count[1] >= (num_dice)/2) {
+		// Rule of Six with Edge
+		if (rule_of_six && roll == 6) {
+			adds += 1;
+		}
+	};
+
+	return count;
+};
+
+Dice.interpretResult = function(count) {
+	var res = {'hits':0, 'zeros':0, 'glitch':false, 'critical':false};
+
+	res['num_dice'] = count.reduce(function(a, b) { return a + b })
+	res['hits']     = count[5] + count[6];
+	res['zeros']    = count[1];
+	res['glitch']   = res.zeros >= (res.num_dice)/2;
+	res['critical'] = res.glitch && (res.hits == 0);
+
+	return res;
+}
+
+
+Dice.printToPopup = function (count) {
+	var res = this.interpretResult(count);
+	var title = '';
+
+	if (res.hits > 0) {
+		if (res.glitch) {
 			// normal glitch, too many ones ...
-			var title = "<h3 class='diceresglitch'>"+hits+(hits>1?" Hits":" Hit")+ " (and glitch!)</h3>";	
+			title = "<h3 class='diceresglitch'>"+res.hits+(res.hits>1?" Hits":" Hit")+ " (and glitch!)</h3>";	
 		} else {
-			var title = "<h3 class='diceres'>"+hits+(hits>1?" Hits":" Hit")+"!</h3>";
+			title = "<h3 class='diceres'>"+res.hits+(res.hits>1?" Hits":" Hit")+"!</h3>";
 		}
 	} else {
-		 if (count[1] >= (num_dice)/2) {
-			var title = "<h3 class='diceresglitch'>Critical glitch!!</h3>";	
+		 if (res.glitch) {
+			title = "<h3 class='diceresglitch'>Critical glitch!!</h3>";	
 		} else {
-			var title = "<h3 class='diceres'>No Hits!</h3>";
+			title = "<h3 class='diceres'>No Hits!</h3>";
 		}
 	}
 
@@ -140,6 +157,12 @@ Dice.changeOffset = function(obj, prop, remove) {
 	this.refreshDiceButtons();
 };
 
+Dice.useCharMods = function(use) {
+	this.use_cmods = use;
+
+	this.refreshDiceButtons();
+};
+
 Dice.refreshDiceButtons = function() {
 	$('.dicebutton').each(
 		function(index) {
@@ -157,6 +180,10 @@ Dice.refreshDiceButtons = function() {
 				
 				offset += currobj;
 			};
+
+			if (Dice.use_cmods) {
+				offset += SR4.currChar.getMods();
+			}
 			
 			$(this).attr("currval", baseval + offset);
 			$(this).attr("valoffset", offset);

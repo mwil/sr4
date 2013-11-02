@@ -19,8 +19,11 @@ window.APPSTRING_C = window.APPSTRING + "Character."
 
 var SR4 = {
 	StatList: [],
+	CondList: ['currStun', 'currPhy', 'currMisc'],
+
 	AppStrings: [window.APPSTRING+"__active_char__", 
 				 window.APPSTRING+"__charlist__"],
+
 	Remote: {Chars: {}, CharList:[]},
 	Local:  {Chars: {}, CharList:[]},
 	currChar: null

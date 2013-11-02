@@ -99,6 +99,11 @@ SR4.Local.removeChar = function() {
 
 SR4.Local.renameChar = function(newName) {
 	var oldName = SR4.currChar.charName;
+
+	if (newName === oldName) {
+		return;
+	}
+
 	SR4.currChar.rename(newName);
 
 	// relabel in local character list
@@ -108,9 +113,7 @@ SR4.Local.renameChar = function(newName) {
 	// clear character from localStorage
 	localStorage.removeItem(window.APPSTRING_C+oldName);
 	
-	// mark the new name as active again
-	SR4.currChar = this.Chars[newName];
-	localStorage.setItem(window.APPSTRING+"__active_char__", newName);
+	SR4.switchToChar(newName);
 
 	this.charListChanged();
 };

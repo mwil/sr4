@@ -5,12 +5,11 @@
 .med { font-size:medium !important; }
 .txtcenter { text-align: center }
 .poplabel { text-align:center; }
-.centerhead { text-align:center; }
 .dicebutton { height:43px; }
 td { text-align:center; }
 .grey {color:grey;}
 .red {color:red;}
-.char-container .ui-btn-inner { text-align: center; }
+.center-collap .ui-btn-inner { text-align: center; }
 
 #tworow-stun-cg a, #tworow-misc-cg a, #tworow-phy-cg a {   
 	float:none;

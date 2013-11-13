@@ -131,7 +131,7 @@ SR4.Local.refreshCharList = function() {
 	$('#loadchar-lv').empty();
 
 	for (var i = 0; i < this.CharList.length; i++) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button'\
+		$('#loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' \
 			onClick='SR4.switchToCharIndex("+i+"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
 	};
 

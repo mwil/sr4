@@ -19,6 +19,11 @@ Test = {}
 Test.asString = function(stat_a, stat_b, offset) {
 	var cc = SR4.currChar;
 	var num_dice = cc.stats[stat_a] + cc.stats[stat_b] + cc.getMods();
+
+	if (num_dice <= 0) {
+		return "No dice!"
+	}
+
 	var res = Dice.interpretResult(Dice.roll(num_dice));
 
 	if (res.critical) {

@@ -14,10 +14,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-auths = 'cornholio'
+var auths = 'cornholio';
+
+
+SR4.Remote.connectToServer = function() {
+
+};
+
 
 SR4.Remote.fetchCharList = function() {
-	$.mobile.showPageLoadingMsg(true);
+	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'list', 'auth': auths}, function(response) {
 		response = $.trim(response);
@@ -30,14 +36,15 @@ SR4.Remote.fetchCharList = function() {
 			SR4.Remote.refreshCharList();	
 		}
 
-		$.mobile.hidePageLoadingMsg();
+		$.mobile.loading("hide");
+		$("#rem-lc-collap").trigger("expand");
 	});
 };
 
 SR4.Remote.pullChar = function(index) {
 	var charName = this.CharList[index];
 
-	$.mobile.showPageLoadingMsg(true);
+	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': JSON.stringify(charName), 'auth': auths}, function(response) {
 		response = $.trim(response);
@@ -59,12 +66,12 @@ SR4.Remote.pullChar = function(index) {
 			$('#remote-status-popup').text('Pull successful!').popup('open');
 		}
 
-		$.mobile.hidePageLoadingMsg();
+		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.pushChar = function() {
-	$.mobile.showPageLoadingMsg(true);
+	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'push', 'auth': auths, 
 								 'cname': JSON.stringify(SR4.currChar.charName), 
@@ -78,12 +85,12 @@ SR4.Remote.pushChar = function() {
 			$('#remote-status-popup').html('Push failed!<br/>Message: '+response).popup('open');	
 		}
 
-		$.mobile.hidePageLoadingMsg();
+		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.removeChar = function() {
-	$.mobile.showPageLoadingMsg(true);
+	$.mobile.loading("show");
 
 	delete this.Chars[SR4.currChar.charName];
 	this.CharList = Object.keys(this.Chars);
@@ -102,23 +109,41 @@ SR4.Remote.removeChar = function() {
 		$('#rem-lc-collap').trigger('collapse');
 		SR4.Remote.refreshCharList();
 
-		$.mobile.hidePageLoadingMsg();
+		$.mobile.loading("hide");
 	});
 };
-
-
 
 SR4.Remote.refreshCharList = function() {
 	$('#rem-loadchar-lv').empty();
 
 	for (var i = 0; i < this.CharList.length; i++) {
-		$('#rem-loadchar-lv').append(
-			"<li><a href='#' data-role='button' onClick='SR4.Remote.pullChar("+i+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
+		$('#rem-loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' "+
+			"onClick='SR4.Remote.pullChar("+i+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
 	};
 
 	$("#rem-loadchar-lv").listview("refresh");
 };
 
-$(document).on('expand', '#rem-lc-collap', function (event) {
-    SR4.Remote.fetchCharList();
+
+
+$(document).on('pageinit', '#title',  function() {
+	$(".ui-collapsible-heading-toggle").on("click", function (e) {
+	    
+	    if ($(this).closest(".ui-collapsible").hasClass("ui-collapsible-collapsed")) {
+			var curr_id = $(this).closest(".ui-collapsible").attr("id");
+
+	        e.stopImmediatePropagation();
+
+	        if(curr_id === "rem-server-collap") {
+	        	$.mobile.loading("show");
+		        setTimeout(function () {
+		            $("#"+curr_id).trigger("expand");
+		            $.mobile.loading("hide");
+		        }, 1000);
+
+			} else if (curr_id === "rem-lc-collap") {
+		        SR4.Remote.fetchCharList();
+			};
+	    }
+	});
 });

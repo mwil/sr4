@@ -28,3 +28,12 @@ td { text-align:center; }
 .fullwidth {
     margin:0px !important;
 }
+
+/* http://forum.jquery.com/topic/eliminate-circcle-around-icon */
+/* Get rid of the annoying outer circle on listview alt links */
+.ui-li-link-alt span.ui-btn-corner-all {
+  border-style: hidden;
+  -webkit-box-shadow: none;
+  /* Additional browser-specific box-shadow CSS should go here */
+  background: transparent;
+}

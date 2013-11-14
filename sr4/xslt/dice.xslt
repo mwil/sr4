@@ -7,7 +7,7 @@
 <xsl:template match="dicemode-cb">
 	<form style="text-align:center;">
 	<fieldset data-role="controlgroup" data-type="horizontal">
- 		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" 
+ 		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" checked="checked"
 	    	onClick="Dice.useCharMods($('#dicemode-cb-condi')[0].checked);"/>
 	    <label for="dicemode-cb-condi" style="width:110px;"><xsl:text>Monitor</xsl:text></label>
 

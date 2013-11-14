@@ -22,10 +22,15 @@ var SR4 = {
 	CondList: ['currStun', 'currPhy', 'currMisc'],
 
 	AppStrings: [window.APPSTRING+"__active_char__", 
-				 window.APPSTRING+"__charlist__"],
+				 window.APPSTRING+"__charlist__",
+				 window.APPSTRING+"__active_user__"],
 
-	Remote: {Chars: {}, CharList:[]},
-	Local:  {Chars: {}, CharList:[]},
+	Remote: { Chars: {}, 
+			  CharList: [],
+			  user: null,
+			  auths: 'cornholio'
+			},
+	Local:  {Chars: {}, CharList: []},
 	currChar: null
 };
 
@@ -35,10 +40,11 @@ SR4.switchToChar = function(charName) {
 
 	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
 
+	Test.resetAll();
 	this.refreshTitlePage();
 };
 
-SR4.switchToCharIndex = function(index) {
+SR4.switchToCharByIndex = function(index) {
 	// save to call from JS onClicks, even with evil unescaped names
 	this.switchToChar(this.Local.CharList[index]);
 };

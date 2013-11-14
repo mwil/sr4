@@ -2,11 +2,12 @@
 
 # CGI script to interact with SR4.Datajack
 # Supported options:
-# - command: {list, push, pull, delete}
+# - command: {list, push, pull, delete, login}
 # - group:   controls sub-directory to store chars to, only 'devel' is currently available
 # - cname:   character name used when pull/push characters
 # - char:    JSON object with the character inside
 # - auth:    token in the app that ensures that not some random scripter can exploit this script
+# - user:    Username used to login to a group, should be connected with the auth token
 
 import cgi
 import cgitb
@@ -18,6 +19,8 @@ import sys
 
 cgitb.enable()
 # cgi.test()
+
+CHAR_LIMIT = 20
 
 def get_charlist(path):
 	clist = []
@@ -49,13 +52,18 @@ def load_char(path, cname):
 def save_char(path, cname, char):
 	char_path = os.path.join(path, base64.urlsafe_b64encode(cname.strip())+'.txt')
 
-	try:
-		char_file = open(char_path, 'w')
-		char_file.write(char.strip())
-		char_file.close()
-		return True
-	except IOError:
+	if len([f for f in os.listdir(path) if f.endswith('.txt')]) > CHAR_LIMIT:
+		print 'err:push:charlimit'
 		return False
+	else:
+		try:
+			char_file = open(char_path, 'w')
+			char_file.write(char.strip())
+			char_file.close()
+			return True
+		except IOError:
+			print 'err:push:IOError'
+			return False
 
 def del_char(path, cname):
 	char_path = os.path.join(path, base64.urlsafe_b64encode(cname.strip())+'.txt')
@@ -86,6 +94,7 @@ command = form.getvalue('command', 'list')
 cname   = form.getvalue('cname', '')
 char    = form.getvalue('char', '')
 auth    = form.getvalue('auth')
+user    = form.getvalue('user')
 
 # silent fail if someone is just spamming the script ...
 if auth != 'cornholio':
@@ -130,8 +139,7 @@ elif command == 'push':
 	if cname and char:
 		if save_char(group_path, cname, char):
 			print 'ok:push:saved'
-		else:
-			print 'err:push:failure'
+			
 	else:
 		print "err:push:incomplete"
 
@@ -151,6 +159,12 @@ elif command == 'delete':
 			print('err:delete:failure')
 	else:
 		print('err:delete:incomplete')
+
+elif command == "login":
+	if user.lower() in ("matthias", "ralf", "florian"):
+		print("ok:login:"+user)
+	else:
+		print("err:login:failure")
 
 else:
 	print 'err:'+command+':unknown'

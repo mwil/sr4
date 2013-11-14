@@ -97,12 +97,25 @@ SR4.Local.removeChar = function() {
 	}
 };
 
+SR4.Local.removeCharByIndex = function(index) {
+	var charname = this.CharList[index];
+
+	if (charname === SR4.currChar.charName) {
+		this.removeChar();
+	} else {
+		localStorage.removeItem(window.APPSTRING_C+charname);
+		delete this.Chars[charname];
+
+		this.charListChanged();		
+	};
+};
+
 SR4.Local.renameChar = function(newName) {
 	var oldName = SR4.currChar.charName;
 
 	if (newName === oldName) {
 		return;
-	}
+	};
 
 	SR4.currChar.rename(newName);
 
@@ -131,8 +144,9 @@ SR4.Local.refreshCharList = function() {
 	$('#loadchar-lv').empty();
 
 	for (var i = 0; i < this.CharList.length; i++) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' \
-			onClick='SR4.switchToCharIndex("+i+"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
+		$('#loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward'" +
+			                     "onClick='SR4.switchToCharByIndex("+i+"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+this.CharList[i]+
+			                     "</a><a href='#delete-popup' data-rel='popup' onClick='$(\"#delete-popup\").attr(\"data-target\", "+i+")'>Delete</a></li>")	
 	};
 
 	$("#loadchar-lv").listview("refresh");

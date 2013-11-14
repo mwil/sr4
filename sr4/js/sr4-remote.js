@@ -14,18 +14,39 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var auths = 'cornholio';
 
+SR4.Remote.init = function() {
+	if (window.APPSTRING+"__active_user__" in localStorage) {
+		this.user = localStorage.getItem(window.APPSTRING+"__active_user__");
+	}
+};
 
-SR4.Remote.connectToServer = function() {
+SR4.Remote.loginToServer = function() {
+	$.mobile.loading("show");
 
+	$.post('../cgi-bin/sr4.py', {'command': 'login', 'user': this.user, 'auth': this.auths}, function(response) {
+		response = $.trim(response);
+
+		if (response.indexOf('err:') === 0) {
+			$('#remote-status-popup').html('Login failed!<br/>Message: '+response).popup('open');
+		} else {
+			var username = response.slice("ok:login:".length);
+
+			localStorage.setItem(window.APPSTRING+"__active_user__", username);
+
+			$("#rem-server-collap .ui-btn-text:first").text("Connected to Server (as "+username+")");
+			$("#rem-server-collap").trigger("expand");	
+		};
+
+		$.mobile.loading("hide");
+	});
 };
 
 
 SR4.Remote.fetchCharList = function() {
 	$.mobile.loading("show");
 
-	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'list', 'auth': auths}, function(response) {
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'list', 'auth': this.auths}, function(response) {
 		response = $.trim(response);
 
 		if (response.indexOf('err:') === 0) {
@@ -46,7 +67,7 @@ SR4.Remote.pullChar = function(index) {
 
 	$.mobile.loading("show");
 
-	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': JSON.stringify(charName), 'auth': auths}, function(response) {
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'pull', 'cname': JSON.stringify(charName), 'auth': this.auths}, function(response) {
 		response = $.trim(response);
 
 		if (response.indexOf('err:') === 0) {
@@ -73,7 +94,7 @@ SR4.Remote.pullChar = function(index) {
 SR4.Remote.pushChar = function() {
 	$.mobile.loading("show");
 
-	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'push', 'auth': auths, 
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'push', 'auth': this.auths, 
 								 'cname': JSON.stringify(SR4.currChar.charName), 
 								 'char':JSON.stringify(SR4.currChar)}, function(response) 
 	{
@@ -95,7 +116,7 @@ SR4.Remote.removeChar = function() {
 	delete this.Chars[SR4.currChar.charName];
 	this.CharList = Object.keys(this.Chars);
 
-	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': auths, 
+	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': this.auths, 
 								 'cname': JSON.stringify(SR4.currChar.charName)}, function(response)
 	{
 	 	response = $.trim(response);
@@ -128,22 +149,31 @@ SR4.Remote.refreshCharList = function() {
 
 $(document).on('pageinit', '#title',  function() {
 	$(".ui-collapsible-heading-toggle").on("click", function (e) {
+		var curr_id = $(this).closest(".ui-collapsible").attr("id");
 	    
 	    if ($(this).closest(".ui-collapsible").hasClass("ui-collapsible-collapsed")) {
-			var curr_id = $(this).closest(".ui-collapsible").attr("id");
-
-	        e.stopImmediatePropagation();
+	    	// Opening a collapsible
 
 	        if(curr_id === "rem-server-collap") {
-	        	$.mobile.loading("show");
-		        setTimeout(function () {
-		            $("#"+curr_id).trigger("expand");
-		            $.mobile.loading("hide");
-		        }, 1000);
+				e.stopImmediatePropagation();
+
+				$("#rem-user-txtbx").val(SR4.Remote.user);
+				setTimeout(function() { $("#login-popup").popup("open"); }, 100);
 
 			} else if (curr_id === "rem-lc-collap") {
+				e.stopImmediatePropagation();
+
 		        SR4.Remote.fetchCharList();
 			};
-	    }
+			// other callapsibles on #title also trigger this event, do nothing ...
+
+	    } else {
+	    	// Closing a collapsible
+
+	    	if(curr_id === "rem-server-collap") {
+	    		$("#rem-server-collap .ui-btn-text:first").text("Connect to Server");
+	    		$("#rem-lc-collap").trigger("collapse");
+	    	};
+	    };
 	});
 });

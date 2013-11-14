@@ -56,7 +56,7 @@
     			<a href="#" id="roll-initiative" 
     				onClick="$('#currInitiative').html(Test.asString('Attrib_REA', 'Attrib_INT', SR4.currChar.stats['Attrib_REA'] + SR4.currChar.stats['Attrib_INT']));">
     				<xsl:text>Roll Initiative</xsl:text>
-    				<span class="ui-li-count med" id="currInitiative">--</span>
+    				<span class="ui-li-count med test" id="currInitiative">--</span>
     			</a>
     		</li>
     	</ul>

@@ -15,7 +15,7 @@
 	<div data-role="collapsible" data-iconpos="right"  data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"
 		id="loadchar-container" class="center-collap ui-disabled nochar-disabled">
     	<h2><xsl:text>&#160;&#160;Switch Characters</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
-    	<ul data-role="listview" id="loadchar-lv"></ul>
+    	<ul data-role="listview" id="loadchar-lv" data-split-icon="delete" data-split-theme="c"></ul>
     </div>
     <!-- -->
 
@@ -24,14 +24,15 @@
 		<xsl:text>Rename Character</xsl:text>
 	</a>
 
-	<a href="#delete-popup" data-rel="popup" onClick="SR4.Local.removeChar();"
-		data-role="button" data-icon="delete" data-iconpos="right" class="ui-disabled nochar-disabled">
-		<xsl:text>Remove Character</xsl:text>
-	</a>
 
+	<!-- The SERVER COLLAPSIBLE -->
 	<div data-role="collapsible" data-collapsed-icon="refresh" data-expanded-icon="delete" data-iconpos="right"
 		class="center-collap" id="rem-server-collap">
-		<h2>Connect to Server</h2>
+		<h2><xsl:text>Connect to Server</xsl:text></h2>
+
+		<a href="#" data-role="button" data-icon="bars" data-iconpos="right" class="ui-disabled" id="rem-group-a">
+			<xsl:text>Choose Group (current: devel)</xsl:text>
+		</a>
 
 		<a href="#" data-role="button" data-icon="check" data-iconpos="right" onClick="SR4.Remote.pushChar();"
 			class="ui-disabled nochar-disabled" id="rem-server-a">
@@ -51,6 +52,9 @@
 		</a>
 	</div>
 
+
+
+
 	<!-- The POPUPS -->
 
 	<!-- Notifications from remote server interaction -->
@@ -59,8 +63,16 @@
 	</div>
 
 	<!-- Get Username / Groupname / Password / ... -->
-	<div data-role="popup" id="login-popup" class="ui-content">
-		<h3><xsl:text>Enter your data ...</xsl:text></h3>
+	<div data-role="popup" id="login-popup" data-transition="pop" data-position-to="window" class="ui-content">
+		<h3><xsl:text>Enter your username:</xsl:text></h3>
+
+		<input type="text" id="rem-user-txtbx" value="" placeholder="Enter name ..." data-clear-btn="true"/>
+		<input type="text" id="rem-pass-txtbx" value="" placeholder="Password" disabled="disabled"/>
+
+		<button type="submit" data-theme="b" data-icon="check"
+			onClick="SR4.Remote.user=$('#rem-user-txtbx').val(); SR4.Remote.loginToServer(); $('#login-popup').popup('close');">
+			<xsl:text>Sign in</xsl:text>
+		</button>
 	</div>
 
     <!-- Generate new char window -->
@@ -69,7 +81,7 @@
     	<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
 	    <a href="#" data-role="button" data-rel="back"
-	    	onClick="SR4.Local.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('')">
+	    	onClick="SR4.Local.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('');">
 	    	<xsl:text>Generate!</xsl:text>
 	    </a>
     </div>
@@ -87,6 +99,22 @@
 		</form>
 	</div>
 	
+	<!-- Delete confirmation -->
+    <div data-role="popup" id="delete-popup" data-transition="pop" data-position-to="window" class="ui-content" data-target="">
+		<form>
+			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character?</xsl:text></h3>
+
+		    <a href="#" data-role="button" data-rel="back"
+		    	onClick="SR4.Local.removeCharByIndex($('#delete-popup').attr('data-target'));">
+		    	<xsl:text>Delete</xsl:text>
+		    </a>
+
+		    <a href="#" data-role="button" data-rel="back">
+		    	<xsl:text>Back</xsl:text>
+		    </a>
+		</form>
+	</div>
+
 </xsl:template>
 
 </xsl:stylesheet>

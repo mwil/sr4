@@ -16,7 +16,7 @@
 
 var Dice = {
 	Offsets: {},
-	use_cmods: false,
+	use_cmods: true,
 	prev_count: []
 };
 

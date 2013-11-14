@@ -14,7 +14,7 @@
 	<!-- Character load chooser -->
 	<div data-role="collapsible" data-iconpos="right"  data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u"
 		id="loadchar-container" class="center-collap ui-disabled nochar-disabled">
-    	<h2><xsl:text>&#160;&#160;Switch Characters</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
+    	<h2><xsl:text>&#160;&#160;Browse Local Characters</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
     	<ul data-role="listview" id="loadchar-lv" data-split-icon="delete" data-split-theme="c"></ul>
     </div>
     <!-- -->
@@ -34,21 +34,16 @@
 			<xsl:text>Choose Group (current: devel)</xsl:text>
 		</a>
 
-		<a href="#" data-role="button" data-icon="check" data-iconpos="right" onClick="SR4.Remote.pushChar();"
-			class="ui-disabled nochar-disabled" id="rem-server-a">
-			<xsl:text>Push Character (Server)</xsl:text>
-		</a>
-
 		<!-- Character load chooser -->
-		<div data-role="collapsible" data-collapsed-icon="refresh" data-iconpos="right" data-expanded-icon="delete"
+		<div data-role="collapsible" data-collapsed-icon="refresh" data-iconpos="right" data-expanded-icon="arrow-u"
 			id="rem-lc-collap" class="center-collap">
-	    	<h2><xsl:text>&#160;&#160;Fetch Character (Server)</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
-	    	<ul data-role="listview" id="rem-loadchar-lv"></ul>
+	    	<h2><xsl:text>&#160;&#160;Browse Remote Characters</xsl:text></h2> <!-- FIXME: hack to center, but ok -->
+	    	<ul data-role="listview" id="rem-loadchar-lv" data-split-icon="delete" data-split-theme="c"></ul>
 	    </div>
 
-		<a href="#" data-role="button" data-icon="delete" data-iconpos="right" class="ui-disabled nochar-disabled"
-			onClick="SR4.Remote.removeChar();">
-			<xsl:text>Remove Character (Server)</xsl:text>
+		<a href="#" data-role="button" data-icon="check" data-iconpos="right" onClick="SR4.Remote.pushChar();"
+			class="ui-disabled nochar-disabled" id="rem-server-a">
+			<xsl:text>Push Character to Server</xsl:text>
 		</a>
 	</div>
 
@@ -106,6 +101,22 @@
 
 		    <a href="#" data-role="button" data-rel="back"
 		    	onClick="SR4.Local.removeCharByIndex($('#delete-popup').attr('data-target'));">
+		    	<xsl:text>Delete</xsl:text>
+		    </a>
+
+		    <a href="#" data-role="button" data-rel="back">
+		    	<xsl:text>Back</xsl:text>
+		    </a>
+		</form>
+	</div>
+
+	<!-- Remote Delete confirmation -->
+    <div data-role="popup" id="rem-delete-popup" data-transition="pop" data-position-to="window" class="ui-content" data-target="">
+		<form>
+			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
+
+		    <a href="#" data-role="button" data-rel="back"
+		    	onClick="SR4.Remote.removeCharByIndex($('#rem-delete-popup').attr('data-target'));">
 		    	<xsl:text>Delete</xsl:text>
 		    </a>
 

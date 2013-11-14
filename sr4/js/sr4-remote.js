@@ -28,7 +28,7 @@ SR4.Remote.loginToServer = function() {
 		response = $.trim(response);
 
 		if (response.indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Login failed!<br/>Message: '+response).popup('open');
+			$('#remote-status-popup').html('Login failed!<br/>Message from server: '+response).popup('open');
 		} else {
 			var username = response.slice("ok:login:".length);
 
@@ -50,7 +50,7 @@ SR4.Remote.fetchCharList = function() {
 		response = $.trim(response);
 
 		if (response.indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Listing failed!<br/>Message: '+response).popup('open');
+			$('#remote-status-popup').html('Listing failed!<br/>Message from server: '+response).popup('open');
 			$('#rem-lc-collap').trigger('collapse');
 		} else {
 			SR4.Remote.CharList = response && JSON.parse(response);
@@ -71,7 +71,7 @@ SR4.Remote.pullChar = function(index) {
 		response = $.trim(response);
 
 		if (response.indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Pull failed!<br/>Message: '+response).popup('open');
+			$('#remote-status-popup').html('Pull failed!<br/>Message from server: '+response).popup('open');
 		} else {
 			SR4.Remote.Chars[charName] = response && JSON.parse(response);
 			SR4.Remote.Chars[charName].__proto__ = Character.prototype;
@@ -84,7 +84,7 @@ SR4.Remote.pullChar = function(index) {
 			SR4.Local.charListChanged();
 			SR4.switchToChar(charName);
 
-			$('#remote-status-popup').text('Pull successful!').popup('open');
+			$('#remote-status-popup').text('Character successfully added to local library!').popup('open');
 		}
 
 		$.mobile.loading("hide");
@@ -101,30 +101,37 @@ SR4.Remote.pushChar = function() {
 		response = $.trim(response);
 
 		if (response === "ok:push:saved") {
-			$('#remote-status-popup').text('Push successful!').popup('open');
+			$('#remote-status-popup').text('Character is now stored on the server!').popup('open');
 		} else {
-			$('#remote-status-popup').html('Push failed!<br/>Message: '+response).popup('open');	
+			$('#remote-status-popup').html('Push failed!<br/>Message from server: '+response).popup('open');	
 		}
 
+		// TODO: keep charlist updated ...
 		$.mobile.loading("hide");
 	});
 };
 
-SR4.Remote.removeChar = function() {
+SR4.Remote.removeCharByIndex = function(index) {
+	var charname = this.CharList[index];
+
+	this.removeChar(charname);
+};
+
+SR4.Remote.removeChar = function(charname) {
 	$.mobile.loading("show");
 
-	delete this.Chars[SR4.currChar.charName];
+	delete this.Chars[charname];
 	this.CharList = Object.keys(this.Chars);
 
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': this.auths, 
-								 'cname': JSON.stringify(SR4.currChar.charName)}, function(response)
+								 'cname': JSON.stringify(charname)}, function(response)
 	{
 	 	response = $.trim(response);
 
 		if (response === "ok:delete:deleted") {
-			$('#remote-status-popup').text('Remove successful!').popup('open');
+			$('#remote-status-popup').text('Character successfully removed!').popup('open');
 		} else {
-			$('#remote-status-popup').html('Remove failed!<br/>Message: '+response).popup('open');	
+			$('#remote-status-popup').html('Remove failed!<br/>Message from server: '+response).popup('open');	
 		}
 
 		$('#rem-lc-collap').trigger('collapse');
@@ -139,7 +146,8 @@ SR4.Remote.refreshCharList = function() {
 
 	for (var i = 0; i < this.CharList.length; i++) {
 		$('#rem-loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' "+
-			"onClick='SR4.Remote.pullChar("+i+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a></li>")	
+			"onClick='SR4.Remote.pullChar("+i+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a>"+
+			"<a href='#rem-delete-popup' data-rel='popup' onClick='$(\"#rem-delete-popup\").attr(\"data-target\", "+i+");'>Delete</a></li>")	
 	};
 
 	$("#rem-loadchar-lv").listview("refresh");

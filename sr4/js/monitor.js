@@ -71,16 +71,20 @@ Monitor.incMisc = function(value) {
 
 Monitor.resetStun = function() {
 	SR4.currChar.condition.currStun = 0;
-	this.refresh();
+
+	// changing the char directly seems to make it null for a short while and trigger a page transition ...
+	setTimeout(function(){Monitor.refresh();}, 50);
 };
 
 Monitor.resetPhy = function() {
 	SR4.currChar.condition.currPhy = 0;
-	this.refresh();
+
+	setTimeout(function(){Monitor.refresh();}, 50);
 };
 
 Monitor.resetMisc = function() {
 	SR4.currChar.condition.currMisc = 0;
+	
 	this.refresh();
 };
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<skills>
+	<category name="Combat Active Skills">
+		<skill>
+			<name>Blades</name>
+			<id>CA_Blad</id>
+			<attribute>AGI</attribute>
+		</skill>
+	</category>
+
+	<category name="Active Skills -- Physical">
+		<skill>
+			<name>Infiltration</name>
+			<id>PA_Inf</id>
+			<attribute>AGI</attribute>
+		</skill>
+	</category>
+
+	<category name="Active Skills -- Social">
+		<skill>
+			<name>Con</name>
+			<id>SA_Con</id>
+			<attribute>CHA</attribute>
+		</skill>
+	</category>
+
+	<category name="Technical Active Skills">
+		<skill>
+			<name>Computer</name>
+			<id>TA_Comp</id>
+			<attribute>LOG</attribute>
+		</skill>
+	</category>
+
+	<category name="Vehicle Active Skills">
+		<skill>
+			<name>Pilot Aircraft</name>
+			<id>VA_Airc</id>
+			<attribute>REA</attribute>
+		</skill>
+	</category>
+</skills>

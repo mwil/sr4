@@ -67,9 +67,10 @@
     <xsl:copy-of select="."/>
 </xsl:template>
 
+<!-- Make the list of attributes available to the JavaScript app -->
 <xsl:template match="attribs">
 	<xsl:element name="div">
-		<xsl:attribute name="id"><xsl:text>StatList</xsl:text></xsl:attribute>
+		<xsl:attribute name="class"><xsl:text>AttrList</xsl:text></xsl:attribute>
 		<xsl:attribute name="data-stats">
 			<xsl:for-each select="attr">
 				<xsl:text>Attrib_</xsl:text><xsl:value-of select="id"/><xsl:text> </xsl:text>
@@ -78,7 +79,20 @@
 	</xsl:element>
 </xsl:template>
 
+<!-- Make the list of skills available to the JavaScript app -->
+<xsl:template match="skills/category">
+	<xsl:element name="div">
+		<xsl:attribute name="class"><xsl:text>SkillList</xsl:text></xsl:attribute>
+		<xsl:attribute name="data-stats">
+			<xsl:for-each select="skill">
+				<xsl:text>Skill_</xsl:text><xsl:value-of select="id"/><xsl:text> </xsl:text>
+			</xsl:for-each>
+		</xsl:attribute>
+	</xsl:element>
+</xsl:template>
+
 <!-- Ignore data xml that is used for autogenerating lists -->
 <xsl:template match="attribs/*"/>
+<xsl:template match="skills/*"/>
 
 </xsl:stylesheet>

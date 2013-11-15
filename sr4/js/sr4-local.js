@@ -18,7 +18,13 @@
 SR4.Local.init = function() {
 	var gotChar = false;
 
-	SR4.StatList = $('#StatList').attr("data-stats").trim().split(/\s+/);
+	SR4.StatList = $('.AttrList').attr("data-stats").trim().split(/\s+/);
+
+	// Get the Skill information from each category
+	$('.SkillList').each(function() {
+		SR4.StatList = SR4.StatList.concat($(this).attr("data-stats").trim().split(/\s+/));
+	});
+	
 
 	// load available chars from localStorage
 	if (window.APPSTRING+"__charlist__" in localStorage) {

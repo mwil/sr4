@@ -6,7 +6,8 @@
 <xsl:template match="stats">
 	<!-- autogen the stats list from the <attribs> element tree in sr4.xml -->
 	<div data-role="collapsible-set" data-inset="true">
-	    <div data-role="collapsible" data-collapsed="false">
+
+	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>
 	        <ul data-role="listview">
 	        	<xsl:for-each select="/app/attribs/attr">
@@ -19,8 +20,24 @@
 		            </li>
 		        </xsl:for-each>
 	        </ul>
-	        <!-- TODO: add more collapsibles from skills data, possible from the Chummer xml files -->
 	    </div>
+	    
+	    <xsl:for-each select="/app/skills/category">
+			<div data-role="collapsible">
+		        <h2><xsl:value-of select="@name"/></h2>
+		        <ul data-role="listview">
+		        	<xsl:for-each select="./skill">
+			            <li>
+			            	<a href="#stats-popup" data-rel="popup"
+			            		onClick="SR4.updateStatsPopup('{name}', 'Skill_{id}', SR4.currChar.stats['Skill_{id}']);">
+			            		<xsl:value-of select="name"/>
+			            		<span class="ui-li-count med" id="Skill_{id}"></span>
+			            	</a>
+			            </li>
+					</xsl:for-each>	        
+		        </ul>
+		    </div>
+	    </xsl:for-each>
 	</div>
 
 	<!-- the popup to change character stats values, it is reused and automatically filled refreshed by SR4.updateStatsPopup.js -->

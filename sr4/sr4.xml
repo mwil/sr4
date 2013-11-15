@@ -3,6 +3,7 @@
 
 <!DOCTYPE app [
 	<!ENTITY include_attribs SYSTEM "xml/attribs.xml">
+	<!ENTITY include_skills  SYSTEM "xml/skills.xml">
 ]>
 
 
@@ -34,4 +35,5 @@
 
 	<!-- read attributes from data XML file -->
 	&include_attribs;
+	&include_skills;
 </app>

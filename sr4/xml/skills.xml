@@ -3,17 +3,142 @@
 <skills>
 	<category name="Active Skills -- Combat">
 		<skill>
+			<name>Archery</name>
+			<id>CA_Arch</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Automatics</name>
+			<id>CA_Auto</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
 			<name>Blades</name>
 			<id>CA_Blad</id>
 			<attribute>AGI</attribute>
 		</skill>
+		<skill>
+			<name>Clubs</name>
+			<id>CA_Club</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Dodge</name>
+			<id>CA_Dodg</id>
+			<attribute>REA</attribute>
+		</skill>
+		<skill>
+			<name>Exotic Melee Weapon</name>
+			<id>CA_ExoMe</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Exotic Ranged Weapon</name>
+			<id>CA_ExoRa</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Heavy Weapons</name>
+			<id>CA_Heav</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Longarms</name>
+			<id>CA_Long</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Pistols</name>
+			<id>CA_Pist</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Throwing Weapons</name>
+			<id>CA_Throw</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Unarmed Combat</name>
+			<id>CA_Unarm</id>
+			<attribute>AGI</attribute>
+		</skill>y
 	</category>
 
 	<category name="Active Skills -- Physical">
 		<skill>
+			<name>Climbing</name>
+			<id>PA_Climb</id>
+			<attribute>STR</attribute>
+		</skill>
+		<skill>
+			<name>Disguise</name>
+			<id>PA_Disg</id>
+			<attribute>INT</attribute>
+		</skill>
+		<skill>
+			<name>Diving</name>
+			<id>PA_Dive</id>
+			<attribute>BOD</attribute>
+		</skill>
+		<skill>
+			<name>Escape Artist</name>
+			<id>PA_Escap</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Gymnastics</name>
+			<id>PA_Gym</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
 			<name>Infiltration</name>
 			<id>PA_Inf</id>
 			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Navigation</name>
+			<id>PA_Navi</id>
+			<attribute>INT</attribute>
+		</skill>
+		<skill>
+			<name>Palming</name>
+			<id>PA_Palm</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Parachuting</name>
+			<id>PA_Pchute</id>
+			<attribute>BOD</attribute>
+		</skill>
+		<skill>
+			<name>Perception</name>
+			<id>PA_Perce</id>
+			<attribute>INT</attribute>
+		</skill>
+		<skill>
+			<name>Running</name>
+			<id>PA_Run</id>
+			<attribute>STR</attribute>
+		</skill>
+		<skill>
+			<name>Shadowing</name>
+			<id>PA_Shado</id>
+			<attribute>INT</attribute>
+		</skill>
+		<skill>
+			<name>Survival</name>
+			<id>PA_Surv</id>
+			<attribute>WIL</attribute>
+		</skill>
+		<skill>
+			<name>Swimming</name>
+			<id>PA_Swim</id>
+			<attribute>STR</attribute>
+		</skill>
+		<skill>
+			<name>Tracking</name>
+			<id>PA_Track</id>
+			<attribute>INT</attribute>
 		</skill>
 	</category>
 
@@ -23,20 +148,170 @@
 			<id>SA_Con</id>
 			<attribute>CHA</attribute>
 		</skill>
+		<skill>
+			<name>Etiquette</name>
+			<id>SA_Etiq</id>
+			<attribute>CHA</attribute>
+		</skill>
+		<skill>
+			<name>Instruction</name>
+			<id>SA_Instr</id>
+			<attribute>CHA</attribute>
+		</skill>
+		<skill>
+			<name>Intimidation</name>
+			<id>SA_Intim</id>
+			<attribute>CHA</attribute>
+		</skill>
+		<skill>
+			<name>Leadership</name>
+			<id>SA_Lead</id>
+			<attribute>CHA</attribute>
+		</skill>
+		<skill>
+			<name>Negotiation</name>
+			<id>SA_Nego</id>
+			<attribute>CHA</attribute>
+		</skill>
 	</category>
 
 	<category name="Active Skills -- Technical">
 		<skill>
+			<name>Aeronautics Mechanic</name>
+			<id>TA_Aero</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Armorer</name>
+			<id>TA_Armor</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Artisan</name>
+			<id>TA_Arti</id>
+			<attribute>INT</attribute>
+		</skill>
+		<skill>
+			<name>Automotive Mechanic</name>
+			<id>TA_Auto</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Chemistry</name>
+			<id>TA_Chem</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
 			<name>Computer</name>
 			<id>TA_Comp</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Cybercombat</name>
+			<id>TA_CyComb</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Cybertechnology</name>
+			<id>TA_Cytech</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Data Search</name>
+			<id>TA_Searc</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Demolitions</name>
+			<id>TA_Demo</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Electronic Warfare</name>
+			<id>TA_EW</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>First Aid</name>
+			<id>TA_FAid</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Forgery</name>
+			<id>TA_Forge</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Hacking</name>
+			<id>TA_Hack</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Hardware</name>
+			<id>TA_HW</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Industrial Mechanic</name>
+			<id>TA_Indus</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Locksmith</name>
+			<id>TA_Lock</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Medicine</name>
+			<id>TA_Medi</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Nautical Mechanic</name>
+			<id>TA_Nauti</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Software</name>
+			<id>TA_SW</id>
 			<attribute>LOG</attribute>
 		</skill>
 	</category>
 
 	<category name="Active Skills -- Vehicle">
 		<skill>
+			<name>Gunnery</name>
+			<id>VA_Gun</id>
+			<attribute>AGI</attribute>
+		</skill>
+		<skill>
+			<name>Pilot Aerospace</name>
+			<id>VA_Aspace</id>
+			<attribute>REA</attribute>
+		</skill>
+		<skill>
 			<name>Pilot Aircraft</name>
-			<id>VA_Airc</id>
+			<id>VA_Acraft</id>
+			<attribute>REA</attribute>
+		</skill>
+		<skill>
+			<name>Pilot Anthroform</name>
+			<id>VA_Anthro</id>
+			<attribute>REA</attribute>
+		</skill>
+		<skill>
+			<name>Pilot Exotic Vehicle</name>
+			<id>VA_ExoV</id>
+			<attribute>REA</attribute>
+		</skill>
+		<skill>
+			<name>Pilot Ground Craft</name>
+			<id>VA_Ground</id>
+			<attribute>REA</attribute>
+		</skill>
+		<skill>
+			<name>Pilot Watercraft</name>
+			<id>VA_Water</id>
 			<attribute>REA</attribute>
 		</skill>
 	</category>

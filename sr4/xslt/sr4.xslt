@@ -49,6 +49,7 @@
 				<ul>
 					<li><a href="#title"><xsl:text>Chars</xsl:text></a></li>
 					<li><a href="#stats"   class="ui-disabled nochar-disabled inheader"><xsl:text>Stats</xsl:text></a></li>
+					<li><a href="#tests"   class="ui-disabled nochar-disabled inheader"><xsl:text>Tests</xsl:text></a></li>
 					<li><a href="#dice"    class="ui-disabled nochar-disabled inheader"><xsl:text>Dicer</xsl:text></a></li>
 					<li><a href="#monitor" class="ui-disabled nochar-disabled inheader"><xsl:text>Monitor</xsl:text></a></li>
 				</ul>

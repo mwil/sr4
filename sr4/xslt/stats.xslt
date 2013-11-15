@@ -5,7 +5,7 @@
 
 <xsl:template match="stats">
 	<!-- autogen the stats list from the <attribs> element tree in sr4.xml -->
-	<div data-role="collapsible-set" data-inset="true">
+	<div data-role="collapsible-set" data-inset="true" data-iconpos="right">
 
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>

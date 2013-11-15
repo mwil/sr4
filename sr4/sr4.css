@@ -6,7 +6,7 @@
 .poplabel { text-align:center; }
 td { text-align:center; }
 
-.info {color:grey;}
+.info {color:grey; font-size: smaller;}
 .warn {color:red;}
 
 .center-collap .ui-btn-inner { text-align: center; vertical-align: middle; }

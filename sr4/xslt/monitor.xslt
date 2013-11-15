@@ -53,10 +53,11 @@
 
         <ul data-role="listview">
         	<li data-icon="refresh">
-    			<a href="#" id="roll-initiative" 
+    			<a href="#" id="roll-initiative" stat_a="Attrib_REA" stat_b="Attrib_INT" offset="8"
     				onClick="$('#currInitiative').html(Test.asString('Attrib_REA', 'Attrib_INT', SR4.currChar.stats['Attrib_REA'] + SR4.currChar.stats['Attrib_INT']));">
-    				<xsl:text>Roll Initiative</xsl:text>
-    				<span class="ui-li-count med test" id="currInitiative">--</span>
+    				<xsl:text>Roll Initiative </xsl:text>
+    				<span class="test-label info"><xsl:text>(x dice)</xsl:text></span>
+    				<span class="ui-li-count med test-res" id="currInitiative">--</span>
     			</a>
     		</li>
     	</ul>

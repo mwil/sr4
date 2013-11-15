@@ -11,7 +11,8 @@
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Test.incMod(-1);">
 		</a>
-	    <a href="#" id="test-mod-label" data-role="button" class="btn-in">
+	    <a href="#" id="test-mod-label" data-role="button" class="btn-in"
+	    	onClick="Test.resetMod();">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
 	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"

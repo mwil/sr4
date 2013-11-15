@@ -65,10 +65,22 @@ Monitor.hitPhy = function(hits) {
 };
 
 Monitor.incMisc = function(value) {
-	var cond = SR4.currChar.condition;
+	SR4.currChar.condition.currMisc += value;
+	this.refresh();
+};
 
-	cond.currMisc += value;
+Monitor.resetStun = function() {
+	SR4.currChar.condition.currStun = 0;
+	this.refresh();
+};
 
+Monitor.resetPhy = function() {
+	SR4.currChar.condition.currPhy = 0;
+	this.refresh();
+};
+
+Monitor.resetMisc = function() {
+	SR4.currChar.condition.currMisc = 0;
 	this.refresh();
 };
 
@@ -106,6 +118,9 @@ Monitor.refresh = function() {
 	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
 
 	SR4.currChar.updated();
+
+	// Refresh Ini test, this needs a better separation (TODO)
+	Test.refresh();
 };
 
 
@@ -114,8 +129,6 @@ Monitor.refresh = function() {
 $(document).on('pagebeforeshow', '#monitor', function () {	
 	if (SR4.currChar) {
 		SR4.refreshMonitorPage();
-		// TODO: refresh Ini test, separate this!
-		SR4.refreshTestsPage();	
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
 	};

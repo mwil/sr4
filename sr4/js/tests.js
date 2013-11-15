@@ -47,6 +47,12 @@ Test.incMod = function(value) {
 	this.refresh();
 };
 
+Test.resetMod = function() {
+	this.mods = 0;
+
+	this.refresh();
+};
+
 Test.refresh = function() {
 	$("span.test-label").each(function() {
 		var a     = $(this).closest("a");

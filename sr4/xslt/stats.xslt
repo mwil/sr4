@@ -23,7 +23,7 @@
 	    </div>
 	    
 	    <xsl:for-each select="/app/skills/category">
-			<div data-role="collapsible">
+			<div data-role="collapsible" class="category">
 		        <h2><xsl:value-of select="@name"/></h2>
 		        <ul data-role="listview">
 		        	<xsl:for-each select="./skill">

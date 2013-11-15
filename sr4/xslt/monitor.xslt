@@ -13,7 +13,8 @@
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitStun(-1);">
 		</a>
-	    <a href="#" id="stun-monitor" data-role="button" class="btn-in">
+	    <a href="#" id="stun-monitor" data-role="button" class="btn-in"
+	    	onClick="Monitor.resetStun();">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
 	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
@@ -25,7 +26,8 @@
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitPhy(-1);">
 		</a>
-	    <a href="#" id="phy-monitor" data-role="button" class="btn-in">
+	    <a href="#" id="phy-monitor" data-role="button" class="btn-in"
+	    	onClick="Monitor.resetPhy();">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
 	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
@@ -37,7 +39,8 @@
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.incMisc(-1);">
 		</a>
-	    <a href="#" id="misc-monitor" data-role="button" class="btn-in">
+	    <a href="#" id="misc-monitor" data-role="button" class="btn-in"
+	    	onClick="Monitor.resetMisc();">
 	    	<xsl:text>AUTOFILLED</xsl:text>
 	    </a>
 	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"

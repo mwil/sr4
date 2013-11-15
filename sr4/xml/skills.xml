@@ -13,7 +13,7 @@
 		<skill>
 			<name>Infiltration</name>
 			<id>PA_Inf</id>
-			<attribute>INT</attribute>
+			<attribute>AGI</attribute>
 		</skill>
 	</category>
 

@@ -9,14 +9,14 @@
 	<h3 class="txtcenter"><xsl:text>Tests</xsl:text></h3>
 
 	<div data-role="collapsible" data-collapsed="false">
-	    <h2><xsl:text>Test Tests</xsl:text></h2>
+	    <h2><xsl:text>Tests Test</xsl:text></h2>
 
         <ul data-role="listview">
         	<li data-icon="refresh">
     			<a href="#" id="roll-PA_Inf" 
-    				onClick="$('#curr_PA_Inf').html(Test.asString('Attrib_INT', 'Skill_PA_Inf', SR4.currChar.stats['Attrib_INT'] + SR4.currChar.stats['Attrib_PA_Inf']));">
-    				<xsl:text>Roll Infiltration</xsl:text>
-    				<span class="ui-li-count med test" id="curr_PA_Inf">--</span>
+    				onClick="$('#curr-PA_Inf').html(Test.asString('Attrib_AGI', 'Skill_PA_Inf', 0));">
+    				<xsl:text>Roll Infiltration (10 dice)</xsl:text>
+    				<span class="ui-li-count med test" id="curr-PA_Inf">--</span>
     			</a>
     		</li>
     	</ul>

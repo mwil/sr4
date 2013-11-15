@@ -6,7 +6,7 @@
 	<div data-role="controlgroup">
 		<a href="#title"   data-role="button" data-icon="arrow-r" data-iconpos="right">Title Page</a>
 	    <a href="#stats"   data-role="button" data-icon="arrow-r" data-iconpos="right">Character Stats</a>
-	    <a href="#tests"   data-role="button" data-icon="arrow-r" data-iconpos="right">Tests Stats</a>
+	    <a href="#tests"   data-role="button" data-icon="arrow-r" data-iconpos="right">Tests Page</a>
 	    <a href="#dice"    data-role="button" data-icon="arrow-r" data-iconpos="right">Dice Thrower</a>
 	    <a href="#monitor" data-role="button" data-icon="arrow-r" data-iconpos="right">Condition Monitor</a>
 	    <a href="#ammo"    data-role="button" data-icon="arrow-r" data-iconpos="right">Ammo Tracking</a>

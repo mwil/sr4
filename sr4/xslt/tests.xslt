@@ -6,6 +6,22 @@
 <!-- Templates for the roll tests page -->
 
 <xsl:template match="tests">
+	<form class="txtcenter fullwidth">
+	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-test-cg">
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
+			onClick="Test.incMod(-1);">
+		</a>
+	    <a href="#" id="test-mod-label" data-role="button" class="btn-in">
+	    	<xsl:text>AUTOFILLED</xsl:text>
+	    </a>
+	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
+	    	onClick="Test.incMod(1);">
+	    </a>
+	</fieldset>
+	</form>
+
+	<h3 class="txtcenter"><xsl:text>Recently Used</xsl:text></h3>
+
 	<div data-role="collapsible" data-iconpos="right">
 	    <h2><xsl:text>TODO: 5 recently used skills.</xsl:text></h2>
 

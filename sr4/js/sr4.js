@@ -102,6 +102,10 @@ SR4.refreshMonitorPage = function() {
 	Monitor.refresh();
 };
 
+SR4.refreshTestsPage = function() {
+	Test.refresh();
+};
+
 
 
 /* ######################### */

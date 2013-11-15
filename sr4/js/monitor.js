@@ -113,7 +113,9 @@ Monitor.refresh = function() {
 
 $(document).on('pagebeforeshow', '#monitor', function () {	
 	if (SR4.currChar) {
-		SR4.refreshMonitorPage();	
+		SR4.refreshMonitorPage();
+		// TODO: refresh Ini test, separate this!
+		SR4.refreshTestsPage();	
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
 	};

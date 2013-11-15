@@ -95,13 +95,13 @@ Dice.printToPopup = function (count) {
 	if (res.hits > 0) {
 		if (res.glitch) {
 			// normal glitch, too many ones ...
-			title = "<h3 class='diceresglitch'>"+res.hits+(res.hits>1?" Hits":" Hit")+ " (and glitch!)</h3>";	
+			title = "<h3 class='diceres warn'>"+res.hits+(res.hits>1?" Hits":" Hit")+ " (and glitch!)</h3>";	
 		} else {
 			title = "<h3 class='diceres'>"+res.hits+(res.hits>1?" Hits":" Hit")+"!</h3>";
 		}
 	} else {
 		 if (res.glitch) {
-			title = "<h3 class='diceresglitch'>Critical glitch!!</h3>";	
+			title = "<h3 class='diceres warn'>Critical glitch!!</h3>";	
 		} else {
 			title = "<h3 class='diceres'>No Hits!</h3>";
 		}
@@ -196,7 +196,7 @@ Dice.refreshDiceButtons = function() {
 			}
 
 			$(this).find(".ui-btn-text").html(baseval + 
-				(offset != 0 ? "<sub style='color:grey;'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
+				(offset != 0 ? "<sub class='info'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
 		}
 	)
 };

@@ -15,9 +15,9 @@
 */
 
 var Monitor = {
-	knock_msg: "<div style='color:grey;'>Knocked Out!<div>",
-	coma_msg:  "<div style='color:red;'>Character in Coma!<div>",
-	dead_msg:  "<div style='color:red;'>! DEAD !<div>"
+	knock_msg: "<div class='info'>Knocked Out!<div>",
+	coma_msg:  "<div class='warn'>Character in Coma!<div>",
+	dead_msg:  "<div class='warn'>! DEAD !<div>"
 }
 
 Monitor.hitStun = function(hits) {
@@ -79,8 +79,8 @@ Monitor.refresh = function() {
 	var phyMod  = -Math.floor(SR4.currChar.condition.currPhy/3);
 	var cond    = SR4.currChar.condition;
 
-	var stun_msg = "<div>Stun Track <span style='color:grey;'>("+stunMod+")</span></div>";
-	var phy_msg  = "<div>Physical Track <span style='color:grey;'>("+phyMod+")</span></div>";
+	var stun_msg = "<div>Stun Track <span class='info'>("+stunMod+")</span></div>";
+	var phy_msg  = "<div>Physical Track <span class='info'>("+phyMod+")</span></div>";
 
 	if (cond.currStun >= maxStun) {
 		stun_msg = this.knock_msg;
@@ -101,9 +101,9 @@ Monitor.refresh = function() {
 	SR4.currChar.mods['phyMod']  = phyMod;
 	SR4.currChar.mods['miscMod'] = cond.currMisc;
 
-	$('#stun-monitor .ui-btn-text').html(stun_msg+"<div><sub class='grey'>("+cond.currStun+" / "+maxStun+")</sub></div>");
-	$('#phy-monitor  .ui-btn-text').html(phy_msg+ "<div><sub class='grey'>("+cond.currPhy+" / " +maxPhy+ ")</sub></div>");
-	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="grey">('+cond.currMisc+')</span>');
+	$('#stun-monitor .ui-btn-text').html(stun_msg+"<div><sub class='info'>("+cond.currStun+" / "+maxStun+")</sub></div>");
+	$('#phy-monitor  .ui-btn-text').html(phy_msg+ "<div><sub class='info'>("+cond.currPhy+" / " +maxPhy+ ")</sub></div>");
+	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
 
 	SR4.currChar.updated();
 };
@@ -116,5 +116,5 @@ $(document).on('pagebeforeshow', '#monitor', function () {
 		SR4.refreshMonitorPage();	
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
-	}
+	};
 });

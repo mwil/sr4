@@ -62,7 +62,7 @@ SR4.Remote.fetchCharList = function() {
 	});
 };
 
-SR4.Remote.pullChar = function(index) {
+SR4.Remote.pullCharByIndex = function(index) {
 	var charName = this.CharList[index];
 
 	$.mobile.loading("show");
@@ -146,7 +146,7 @@ SR4.Remote.refreshCharList = function() {
 
 	for (var i = 0; i < this.CharList.length; i++) {
 		$('#rem-loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' "+
-			"onClick='SR4.Remote.pullChar("+i+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a>"+
+			"onClick='SR4.Remote.pullCharByIndex("+i+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharList[i]+"</a>"+
 			"<a href='#rem-delete-popup' data-rel='popup' onClick='$(\"#rem-delete-popup\").attr(\"data-target\", "+i+");'>Delete</a></li>")	
 	};
 

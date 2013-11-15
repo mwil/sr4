@@ -8,6 +8,7 @@
 <xsl:include href="dice.xslt"/>
 <xsl:include href="stats.xslt"/>
 <xsl:include href="monitor.xslt"/>
+<xsl:include href="tests.xslt"/>
 
 
 <!-- Root template, generate HTML header and body -->

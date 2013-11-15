@@ -20,7 +20,7 @@ SR4.Local.init = function() {
 
 	SR4.StatList = $('.AttrList').attr("data-stats").trim().split(/\s+/);
 
-	// Get the Skill information from each category
+	// Get the skill information from each category and add it to the statlist
 	$('.SkillList').each(function() {
 		SR4.StatList = SR4.StatList.concat($(this).attr("data-stats").trim().split(/\s+/));
 	});

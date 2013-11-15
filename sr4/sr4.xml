@@ -16,12 +16,16 @@
 		<stats/>
 	</page>
 
-	<page id="dice" prev="stats" next="monitor">
+	<page id="dice" prev="stats" next="tests">
 		<dicemode-cb/>
 		<dice-buttons/>
 	</page>
 
-	<page id="monitor" prev="dice" next="title">
+	<page id="tests" prev="dice" next="monitor">
+		<tests/>
+	</page>
+
+	<page id="monitor" prev="tests" next="title">
 		<monitor/>
 	</page>
 

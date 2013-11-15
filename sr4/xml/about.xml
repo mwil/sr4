@@ -8,14 +8,13 @@
 	<p>Grab the latest source code at <a href="https://github.com/mwil/sr4">github.com/mwil/sr4</a> (GPL3)</p>
 
 	<h3>Feature Ideas</h3>
-	<div>More Stats (extract stuff on the fly from Chummer's XML)</div>
-	<div>Split basic char data, Attribs, Karma -- Stats?</div>
-	<div>Add the Ammo Tracker</div>
-	<div>Finance Page</div>
-	<div>Quick Rules Page</div>
-	<div>Add login/password</div>
+	<div>Tests Page</div>
+	<div>Real handling of users and groups</div>
+	<div>Finance Page?</div>
+	<div>Quick Rules Page?</div>
 
 	<h3>Versions</h3>
 	<div>v0.1 --- "The Prancing Pony" Oct. 2013</div>
 	<div>v0.2 --- "Now including the Internet" Nov. 2013</div>
+	<div>v0.3 --- "More of Everthing" Nov. 2013</div>
 </div>

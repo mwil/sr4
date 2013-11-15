@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <skills>
-	<category name="Combat Active Skills">
+	<category name="Active Skills -- Combat">
 		<skill>
 			<name>Blades</name>
 			<id>CA_Blad</id>
@@ -13,7 +13,7 @@
 		<skill>
 			<name>Infiltration</name>
 			<id>PA_Inf</id>
-			<attribute>AGI</attribute>
+			<attribute>INT</attribute>
 		</skill>
 	</category>
 
@@ -25,7 +25,7 @@
 		</skill>
 	</category>
 
-	<category name="Technical Active Skills">
+	<category name="Active Skills -- Technical">
 		<skill>
 			<name>Computer</name>
 			<id>TA_Comp</id>
@@ -33,7 +33,7 @@
 		</skill>
 	</category>
 
-	<category name="Vehicle Active Skills">
+	<category name="Active Skills -- Vehicle">
 		<skill>
 			<name>Pilot Aircraft</name>
 			<id>VA_Airc</id>

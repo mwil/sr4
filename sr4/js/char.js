@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var DEFAULTVAL = 1;
+var DEFAULTVAL = 0;
 var DEFAULTNAME = "Character Name";
 
 var Character = function(charName) {

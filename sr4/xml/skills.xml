@@ -315,4 +315,75 @@
 			<attribute>REA</attribute>
 		</skill>
 	</category>
+
+	<category name="Active Skills – Magical">
+		<skill>
+			<name>Arcana</name>
+			<id>MA_Arca</id>
+			<attribute>LOG</attribute>
+		</skill>
+		<skill>
+			<name>Assensing</name>
+			<id>MA_Assen</id>
+			<attribute>INT</attribute>
+		</skill>
+		<skill>
+			<name>Astral Combat</name>
+			<id>MA_AComb</id>
+			<attribute>WIL</attribute>
+		</skill>
+		<skill>
+			<name>Banishing</name>
+			<id>MA_Ban</id>
+			<attribute>MAG</attribute>
+		</skill>
+		<skill>
+			<name>Binding</name>
+			<id>MA_Bind</id>
+			<attribute>MAG</attribute>
+		</skill>
+		<skill>
+			<name>Counterspelling</name>
+			<id>MA_Counter</id>
+			<attribute>MAG</attribute>
+		</skill>
+		<skill>
+			<name>Enchanting</name>
+			<id>MA_Ench</id>
+			<attribute>MAG</attribute>
+		</skill>
+		<skill>
+			<name>Ritual Spellcasting</name>
+			<id>MA_Ritua</id>
+			<attribute>MAG</attribute>
+		</skill>
+		<skill>
+			<name>Spellcasting</name>
+			<id>MA_Cast</id>
+			<attribute>MAG</attribute>
+		</skill>
+		<skill>
+			<name>Summoning</name>
+			<id>MA_Summon</id>
+			<attribute>MAG</attribute>
+		</skill>
+	</category>
+
+	<category name="Active Skills – Resonance">
+		<skill>
+			<name>Compiling</name>
+			<id>RA_Comp</id>
+			<attribute>RES</attribute>
+		</skill>
+		<skill>
+			<name>Decompiling</name>
+			<id>RA_Decomp</id>
+			<attribute>RES</attribute>
+		</skill>
+		<skill>
+			<name>Registering</name>
+			<id>RA_Reg</id>
+			<attribute>RES</attribute>
+		</skill>
+	</category>
 </skills>

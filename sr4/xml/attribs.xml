@@ -42,4 +42,12 @@
 		<id>EDG</id>
 		<name>Edge</name>
 	</attr>
+	<attr>
+		<id>MAG</id>
+		<name>Magic</name>
+	</attr>
+	<attr>
+		<id>RES</id>
+		<name>Resonance</name>
+	</attr>
 </attribs>

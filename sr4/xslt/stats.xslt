@@ -5,13 +5,13 @@
 
 <xsl:template match="stats">
 	<!-- autogen the stats list from the <attribs> element tree in sr4.xml -->
-	<div data-role="collapsible-set" data-inset="true" data-iconpos="right">
+	<div data-role="collapsible-set" data-inset="true" data-iconpos="right" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
 
 	    <div data-role="collapsible">
 	        <h2><xsl:text>Attributes</xsl:text></h2>
 	        <ul data-role="listview">
 	        	<xsl:for-each select="/app/attribs/attr">
-		            <li>
+		            <li data-icon="false">
 		            	<a href="#stats-popup" data-rel="popup"
 		            		onClick="SR4.updateStatsPopup('{name}', 'Attrib_{id}', SR4.currChar.stats['Attrib_{id}']);">
 		            		<xsl:value-of select="name"/>
@@ -27,7 +27,7 @@
 		        <h2><xsl:value-of select="@name"/></h2>
 		        <ul data-role="listview">
 		        	<xsl:for-each select="./skill">
-			            <li>
+			            <li data-icon="false">
 			            	<a href="#stats-popup" data-rel="popup"
 			            		onClick="SR4.updateStatsPopup('{name}', 'Skill_{id}', SR4.currChar.stats['Skill_{id}']);">
 			            		<xsl:value-of select="name"/>

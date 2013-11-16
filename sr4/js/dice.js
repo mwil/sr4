@@ -24,7 +24,7 @@ Dice.rollToPopup = function(num_dice, edge) {
 	var count = this.roll(num_dice, edge);
 
 	this.prev_count = count;
-	this.printToPopup(count);
+	this.updateDicePopup(count);
 };
 
 Dice.rerollToPopup = function() {
@@ -42,7 +42,7 @@ Dice.rerollToPopup = function() {
 		count[roll] += 1;
 	};
 
-	this.printToPopup(count);
+	this.updateDicePopup(count);
 };
 
 Dice.addEdge = function(num_edge) {
@@ -55,7 +55,7 @@ Dice.addEdge = function(num_edge) {
 		count[i] += edge_count[i];
 	};
 
-	this.printToPopup(count);
+	this.updateDicePopup(count);
 };
 
 Dice.roll = function(num_dice, rule_of_six) {
@@ -88,7 +88,7 @@ Dice.interpretResult = function(count) {
 }
 
 
-Dice.printToPopup = function (count) {
+Dice.updateDicePopup = function (count) {
 	var res = this.interpretResult(count);
 	var title = '';
 
@@ -105,9 +105,9 @@ Dice.printToPopup = function (count) {
 		} else {
 			title = "<h3 class='diceres'>No Hits!</h3>";
 		}
-	}
+	};
 
-	$('#dice-poptext').html(title+"\
+	$('.dice-poptext').html(title+"\
 			<table class='center'>\
 				<tr>\
 					<td><div class='die'>&#9856;</div></td>\

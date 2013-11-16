@@ -31,14 +31,16 @@ Test.asString = function(stat_a, stat_b, offset) {
 		return "No dice!"
 	};
 
-	var res = Dice.interpretResult(Dice.roll(num_dice));
-	console.log(res);
+	var roll = Dice.roll(num_dice);
+	var res = Dice.interpretResult(roll);
+
+	Dice.updateDicePopup(roll);
 
 	if (res.critical) {
 		return "<div class='warn'>Critical glitch!</div>"
 	} else {
 		return (res.hits + offset) + (res.glitch?" (+glitch!)":"");
-	}
+	};
 };
 
 Test.incMod = function(value) {

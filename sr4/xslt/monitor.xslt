@@ -13,58 +13,58 @@
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitStun(-1);">
 		</a>
-	    <a href="#" id="stun-monitor" data-role="button" class="btn-in"
-	    	onClick="Monitor.resetStun();">
-	    	<xsl:text>AUTOFILLED</xsl:text>
-	    </a>
-	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
-	    	onClick="Monitor.hitStun(1);">
-	    </a>
+		<a href="#" id="stun-monitor" data-role="button" class="btn-in"
+			onClick="Monitor.resetStun();">
+			<xsl:text>AUTOFILLED</xsl:text>
+		</a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
+			onClick="Monitor.hitStun(1);">
+		</a>
 	</fieldset>
 	
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-phy-cg">
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitPhy(-1);">
 		</a>
-	    <a href="#" id="phy-monitor" data-role="button" class="btn-in"
-	    	onClick="Monitor.resetPhy();">
-	    	<xsl:text>AUTOFILLED</xsl:text>
-	    </a>
-	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
-	    	onClick="Monitor.hitPhy(1);">
-	    </a>
+		<a href="#" id="phy-monitor" data-role="button" class="btn-in"
+			onClick="Monitor.resetPhy();">
+			<xsl:text>AUTOFILLED</xsl:text>
+		</a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
+			onClick="Monitor.hitPhy(1);">
+		</a>
 	</fieldset>
 
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-misc-cg">
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.incMisc(-1);">
 		</a>
-	    <a href="#" id="misc-monitor" data-role="button" class="btn-in"
-	    	onClick="Monitor.resetMisc();">
-	    	<xsl:text>AUTOFILLED</xsl:text>
-	    </a>
-	    <a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
-	    	onClick="Monitor.incMisc(1);">
-	    </a>
+		<a href="#" id="misc-monitor" data-role="button" class="btn-in"
+			onClick="Monitor.resetMisc();">
+			<xsl:text>AUTOFILLED</xsl:text>
+		</a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" class="btn-out"
+			onClick="Monitor.incMisc(1);">
+		</a>
 	</fieldset>
 	</form>
 
 	<h3 class="txtcenter"><xsl:text>Combat Utilities</xsl:text></h3>
 
 	<div data-role="collapsible" data-collapsed="false">
-	    <h2><xsl:text>Combat Test Quicklinks</xsl:text></h2>
+		<h2><xsl:text>Combat Test Quicklinks</xsl:text></h2>
 
-        <ul data-role="listview">
-        	<li data-icon="refresh">
-    			<a href="#" id="roll-initiative" stat_a="Attrib_REA" stat_b="Attrib_INT" offset="8"
-    				onClick="$('#currInitiative').html(Test.asString('Attrib_REA', 'Attrib_INT', SR4.currChar.stats['Attrib_REA'] + SR4.currChar.stats['Attrib_INT']));">
-    				<xsl:text>Roll Initiative </xsl:text>
-    				<span class="test-label info"><xsl:text>(x dice)</xsl:text></span>
-    				<span class="ui-li-count med test-res" id="currInitiative">--</span>
-    			</a>
-    		</li>
-    	</ul>
-    </div>
+		<ul data-role="listview">
+			<li data-icon="refresh">
+				<a href="#" id="roll-initiative" stat_a="Attrib_REA" stat_b="Attrib_INT" offset="8"
+					onClick="$('#currInitiative').html(Test.asString('Attrib_REA', 'Attrib_INT', SR4.currChar.stats['Attrib_REA'] + SR4.currChar.stats['Attrib_INT']));">
+					<xsl:text>Roll Initiative </xsl:text>
+					<span class="test-label info"><xsl:text>(x dice)</xsl:text></span>
+					<span class="ui-li-count med test-res" id="currInitiative">--</span>
+				</a>
+			</li>
+		</ul>
+	</div>
 
 </xsl:template>
 

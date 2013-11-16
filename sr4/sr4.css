@@ -1,42 +1,46 @@
 .die { font-size:xx-large; }
 .diceres { text-align:center; }
+
 .center { margin-left:auto; margin-right:auto; }
 .med { font-size:medium !important; }
 .txtcenter { text-align: center }
-.poplabel { text-align:center; }
-td { text-align:center; }
 
-.info {color:grey; font-size: smaller;}
-.warn {color:red;}
+.poplabel { text-align: center; }
+td { text-align: center; }
+
+.info { color:gray; font-size: smaller; }
+.warn { color:red; }
+.hit  { text-shadow:lime 1px -1px 1px;}
 
 .center-collap .ui-btn-inner { text-align: center; vertical-align: middle; }
 
 .dicebutton { height: 42px; }
 .dicebutton .ui-btn-inner { padding: 6px; }
 
+/* Custom layout for the three buttons in a row thing */ 
 #tworow-stun-cg a, #tworow-misc-cg a, #tworow-phy-cg a, #tworow-test-cg a {   
-	float:none;
- 	display:table-cell;
-	vertical-align:middle;
+	float: none;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .btn-out {
-    width: 10%;
+	width: 10%;
 }
 
 .btn-in {
-    width: 80%;
+	width: 80%;
 }
 
 .fullwidth {
-    margin:0px !important;
+	margin:0px !important;
 }
 
 /* http://forum.jquery.com/topic/eliminate-circcle-around-icon */
 /* Get rid of the annoying outer circle on listview alt links */
 .ui-li-link-alt span.ui-btn-corner-all {
-  border-style: hidden;
-  -webkit-box-shadow: none;
-  /* Additional browser-specific box-shadow CSS should go here */
-  background: transparent;
+	border-style: hidden;
+	-webkit-box-shadow: none;
+	/* Additional browser-specific box-shadow CSS should go here */
+	background: transparent;
 }

@@ -85,7 +85,7 @@ Dice.interpretResult = function(count) {
 	res['critical'] = res.glitch && (res.hits == 0);
 
 	return res;
-}
+};
 
 
 Dice.updateDicePopup = function (count) {
@@ -110,8 +110,8 @@ Dice.updateDicePopup = function (count) {
 	$('.dice-poptext').html(title+"\
 			<table class='center'>\
 				<tr>\
-					<td><div class='die'>&#9856;</div></td>\
-					<td>x</td><td>"+count[1]+"</td>\
+					<td><div class='die warn'>&#9856;</div></td>\
+					<td class='warn'>x</td><td class='warn'>"+count[1]+"</td>\
 					<td><div class='die'>&#9857;</div></td>\
 					<td>x</td><td>"+count[2]+"</td>\
 					<td><div class='die'>&#9858;</div></td>\
@@ -120,9 +120,9 @@ Dice.updateDicePopup = function (count) {
 				<tr>\
 					<td><div class='die'>&#9859;</div></td>\
 					<td>x</td><td>"+count[4]+"</td>\
-					<td><div class='die'>&#9860;</div></td>\
+					<td><div class='die hit'>&#9860;</div></td>\
 					<td>x</td><td>"+count[5]+"</td>\
-					<td><div class='die'>&#9861;</div></td>\
+					<td><div class='die hit'>&#9861;</div></td>\
 					<td>x</td><td>"+count[6]+"</td>\
 				</tr>\
 			</table>");
@@ -198,7 +198,7 @@ Dice.refreshDiceButtons = function() {
 			$(this).find(".ui-btn-text").html(baseval + 
 				(offset != 0 ? "<sub class='info'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
 		}
-	)
+	);
 };
 
 
@@ -209,5 +209,5 @@ $(document).on('pagebeforeshow', '#dice', function () {
 		SR4.refreshDicePage();
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
-	}
+	};
 });

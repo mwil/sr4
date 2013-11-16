@@ -66,7 +66,7 @@
 
 <!-- copy over a elements verbatim -->
 <xsl:template match="a|p">
-    <xsl:copy-of select="."/>
+	<xsl:copy-of select="."/>
 </xsl:template>
 
 <!-- Make the list of attributes available to the JavaScript app -->

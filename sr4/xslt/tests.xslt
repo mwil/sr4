@@ -32,7 +32,8 @@
 
 	<h3 class="txtcenter"><xsl:text>All Tests</xsl:text></h3>
 
-	<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Search skill to roll ..." data-inset="true" data-iconpos="right">
+	<ul data-role="listview" data-filter="true" data-filter-reveal="true" id="search-skill-lv"
+		data-filter-placeholder="Search skill to roll ..." data-inset="true" data-iconpos="right">
     	<xsl:for-each select="/app/skills/category/skill">
         	<li data-icon="refresh" class="{../@type}">
     			<a href="#tests-popup" data-rel="popup"

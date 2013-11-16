@@ -21,17 +21,26 @@ var SR4 = {
 	StatList: [],
 	CondList: ['currStun', 'currPhy', 'currMisc'],
 
-	AppStrings: [window.APPSTRING+"__active_char__", 
-				 window.APPSTRING+"__charlist__",
-				 window.APPSTRING+"__active_user__"],
+	AppStrings: [
+		window.APPSTRING+"__active_char__", 
+		window.APPSTRING+"__charlist__",
+		window.APPSTRING+"__active_user__"
+	],
 
-	Remote: { Chars: {}, 
-			  CharList: [],
-			  user: null,
-			  auths: 'cornholio'
-			},
+	Remote: { 
+		Chars: {}, 
+		CharList: [],
+		user: null,
+		auths: 'cornholio'
+	},
+
 	Local:  {Chars: {}, CharList: []},
-	currChar: null
+	currChar: null,
+
+	Detached: {
+		tests_MAG: null,
+		tests_RES: null	
+	}
 };
 
 
@@ -111,17 +120,38 @@ SR4.refreshTestsPage = function() {
 };
 
 SR4.hideMAGorRES = function() {
+	// hide skill collapsibles on stats page if attrib requirements are not satisfied
+	// detach list element and restore them if necessary, just hiding them breaks ...
 	if (this.currChar.stats["Attrib_MAG"] === 0) {
-		$(".skill-magic").hide();
+		$("div.skill-magic").hide();
+
+		if (!this.Detached["tests_MAG"]) {
+			this.Detached["tests_MAG"] = $("li.skill-magic").detach();	
+		};
+
 	} else {
-		// TODO: show only if outer container is open! Use detach() instead?
-		$(".skill-magic").show();
+		$("div.skill-magic").show();
+
+		if (this.Detached["tests_MAG"]) {
+			this.Detached["tests_MAG"].appendTo("#search-skill-lv");
+			this.Detached["tests_MAG"] = null;
+		};
 	};
 
 	if (this.currChar.stats["Attrib_RES"] === 0) {
-		$(".skill-resonance").hide();
+		$("div.skill-resonance").hide();
+
+		if (!this.Detached["tests_RES"]) {
+			this.Detached["tests_RES"] = $("li.skill-resonance").detach();
+		};
+
 	} else {
-		$(".skill-resonance").show();
+		$("div.skill-resonance").show();
+
+		if (this.Detached["tests_RES"]) {
+			this.Detached["tests_RES"].appendTo("#search-skill-lv");
+			this.Detached["tests_RES"] = null;
+		};
 	};
 };
 

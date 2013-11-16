@@ -68,7 +68,7 @@ SR4.refreshTitlePage = function() {
 		this.Local.refreshCharList();
 	} else {
 		$('.nochar-disabled').addClass('ui-disabled');
-	}
+	};
 };
 
 SR4.refreshStatsPage = function() {
@@ -77,6 +77,8 @@ SR4.refreshStatsPage = function() {
 
 		$('#'+stat).html(this.currChar.stats[stat]);	
 	};
+
+	this.hideMAGorRES();
 };
 
 SR4.refreshDicePage = function() {
@@ -103,9 +105,25 @@ SR4.refreshMonitorPage = function() {
 };
 
 SR4.refreshTestsPage = function() {
+	this.hideMAGorRES();
+
 	Test.refresh();
 };
 
+SR4.hideMAGorRES = function() {
+	if (this.currChar.stats["Attrib_MAG"] === 0) {
+		$(".skill-magic").hide();
+	} else {
+		// TODO: show only if outer container is open! Use detach() instead?
+		$(".skill-magic").show();
+	};
+
+	if (this.currChar.stats["Attrib_RES"] === 0) {
+		$(".skill-resonance").hide();
+	} else {
+		$(".skill-resonance").show();
+	};
+};
 
 
 /* ######################### */

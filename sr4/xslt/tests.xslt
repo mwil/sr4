@@ -34,8 +34,8 @@
 
 	<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Search skill to roll ..." data-inset="true" data-iconpos="right">
     	<xsl:for-each select="/app/skills/category/skill">
-        	<li data-icon="refresh">
-    			<a href="#tests-popup" data-rel="popup" 
+        	<li data-icon="refresh" class="{../@type}">
+    			<a href="#tests-popup" data-rel="popup"
     				id="roll-{id}" stat_a="Skill_{id}" stat_b="Attrib_{attribute}" offset="0"
     				onClick="$('#curr-{id}').html(Test.asString('Skill_{id}', 'Attrib_{attribute}', 0));">
 
@@ -46,7 +46,6 @@
     		</li>
     	</xsl:for-each>
 	</ul>
-
 
 	<!-- The popups -->
 	<div data-role="popup" id="tests-popup" class="ui-content dice-popup" data-transition="pop" data-position-to="window">

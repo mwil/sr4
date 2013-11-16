@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <skills>
-	<category name="Active Skills – Combat">
+	<category name="Active Skills – Combat" type="skill-general">
 		<skill>
 			<name>Archery</name>
 			<id>CA_Arch</id>
@@ -64,7 +64,7 @@
 		</skill>y
 	</category>
 
-	<category name="Active Skills – Physical">
+	<category name="Active Skills – Physical" type="skill-general">
 		<skill>
 			<name>Climbing</name>
 			<id>PA_Climb</id>
@@ -142,7 +142,7 @@
 		</skill>
 	</category>
 
-	<category name="Active Skills – Social">
+	<category name="Active Skills – Social" type="skill-general">
 		<skill>
 			<name>Con</name>
 			<id>SA_Con</id>
@@ -175,7 +175,7 @@
 		</skill>
 	</category>
 
-	<category name="Active Skills – Technical">
+	<category name="Active Skills – Technical" type="skill-general">
 		<skill>
 			<name>Aeronautics Mechanic</name>
 			<id>TA_Aero</id>
@@ -278,7 +278,7 @@
 		</skill>
 	</category>
 
-	<category name="Active Skills – Vehicle">
+	<category name="Active Skills – Vehicle" type="skill-general">
 		<skill>
 			<name>Gunnery</name>
 			<id>VA_Gun</id>
@@ -316,7 +316,7 @@
 		</skill>
 	</category>
 
-	<category name="Active Skills – Magical">
+	<category name="Active Skills – Magical" type="skill-magic">
 		<skill>
 			<name>Arcana</name>
 			<id>MA_Arca</id>
@@ -369,7 +369,7 @@
 		</skill>
 	</category>
 
-	<category name="Active Skills – Resonance">
+	<category name="Active Skills – Resonance" type="skill-resonance">
 		<skill>
 			<name>Compiling</name>
 			<id>RA_Comp</id>

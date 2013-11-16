@@ -27,7 +27,7 @@ Test.asString = function(stat_a, stat_b, offset) {
 		num_dice -= 1;
 	};
 
-	if (num_dice <= 0) {
+	if (num_dice <= 0) {	
 		return "No dice!"
 	};
 
@@ -71,6 +71,12 @@ Test.refresh = function() {
 		num_dice = Math.max(0, num_dice);
 
 		$(this).text("("+num_dice+"d"+(offset!=0?"+"+offset:"")+")");
+
+		if (num_dice === 0) {
+			$(this).closest("a").addClass("ui-disabled");
+		} else {
+			$(this).closest("a").removeClass("ui-disabled");
+		};
 	});
 
 	$('#test-mod-label .ui-btn-text').html('Additional Modifiers <span class="info">('+Test.mods+')</span>');

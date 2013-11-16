@@ -36,7 +36,10 @@ $(document).on('pagebeforeshow', "[data-role='page']", function () {
 		$(this).bind('swiperight', function(event, ui) {
 	    	$.mobile.changePage('#'+$(this).jqmData('prev'), {transition: "slide", reverse: true});
 		});
-	}
+	};
+
+	// hide elements that are only of interest for mages or technomancers
+	SR4.hideMAGorRES();
 });
 
 $(document).on('pagebeforehide', "[data-role='page']", function () { 		

@@ -23,12 +23,12 @@
 	    </div>
 	    
 	    <xsl:for-each select="/app/skills/category">
-			<div data-role="collapsible" class="category">
+			<div data-role="collapsible" class="{@type}">
 		        <h2><xsl:value-of select="@name"/></h2>
 		        <ul data-role="listview">
 		        	<xsl:for-each select="./skill">
 			            <li data-icon="false">
-			            	<a href="#stats-popup" data-rel="popup"
+			            	<a href="#stats-popup" data-rel="popup" class="{@type}"
 			            		onClick="SR4.updateStatsPopup('{name}', 'Skill_{id}', SR4.currChar.stats['Skill_{id}']);">
 			            		<xsl:value-of select="name"/>
 			            		<span class="ui-li-count med" id="Skill_{id}"></span>

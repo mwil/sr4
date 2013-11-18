@@ -7,8 +7,7 @@
 	<h1 class="txtcenter charName"><xsl:text>No Char found!</xsl:text></h1>
 	
 	<a href="#createchar-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		data-role="button" data-icon="gear" data-iconpos="right"
-		onClick="$('#newchar-name-txtbx').focus();"> 
+		data-role="button" data-icon="gear" data-iconpos="right"> 
 		<xsl:text>New Character</xsl:text>
 	</a>
 
@@ -49,8 +48,6 @@
 	</div>
 
 
-
-
 	<!-- The POPUPS -->
 
 	<!-- Notifications from remote server interaction -->
@@ -62,36 +59,41 @@
 	<div data-role="popup" id="login-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3><xsl:text>Enter your username:</xsl:text></h3>
 
-		<input type="text" id="rem-user-txtbx" value="" placeholder="Enter name ..." data-clear-btn="true"/>
-		<input type="text" id="rem-pass-txtbx" value="" placeholder="Password" disabled="disabled"/>
+		<form>
+			<input type="text" id="rem-user-txtbx" value="" placeholder="Enter name ..." data-clear-btn="true"/>
+			<input type="text" id="rem-pass-txtbx" value="" placeholder="Password" disabled="disabled"/>
 
-		<button type="submit" data-theme="b" data-icon="check"
-			onClick="SR4.Remote.user=$('#rem-user-txtbx').val(); SR4.Remote.loginToServer(); $('#login-popup').popup('close');">
-			<xsl:text>Sign in</xsl:text>
-		</button>
+			<button type="submit" data-theme="b" data-icon="check" data-iconpos="right" id="login-submit-btn"
+				onClick="SR4.Remote.user=$('#rem-user-txtbx').val(); SR4.Remote.loginToServer(); $('#login-popup').popup('close');">
+				<xsl:text>Sign in</xsl:text>
+			</button>
+		</form>
 	</div>
 
 	<!-- Generate new char window -->
 	<div data-role="popup" id="createchar-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3 class="ui-title"><xsl:text>Enter a character name ...</xsl:text></h3>
-		<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
+		<form>
+			<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
 
-		<a href="#" data-role="button" data-rel="back"
-			onClick="SR4.Local.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('');">
-			<xsl:text>Generate!</xsl:text>
-		</a>
+			<button type="submit" 
+				onClick="SR4.Local.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('');">
+				<xsl:text>Generate!</xsl:text>
+			</button>
+		</form>
 	</div>
 
 	<!-- Rename -->
 	<div data-role="popup" id="rename-popup" data-transition="pop" data-position-to="window" class="ui-content">
-		<form>
-			<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
-			<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..."/>
+		<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
+	
+		<form>	
+			<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..." tabindex="1"/>
 
-			<a href="#" data-role="button" data-rel="back" 
+			<button type="submit" tabindex="2"
 				onClick="SR4.Local.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
 				<xsl:text>Rename</xsl:text>
-			</a>
+			</button>
 		</form>
 	</div>
 	
@@ -100,14 +102,12 @@
 		<form>
 			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character?</xsl:text></h3>
 
-			<a href="#" data-role="button" data-rel="back"
+			<button type="submit"
 				onClick="SR4.Local.removeCharByIndex($('#delete-popup').attr('data-target'));">
 				<xsl:text>Delete</xsl:text>
-			</a>
+			</button>
 
-			<a href="#" data-role="button" data-rel="back">
-				<xsl:text>Back</xsl:text>
-			</a>
+			<button type="reset"><xsl:text>Back</xsl:text></button>
 		</form>
 	</div>
 
@@ -116,14 +116,12 @@
 		<form>
 			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
 
-			<a href="#" data-role="button" data-rel="back"
+			<button type="submit"
 				onClick="SR4.Remote.removeCharByIndex($('#rem-delete-popup').attr('data-target'));">
 				<xsl:text>Delete</xsl:text>
-			</a>
+			</button>
 
-			<a href="#" data-role="button" data-rel="back">
-				<xsl:text>Back</xsl:text>
-			</a>
+			<button type="reset"><xsl:text>Back</xsl:text></button>
 		</form>
 	</div>
 

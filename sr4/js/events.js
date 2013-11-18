@@ -47,3 +47,25 @@ $(document).on('pagebeforehide', "[data-role='page']", function () {
 		$(this).off('swipeleft swiperight');
 	}
 });
+
+$(document).on('pageinit', '#title',  function() {
+	// Taking care of focus
+	$("#login-popup").on("popupafteropen", function(e) {
+		$("#login-submit-btn").focus();
+	});
+
+	$("#createchar-popup").on("popupafteropen", function(e) {
+		$("#newchar-name-txtbx").focus();
+	});
+
+	$("#rename-popup").on("popupafteropen", function(e) {
+		$("#charname-txtbx").focus();
+	});
+});
+
+$(document).on('pageinit', '#stats',  function() {
+	// Taking care of focus
+	$("#stats-popup").on("popupafteropen", function(e) {
+		$(".ui-slider-handle").focus();
+	});
+});

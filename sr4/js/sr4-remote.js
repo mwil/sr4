@@ -126,7 +126,7 @@ SR4.Remote.removeChar = function(charname) {
 	$.post('../cgi-bin/sr4.py', {'group': 'devel', 'command': 'delete', 'auth': this.auths, 
 								 'cname': JSON.stringify(charname)}, function(response)
 	{
-	 	response = $.trim(response);
+		response = $.trim(response);
 
 		if (response === "ok:delete:deleted") {
 			$('#remote-status-popup').text('Character successfully removed!').popup('open');
@@ -156,13 +156,14 @@ SR4.Remote.refreshCharList = function() {
 
 
 $(document).on('pageinit', '#title',  function() {
+	// handle the "fetch before show" collapsibles on the title page
 	$(".ui-collapsible-heading-toggle").on("click", function (e) {
 		var curr_id = $(this).closest(".ui-collapsible").attr("id");
-	    
-	    if ($(this).closest(".ui-collapsible").hasClass("ui-collapsible-collapsed")) {
-	    	// Opening a collapsible
+		
+		if ($(this).closest(".ui-collapsible").hasClass("ui-collapsible-collapsed")) {
+			// Opening a collapsible
 
-	        if(curr_id === "rem-server-collap") {
+			if(curr_id === "rem-server-collap") {
 				e.stopImmediatePropagation();
 
 				$("#rem-user-txtbx").val(SR4.Remote.user);
@@ -171,17 +172,22 @@ $(document).on('pageinit', '#title',  function() {
 			} else if (curr_id === "rem-lc-collap") {
 				e.stopImmediatePropagation();
 
-		        SR4.Remote.fetchCharList();
+				SR4.Remote.fetchCharList();
 			};
 			// other callapsibles on #title also trigger this event, do nothing ...
 
-	    } else {
-	    	// Closing a collapsible
+		} else {
+			// Closing a collapsible
 
-	    	if(curr_id === "rem-server-collap") {
-	    		$("#rem-server-collap .ui-btn-text:first").text("Connect to Server");
-	    		$("#rem-lc-collap").trigger("collapse");
-	    	};
-	    };
+			if(curr_id === "rem-server-collap") {
+				$("#rem-server-collap .ui-btn-text:first").text("Connect to Server");
+				$("#rem-lc-collap").trigger("collapse");
+			};
+		};
+	});
+
+	// Taking care of focus
+	$("#rename-popup").on("popupafteropen", function(e) {
+		$("#charname-txtbx").focus();
 	});
 });

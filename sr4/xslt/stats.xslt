@@ -15,7 +15,7 @@
 						<a href="#stats-popup" data-rel="popup"
 							onClick="SR4.updateStatsPopup('{name}', 'Attrib_{id}', SR4.currChar.stats['Attrib_{id}']);">
 							<xsl:value-of select="name"/>
-							<span class="ui-li-count med" id="Attrib_{id}"></span>
+							<span class="ui-li-count" id="Attrib_{id}"></span>
 						</a>
 					</li>
 				</xsl:for-each>
@@ -31,7 +31,8 @@
 							<a href="#stats-popup" data-rel="popup"
 								onClick="SR4.updateStatsPopup('{name}', 'Skill_{id}', SR4.currChar.stats['Skill_{id}']);">
 								<xsl:value-of select="name"/>
-								<span class="ui-li-count med" id="Skill_{id}"></span>
+								<span class="info"><xsl:text> (</xsl:text><xsl:value-of select="attribute"/><xsl:text>) </xsl:text></span>
+								<span class="ui-li-count" id="Skill_{id}"></span>
 							</a>
 						</li>
 					</xsl:for-each>	        

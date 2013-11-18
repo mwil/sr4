@@ -10,9 +10,13 @@ td { text-align: center; }
 
 .info { color:gray; font-size: smaller; }
 .warn { color:red; }
-.hit  { text-shadow:lime 1px -1px 1px;}
+.fade { color:gray; }
+.hit  { /* text-shadow:0px 0px 1px gold; */ }
 
-.center-collap .ui-btn-inner { text-align: center; vertical-align: middle; }
+.center-collap .ui-btn-inner { 
+	text-align: center; 
+	vertical-align: middle; 
+}
 
 .dicebutton { height: 42px; }
 .dicebutton .ui-btn-inner { padding: 6px; }
@@ -24,17 +28,9 @@ td { text-align: center; }
 	vertical-align: middle;
 }
 
-.btn-out {
-	width: 10%;
-}
-
-.btn-in {
-	width: 80%;
-}
-
-.fullwidth {
-	margin:0px !important;
-}
+.btn-out { width: 10%; }
+.btn-in { width: 80%; }
+.fullwidth { margin:0px !important; }
 
 /* http://forum.jquery.com/topic/eliminate-circcle-around-icon */
 /* Get rid of the annoying outer circle on listview alt links */
@@ -43,4 +39,24 @@ td { text-align: center; }
 	-webkit-box-shadow: none;
 	/* Additional browser-specific box-shadow CSS should go here */
 	background: transparent;
+}
+
+.ui-li-count { font-size:medium !important; }
+
+.nosel {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+/* Prevent the app to take the whole screen on the desktop */
+html { background-color: #F9F9F9; }
+@media only screen and (min-width: 600px) {
+	.ui-page {
+		width: 600px !important;
+		margin: 0 auto !important;
+		position: relative !important;
+		border-right: 2px #666 outset !important;
+		border-left:  2px #666 outset !important;
+	}
 }

@@ -5,7 +5,7 @@
 
 <!-- Checkbox for dice modes -->
 <xsl:template match="dicemode-cb">
-	<form style="text-align:center;">
+	<form class="txtcenter nosel">
 	<fieldset data-role="controlgroup" data-type="horizontal">
 		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" checked="checked"
 			onClick="Dice.useCharMods($('#dicemode-cb-condi')[0].checked);"/>

@@ -6,7 +6,7 @@
 <!-- Templates for the roll tests page -->
 
 <xsl:template match="tests">
-	<form class="txtcenter fullwidth">
+	<form class="txtcenter fullwidth nosel">
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-test-cg">
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Test.incMod(-1);">
@@ -21,29 +21,28 @@
 	</fieldset>
 	</form>
 
-	<h3 class="txtcenter"><xsl:text>Recently Used</xsl:text></h3>
+	<div data-role="collapsible" data-iconpos="right" data-collapsed="false" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
+		<h2><xsl:text>Recently Used Skills</xsl:text></h2>
 
-	<div data-role="collapsible" data-iconpos="right">
-		<h2><xsl:text>TODO: 5 recently used skills.</xsl:text></h2>
-
-		<ul data-role="listview">
-		</ul>
+		<ul data-role="listview" id="recent-skill-lv" data-icon="false" data-split-icon="edit" data-split-theme="c"></ul>
 	</div>
 
-	<h3 class="txtcenter"><xsl:text>All Tests</xsl:text></h3>
+	<h3 class="txtcenter nosel"><xsl:text>Browse Tests</xsl:text></h3>
 
-	<ul data-role="listview" data-filter="true" data-filter-reveal="true" id="search-skill-lv"
-		data-filter-placeholder="Search skill to roll ..." data-inset="true" data-iconpos="right">
+	<ul data-role="listview" data-filter="true" data-filter-reveal="true" id="search-skill-lv" class="nosel"  data-split-icon="edit" data-split-theme="c"
+		data-filter-placeholder="Search skill to roll ..." data-inset="true" data-icon="false">
 		<xsl:for-each select="/app/skills/category/skill">
-			<li data-icon="refresh" class="{../@type}">
-				<a href="#tests-popup" data-rel="popup"
-					id="roll-{id}" stat_a="Skill_{id}" stat_b="Attrib_{attribute}" offset="0"
-					onClick="$('#curr-{id}').html(Test.asString('Skill_{id}', 'Attrib_{attribute}', 0));">
+			<li data-icon="false" class="{../@type}">
+				<a href="#tests-popup" data-rel="popup" class="roll-{id}"
+					stat_a="Skill_{id}" stat_b="Attrib_{attribute}" offset="0"
+					onClick="$('.count-{id}').html(Test.asString('Skill_{id}', 'Attrib_{attribute}', 0)); Test.recentlyUsed('roll-{id}');">
 
-					<xsl:value-of select="name"/><xsl:text> </xsl:text>
+					<xsl:value-of select="name"/>
+					<span class="info"><xsl:text> (</xsl:text><xsl:value-of select="attribute"/><xsl:text>) </xsl:text></span>
 					<span class="test-label info"><xsl:text>(x dice)</xsl:text></span>
-					<span class="ui-li-count test-res med" id="curr-{id}">--</span>
+					<span class="ui-li-count test-res count-{id}">--</span>
 				</a>
+				<a href="#">Options</a>
 			</li>
 		</xsl:for-each>
 	</ul>

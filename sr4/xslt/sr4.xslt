@@ -29,7 +29,7 @@
 
 <!-- generic page markup -->
 <xsl:template match="page">
-	<div data-role="page" id="{@id}" data-prev="{@prev}" data-next="{@next}" data-theme="c" data-content-theme="c">
+	<div data-role="page" id="{@id}" data-prev="{@prev}" data-next="{@next}" data-theme="c" data-content-theme="c" class="nosel">
 		<xsl:copy-of select="document('../xml/panel.xml')/*"/>
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">

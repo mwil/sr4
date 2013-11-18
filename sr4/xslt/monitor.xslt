@@ -6,9 +6,9 @@
 <!-- Templates for the condition monitor page -->
 
 <xsl:template match="monitor">
-	<h3 class="txtcenter"><xsl:text>Damage Monitors</xsl:text></h3>
+	<h3 class="txtcenter nosel"><xsl:text>Damage Monitors</xsl:text></h3>
 
-	<form class="txtcenter fullwidth">
+	<form class="txtcenter fullwidth nosel">
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-stun-cg">
 		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" class="btn-out"
 			onClick="Monitor.hitStun(-1);">
@@ -51,7 +51,7 @@
 
 	<h3 class="txtcenter"><xsl:text>Combat Utilities</xsl:text></h3>
 
-	<div data-role="collapsible" data-collapsed="false">
+	<div data-role="collapsible" data-collapsed="false" class="nosel">
 		<h2><xsl:text>Combat Test Quicklinks</xsl:text></h2>
 
 		<ul data-role="listview">
@@ -60,7 +60,7 @@
 					onClick="$('#currInitiative').html(Test.asString('Attrib_REA', 'Attrib_INT', SR4.currChar.stats['Attrib_REA'] + SR4.currChar.stats['Attrib_INT']));">
 					<xsl:text>Roll Initiative </xsl:text>
 					<span class="test-label info"><xsl:text>(x dice)</xsl:text></span>
-					<span class="ui-li-count med test-res" id="currInitiative">--</span>
+					<span class="ui-li-count test-res" id="currInitiative">--</span>
 				</a>
 			</li>
 		</ul>

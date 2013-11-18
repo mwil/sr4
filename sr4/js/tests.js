@@ -14,6 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var RECENT_LEN = 5;
+
 Test = {
 	mods: 0
 }
@@ -53,6 +55,20 @@ Test.resetMod = function() {
 	this.mods = 0;
 
 	this.refresh();
+};
+
+Test.recentlyUsed = function(id) {
+	if ($("#recent-skill-lv ."+id).length > 0) {
+		// this test is already present in the list, just do nothing ...
+		return;
+	}
+
+	if ($("#recent-skill-lv li").length >= RECENT_LEN) {
+		// TODO: do something smarter like counting recent uses
+		$("#recent-skill-lv li:first").remove();
+	};
+
+	$("#recent-skill-lv").append($("#search-skill-lv ."+id).closest("li").clone()).listview("refresh");
 };
 
 Test.refresh = function() {

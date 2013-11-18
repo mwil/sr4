@@ -7,7 +7,8 @@
 	<h1 class="txtcenter charName"><xsl:text>No Char found!</xsl:text></h1>
 	
 	<a href="#createchar-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		data-role="button" data-icon="gear" data-iconpos="right"> 
+		data-role="button" data-icon="gear" data-iconpos="right"
+		onClick="$('#newchar-name-txtbx').focus();"> 
 		<xsl:text>New Character</xsl:text>
 	</a>
 

@@ -112,18 +112,18 @@ Dice.updateDicePopup = function (count) {
 				<tr>\
 					<td><div class='die warn'>&#9856;</div></td>\
 					<td class='warn'>x</td><td class='warn'>"+count[1]+"</td>\
-					<td><div class='die'>&#9857;</div></td>\
-					<td>x</td><td>"+count[2]+"</td>\
-					<td><div class='die'>&#9858;</div></td>\
-					<td>x</td><td>"+count[3]+"</td>\
+					<td><div class='die fade'>&#9857;</div></td>\
+					<td class='fade'>x</td><td class='fade'>"+count[2]+"</td>\
+					<td><div class='die fade'>&#9858;</div></td>\
+					<td class='fade'>x</td><td class='fade'>"+count[3]+"</td>\
 				</tr>\
 				<tr>\
-					<td><div class='die'>&#9859;</div></td>\
-					<td>x</td><td>"+count[4]+"</td>\
+					<td><div class='die fade'>&#9859;</div></td>\
+					<td class='fade'>x</td><td class='fade'>"+count[4]+"</td>\
 					<td><div class='die hit'>&#9860;</div></td>\
-					<td>x</td><td>"+count[5]+"</td>\
+					<td class='hit'>x</td><td class='hit'>"+count[5]+"</td>\
 					<td><div class='die hit'>&#9861;</div></td>\
-					<td>x</td><td>"+count[6]+"</td>\
+					<td class='hit'>x</td><td class='hit'>"+count[6]+"</td>\
 				</tr>\
 			</table>");
 };

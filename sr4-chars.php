@@ -17,54 +17,60 @@ $group    = $_SESSION['group'];
 $command  = $_POST["command"];
 $cid	  = $_POST["cid"];
 
-#$mysql = mysql_connect("localhost", "mwil4321_sr4adm" , "3XGVw4egNAEU") 
-#		 	or die("Connection to the MySQL server could not be established!");
-
-#mysql_select_db("mwil4321_sr4") 
-#	or die ("Database could not be selected!"); 
 
 $mysqli = mysqli_connect("localhost", "mwil4321_sr4adm" , "3XGVw4egNAEU", "mwil4321_sr4");
 
 if (mysqli_connect_errno($mysqli)) {
-    echo "Failed to connect to MySQL: ".mysqli_connect_error();
+	echo "Failed to connect to MySQL: ".mysqli_connect_error();
 }
 
 switch ($command) {
 	case "list":
 		$chars = array();
+		$gid = 1;
 
-		# $query = "SELECT cid, charname FROM chars WHERE gid=1"; 
-		# $res = mysql_query($query);
+		if ($list_stmt = $mysqli->prepare("SELECT cid, charname FROM chars WHERE gid=?;")) {
+			$list_stmt->bind_param("i", $gid);
+			$list_stmt->bind_result($cid, $charname);
+			$list_stmt->execute();
 
-		$res = $mysqli->query("SELECT cid, charname FROM chars WHERE gid=1");
+			while ($list_stmt->fetch()) {
+				$chars[$cid] = $charname;
+			}
 
-		while ($row = $res->fetch_assoc()) {
-			$chars[$row["cid"]] = $row["charname"];
+			$list_stmt->close();
 		}
-
+		
 		echo "ok:list:success\n";
 		echo json_encode($chars);
 		break;
 
 	case "pull":
-		$query = sprintf("SELECT chardata FROM chars WHERE cid=%u LIMIT 1",
-							mysql_real_escape_string($cid));
-
-		$res = mysql_query($query);
-		$row = mysql_fetch_object($res);
+		if ($pull_stmt = $mysqli->prepare("SELECT chardata FROM chars WHERE cid=? LIMIT 1;")) {
+			$pull_stmt->bind_param("i", $cid);
+			$pull_stmt->bind_result($chardata);
+			$pull_stmt->execute();
+			$pull_stmt->fetch();
+			$pull_stmt->close();
+		}
 
 		echo "ok:pull:success\n";
-		echo $row->chardata;
+		echo $chardata;
 		break;
 
 	case "push":
 		$charname = $_POST["charname"];
 		$chardata = $_POST["chardata"];
 
-		$query = sprintf("'%s', '%s'",
-							mysql_real_escape_string($charname),
-							mysql_real_escape_string($chardata));
+		# chars table: cid, charname, gid, ownerid, chardata
+		if ($pull_stmt = $mysqli->prepare("INSERT INTO chars VALUES (NULL, ?, 1, 1, ?);")) {
+			$pull_stmt->bind_param("ss", $charname, $chardata);
+			$pull_stmt->execute();
+			$pull_stmt->fetch();
+			$pull_stmt->close();
+		}
 
+		echo "ok:push:success";
 		break;
 	
 	default:
@@ -72,5 +78,5 @@ switch ($command) {
 		break;
 }
 
-mysql_close();
+$mysqli->close();
 ?>

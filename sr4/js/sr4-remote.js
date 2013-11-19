@@ -135,16 +135,18 @@ SR4.Remote.pullCharByCID = function(cid) {
 SR4.Remote.pushChar = function() {
 	$.mobile.loading("show");
 
-	$.post('../cgi-bin/sr4.py', {'command': 'push', 'cid': null,
-								 'charname': JSON.stringify(SR4.currChar.charName), 
+	$.post('../cgi-bin/sr4-chars.php', {'command': 'push', 'cid': null,
+								 'charname': SR4.currChar.charName,
 								 'chardata': JSON.stringify(SR4.currChar)}, function(response) 
 	{
 		response = $.trim(response);
 
-		if (response === "ok:push:saved") {
+		if (response.indexOf("ok:") === 0) {
 			$('#remote-status-popup').text('Character is now stored on the server!').popup('open');
-		} else {
+		} else if (response.indexOf("err:") === 0) {
 			$('#remote-status-popup').html('Push failed!<br/>Message from server: '+response).popup('open');	
+		} else {
+			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response).popup('open');
 		}
 
 		// TODO: keep charlist updated ...

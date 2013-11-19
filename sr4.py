@@ -20,6 +20,8 @@ import sys
 cgitb.enable()
 # cgi.test()
 
+import PyGreSQL
+
 CHAR_LIMIT = 20
 
 def get_charlist(path):

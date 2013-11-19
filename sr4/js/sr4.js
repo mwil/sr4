@@ -29,7 +29,7 @@ var SR4 = {
 
 	Remote: { 
 		Chars: {}, 
-		CharList: [],
+		CharIDs: {},
 		user: null,
 		auths: 'cornholio'
 	},

@@ -49,7 +49,7 @@ $(document).on('pagebeforehide', "[data-role='page']", function () {
 });
 
 $(document).on('pageinit', '#title',  function() {
-	// Taking care of focus
+	// Taking care of focus for input popups
 	$("#login-popup").on("popupafteropen", function(e) {
 		$("#login-submit-btn").focus();
 	});
@@ -66,6 +66,7 @@ $(document).on('pageinit', '#title',  function() {
 $(document).on('pageinit', '#stats',  function() {
 	// Taking care of focus
 	$("#stats-popup").on("popupafteropen", function(e) {
+		// focus on the handle and not just the input element (focuses text box next to slider)
 		$(".ui-slider-handle").focus();
 	});
 });

@@ -41,7 +41,7 @@
 		</xsl:for-each>
 	</div>
 
-	<!-- the popup to change character stats values, it is reused and automatically filled refreshed by SR4.updateStatsPopup.js -->
+	<!-- the popup to change character stats values, it is reused for all stats and automatically filled refreshed by sr4.js/SR4.updateStatsPopup() -->
 	<div data-role="popup" id="stats-popup" class="ui-content" data-transition="pop" data-position-to="window">
 		<h3 id="stats-poptext" class="ui-title"><xsl:text>AUTOFILLED</xsl:text></h3>
 		

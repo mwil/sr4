@@ -65,10 +65,10 @@ Test.recentlyUsed = function(id) {
 
 	if ($("#recent-skill-lv li").length >= RECENT_LEN) {
 		// TODO: do something smarter like counting recent uses
-		$("#recent-skill-lv li:first").remove();
+		$("#recent-skill-lv li:last").remove();
 	};
 
-	$("#recent-skill-lv").append($("#search-skill-lv ."+id).closest("li").clone()).listview("refresh");
+	$("#recent-skill-lv").prepend($("#search-skill-lv ."+id).closest("li").clone()).listview("refresh");
 };
 
 Test.refresh = function() {

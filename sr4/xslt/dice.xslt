@@ -31,6 +31,7 @@
 	</div>
 
 	<div data-role="popup" id="dice-popup" class="ui-content dice-popup" data-transition="pop" data-position-to="window">
+		<!-- Autofilled by Dice.updateDicePopup() -->
 		<h3 class="ui-title dice-poptext"><xsl:text>AUTOFILLED</xsl:text></h3>
 		<div data-role="controlgroup" data-type="horizontal">
 			<a href="#" data-role="button" 
@@ -48,6 +49,7 @@
 
 <!-- Generate the dice grid (semi-)automatically, rowcount can be adapted to fit different screen sizes -->
 <!-- Adapted from http://www.ibm.com/developerworks/xml/library/x-tiploop/index.html -->
+<!-- Dice buttons labels are later autofilled by Dice.refreshDiceButtons() -->
 <xsl:template name="button-row">
 	<xsl:param name="rowcount" select="1"/>
 	<xsl:param name="dicelabel" select="1"/>

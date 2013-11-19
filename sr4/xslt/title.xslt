@@ -50,12 +50,12 @@
 
 	<!-- The POPUPS -->
 
-	<!-- Notifications from remote server interaction -->
+	<!-- Notifications from remote server interaction Popup -->
 	<div data-role="popup" id="remote-status-popup" class="ui-content">
 		<h3><xsl:text>AUTOFILLED</xsl:text></h3>
 	</div>
 
-	<!-- Get Username / Groupname / Password / ... -->
+	<!-- Get Username / Groupname / Password / ... Popup -->
 	<div data-role="popup" id="login-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3><xsl:text>Enter your username:</xsl:text></h3>
 
@@ -70,7 +70,7 @@
 		</form>
 	</div>
 
-	<!-- Generate new char window -->
+	<!-- Generate new char popup -->
 	<div data-role="popup" id="createchar-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3 class="ui-title"><xsl:text>Enter a character name ...</xsl:text></h3>
 		<form>
@@ -83,7 +83,7 @@
 		</form>
 	</div>
 
-	<!-- Rename -->
+	<!-- Rename Popup -->
 	<div data-role="popup" id="rename-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
 	
@@ -97,7 +97,7 @@
 		</form>
 	</div>
 	
-	<!-- Delete confirmation -->
+	<!-- Delete confirmation Popup -->
 	<div data-role="popup" id="delete-popup" data-transition="pop" data-position-to="window" class="ui-content" data-target="">
 		<form>
 			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character?</xsl:text></h3>
@@ -111,13 +111,13 @@
 		</form>
 	</div>
 
-	<!-- Remote Delete confirmation -->
+	<!-- Remote Delete confirmation Popup -->
 	<div data-role="popup" id="rem-delete-popup" data-transition="pop" data-position-to="window" class="ui-content" data-target="">
 		<form>
 			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
 
 			<button type="submit"
-				onClick="SR4.Remote.removeCharByIndex($('#rem-delete-popup').attr('data-target'));">
+				onClick="SR4.Remote.removeCharByCID($('#rem-delete-popup').attr('data-target'));">
 				<xsl:text>Delete</xsl:text>
 			</button>
 

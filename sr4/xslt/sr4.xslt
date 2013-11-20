@@ -35,7 +35,8 @@
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>SR4.Datajack</xsl:text></h1>
 			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled inheader"><xsl:text>Nav</xsl:text></a>
-			<a href="#" data-iconpos="right" data-icon="refresh" class="ui-disabled remote-disabled">
+			<a href="#" data-iconpos="right" data-icon="refresh" class="header-sync-btn ui-disabled remote-disabled" data-target=""
+				onClick="SR4.Remote.doSyncChar($('.header-sync-btn').data('target'));">
 				<xsl:text>Sync</xsl:text>
 			</a>
 		</div><!-- /header -->

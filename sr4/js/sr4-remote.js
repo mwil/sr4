@@ -116,7 +116,7 @@ SR4.Remote.pullCharByCID = function(cid) {
 			SR4.Remote.Chars[charName].upgrade();
 
 			SR4.Remote.Chars[charName].Remote.cid = parseInt(response[2].slice("cid=".length));
-			SR4.Remote.Chars[charName].Remote.last_modified = response[3].slice("last_modified=".length));
+			SR4.Remote.Chars[charName].Remote.last_modified = response[3].slice("last_modified=".length);
 
 			SR4.Remote.refreshCharList();
 
@@ -182,6 +182,82 @@ SR4.Remote.removeCharByCID = function(cid) {
 
 		$('#rem-lc-collap').trigger('collapse');
 		SR4.Remote.refreshCharList();
+
+		$.mobile.loading("hide");
+	});
+};
+
+SR4.Remote.checkSyncChar = function() {
+	$.post('../cgi-bin/sr4-chars.php', {'command':      'sync', 
+										'cid':           SR4.currChar.Remote.cid,
+										'last_modified': SR4.currChar.Remote.last_modified},
+	function(response) {
+		response = response.split("\n");
+		
+		for (var i = 0; i < response.length; i++) {
+			response[i] = $.trim(response[i]);	
+		};
+
+		if (response[0].indexOf("ok:sync:modified_on_server") === 0) {
+			console.log("checkSync: found modified on server (timestamp: ", response[2].slice("last_modified=".length), ")!");
+
+			$(".header-sync-btn").removeClass("ui-disabled");
+			$(".header-sync-btn").data("target", parseInt(response[1].slice("cid=".length)));
+
+		} else if (response[0].indexOf("ok:sync:up_to_date") === 0) {
+			// nothing to do, nopping around
+			$(".header-sync-btn").addClass("ui-disabled");
+			console.log("checkSync: we have the current char version.");
+
+		} else if (response[0].indexOf("err:") === 0) {
+			console.log('checkSync failed! Message: '+response[0]);
+		} else {
+			console.log('checkSync unexpected response from server! Message: '+response[0]);
+		};
+	});	
+};
+
+SR4.Remote.doSyncChar = function(cid) {
+	$.mobile.loading("show");
+
+	if (!cid) {
+		return;
+	}
+
+	$.post('../cgi-bin/sr4-chars.php', {'command': 'pull', 'cid': cid}, function(response) {
+		response = response.split("\n");
+		
+		for (var i = 0; i < response.length; i++) {
+			response[i] = $.trim(response[i]);	
+		};
+
+		if (response[0].indexOf('err:') === 0) {
+			console.log('Pull failed! Message from server: '+response[0]);
+
+		} else if (response[0].indexOf('ok:') === 0) {
+			var character = response[1] && JSON.parse(response[1]);
+			var charName  = character.charName;
+
+			character.__proto__ = Character.prototype;
+
+			SR4.Remote.Chars[charName] = character;
+			SR4.Remote.Chars[charName].upgrade();
+
+			SR4.Remote.Chars[charName].Remote.cid = parseInt(response[2].slice("cid=".length));
+			SR4.Remote.Chars[charName].Remote.last_modified = response[3].slice("last_modified=".length);
+
+			SR4.Local.Chars[charName] = SR4.Remote.Chars[charName];
+			SR4.Local.Chars[charName].updated();
+
+			// necessary to update currChar as well?
+			SR4.switchToChar(charName);
+
+			$(".header-sync-btn").addClass("ui-disabled");
+			console.log("Character successfully synced (hopefully ...)");
+
+		} else {
+			console.log('Unexpected response from server! Message: '+response[0]);
+		};
 
 		$.mobile.loading("hide");
 	});

@@ -62,7 +62,7 @@ switch ($command) {
 			if ($chardata) {
 				echo "ok:pull:success\n";
 				echo $chardata."\n";
-				echo "cid=".$cid;
+				echo "cid=".$cid."\n";
 				echo "last_modified=".$modified;
 			} else { 
 				echo "err:pull:no_char_found\n";
@@ -102,8 +102,6 @@ switch ($command) {
 			$check_stmt->fetch();
 
 			if ($check_stmt->num_rows > 0) {
-				$check_stmt->close();
-
 				# character already exists, update instead of insert! (do this only for the current group, selected above may not be affected!)
 				if ($update_stmt = $mysqli->prepare("UPDATE chars SET charname=?, chardata=? WHERE gid=? AND cid=?")) {
 					$update_stmt->bind_param("ssii", $charname, $chardata, $gid, $res_cid);
@@ -124,12 +122,8 @@ switch ($command) {
 					echo "MySQL error: ".$update_stmt->error;
 				}
 			} else {
-				$check_stmt->close();
-
 				# chars table: cid, charname, gid, ownerid, chardata
 				# here: generate new character entry with unique cid
-				$ins_stmt = $mysqli->stmt_init();
-
 				if ($ins_stmt = $mysqli->prepare("INSERT INTO chars(charname, gid, ownerid, chardata) VALUES (?, ?, ?, ?)")) {
 					$ins_stmt->bind_param("siis", $charname, $gid, $uid, $chardata);
 					$ins_stmt->execute();
@@ -147,6 +141,8 @@ switch ($command) {
 					echo "MySQL error: '".$mysqli->error."'.";
 				}
 			}
+
+			$check_stmt->close();
 
 		} else { # prepare failed
 			echo "err:push:mysql_statement_error:check\n";
@@ -179,6 +175,41 @@ switch ($command) {
 		} else {
 			echo "err:delchar:mysql_statement_error\n";
 			echo "MySQL error: ".$del_stmt->error;
+		}
+
+		break;
+
+	case "sync":
+		$cid      = $_POST["cid"];
+		$modified = $_POST["last_modified"];
+
+		if (!$cid OR !$modified) {
+			echo "err:sync:incomplete_command";
+			exit;
+		}
+
+		if ($sync_stmt = $mysqli->prepare("SELECT cid, last_modified FROM chars WHERE cid=? AND gid=? AND last_modified>?")) {
+			$sync_stmt->bind_param("iis", $cid, $gid, $modified);
+			$sync_stmt->bind_result($res_cid, $res_mod);
+			$sync_stmt->execute();
+			$sync_stmt->store_result();
+			$sync_stmt->fetch();
+			
+			if ($sync_stmt->num_rows > 0) {
+				echo "ok:sync:modified_on_server\n";
+				echo "cid=".$res_cid."\n";
+				echo "last_modified=".$res_mod;
+			} else {
+				echo "ok:sync:up_to_date\n";
+				echo "cid=".$cid."\n";
+				echo "last_modified=".$res_mod;
+			}
+			
+			$sync_stmt->close();
+
+		} else {
+			echo "err:sync:mysql_statement_error\n";
+			echo "MySQL error: ".$sync_stmt->error;
 		}
 
 		break;

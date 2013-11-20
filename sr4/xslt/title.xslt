@@ -103,7 +103,7 @@
 			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character?</xsl:text></h3>
 
 			<button type="submit"
-				onClick="SR4.Local.removeCharByIndex($('#delete-popup').attr('data-target'));">
+				onClick="SR4.Local.removeCharByIndex($('#delete-popup').data('target'));">
 				<xsl:text>Delete</xsl:text>
 			</button>
 
@@ -117,7 +117,7 @@
 			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
 
 			<button type="submit"
-				onClick="SR4.Remote.removeCharByCID($('#rem-delete-popup').attr('data-target'));">
+				onClick="SR4.Remote.removeCharByCID($('#rem-delete-popup').data('target'));">
 				<xsl:text>Delete</xsl:text>
 			</button>
 

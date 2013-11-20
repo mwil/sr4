@@ -104,7 +104,9 @@ Test.resetAll = function() {
 
 $(document).on('pagebeforeshow', '#tests', function () {	
 	if (SR4.currChar) {
+		SR4.hideMAGorRES();
 		SR4.refreshTestsPage();	
+		
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
 	};

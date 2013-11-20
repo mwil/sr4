@@ -23,6 +23,11 @@ var Character = function(charName) {
 	this.condition = {currStun:0, currPhy:0, currMisc:0};
 	this.mods      = {};
 
+	this.Remote = {
+		cid: null,
+		last_modified: null
+	};
+
 	// TODO: possible problems if name exists already, prevent this before creation! 
 	this.rename(charName);
 
@@ -41,6 +46,13 @@ var Character = function(charName) {
 // Bring character to the newest 'version', i.e., add Stats from SR4.StatList when missing
 Character.prototype.upgrade = function() {
 	// TODO: also remove props that were refactored along the way!
+
+	if (!this.Remote) {
+		this.Remote = {
+			cid: null,
+			last_modified: null
+		};	
+	}
 
 	for (var i = 0; i < SR4.StatList.length; i++) {
 		if (!(SR4.StatList[i] in this.stats)) {

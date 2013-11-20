@@ -25,9 +25,9 @@ switch ($command) {
 		}
 
 		if($pw == $password) {
-			if (!isset($_SESSION["username"])) {
-				$_SESSION["username"] = $username;
-				$_SESSION["group"] = "devel";
+			if (!isset($_SESSION["uid"])) {
+				$_SESSION["uid"] = $uid;
+				$_SESSION["gid"] = 1;
 			}
 			echo "ok:login:success\n";
 			echo "username=".$username."\n";

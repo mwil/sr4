@@ -31,7 +31,6 @@ var SR4 = {
 		Chars: {}, 
 		CharIDs: {},
 		user: null,
-		auths: 'cornholio'
 	},
 
 	Local:  {Chars: {}, CharList: []},
@@ -177,4 +176,9 @@ Storage.prototype.getObject = function(key) {
 
 $(document).on('pagebeforeshow', '#title', function () {
 	SR4.refreshTitlePage();
+});
+
+$(document).on('pagebeforeshow', '#stats',  function() {
+	// hide elements that are only of interest for mages or technomancers
+	SR4.hideMAGorRES();
 });

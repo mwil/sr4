@@ -28,8 +28,8 @@ td { text-align: center; }
 	vertical-align: middle;
 }
 
-.btn-out { width: 10%; }
-.btn-in { width: 80%; }
+.btn-out { width: 5%; }
+.btn-in { width: 90%; }
 .fullwidth { margin:0px !important; }
 
 /* http://forum.jquery.com/topic/eliminate-circcle-around-icon */

@@ -18,7 +18,7 @@ var RECENT_LEN = 5;
 
 Test = {
 	mods: 0
-}
+};
 
 Test.asString = function(stat_a, stat_b, offset) {
 	var cc = SR4.currChar;
@@ -27,11 +27,11 @@ Test.asString = function(stat_a, stat_b, offset) {
 	if (cc.stats[stat_a] === 0 || cc.stats[stat_b] === 0) {
 		//defaulting, one dice penalty!
 		num_dice -= 1;
-	};
+	}
 
 	if (num_dice <= 0) {	
-		return "No dice!"
-	};
+		return "No dice!";
+	}
 
 	var roll = Dice.roll(num_dice);
 	var res = Dice.interpretResult(roll);
@@ -39,10 +39,10 @@ Test.asString = function(stat_a, stat_b, offset) {
 	Dice.updateDicePopup(roll);
 
 	if (res.critical) {
-		return "<div class='warn'>Critical glitch!</div>"
+		return "<div class='warn'>Critical glitch!</div>";
 	} else {
 		return (res.hits + offset) + (res.glitch?" (+glitch!)":"");
-	};
+	}
 };
 
 Test.incMod = function(value) {
@@ -66,7 +66,7 @@ Test.recentlyUsed = function(id) {
 	if ($("#recent-skill-lv li").length >= RECENT_LEN) {
 		// TODO: do something smarter like counting recent uses
 		$("#recent-skill-lv li:last").remove();
-	};
+	}
 
 	var li = $("#search-skill-lv ."+id).closest("li");
 
@@ -86,22 +86,22 @@ Test.refresh = function() {
 		var stats = SR4.currChar.stats;
 
 		var num_dice = stats[a.attr("stat_a")] + stats[a.attr("stat_b")] + SR4.currChar.getMods() + Test.mods;
-		var offset   = parseInt(a.attr("offset"));
+		var offset   = parseInt(a.attr("offset"), 10);
 
 		if (stats[a.attr("stat_a")] === 0 || stats[a.attr("stat_b")] === 0) {
 			//defaulting, one dice penalty!
 			num_dice -= 1;
-		};
+		}
 
 		num_dice = Math.max(0, num_dice);
 
-		$(this).text("("+num_dice+"d"+(offset!=0?"+"+offset:"")+")");
+		$(this).text("("+num_dice+"d"+(offset!==0?"+"+offset:"")+")");
 
 		if (num_dice === 0) {
 			$(this).closest("a").addClass("ui-disabled");
 		} else {
 			$(this).closest("a").removeClass("ui-disabled");
-		};
+		}
 	});
 
 	$('#test-mod-label .ui-btn-text').html('Additional Modifiers <span class="info">('+Test.mods+')</span>');
@@ -128,5 +128,5 @@ $(document).on('pagebeforeshow', '#tests', function () {
 		SR4.refreshTestsPage();	
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
-	};
+	}
 });

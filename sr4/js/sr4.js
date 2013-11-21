@@ -72,6 +72,8 @@ SR4.refreshTitlePage = function() {
 	if (Object.keys(this.Local.Chars).length > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
 	}
+
+	this.Local.refreshCharList();
 };
 
 SR4.refreshDicePage = function() {
@@ -168,6 +170,8 @@ $(document).on('pageinit', '#title',  function() {
 	});
 
 	$("#title").on("switchedChar", function() {
+		Test.resetAll();
+
 		SR4.refreshTitlePage();
 	});
 });

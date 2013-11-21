@@ -42,7 +42,6 @@ SR4.Local.init = function() {
 		}
 
 		this.CharList = Object.keys(this.Chars);
-		this.charListChanged();
 	}
 
 	if (localStorage.hasOwnProperty(window.APPSTRING+"__active_char__")) {

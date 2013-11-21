@@ -146,7 +146,7 @@ SR4.Remote.pullCharByCID = function(cid) {
 
 			SR4.switchToChar(charName);
 
-			$('#remote-status-popup').html('Character successfully added to local library!').popup('open');
+			$('#remote-status-popup').html('<h3>Character successfully added to local library!</h3>').popup('open');
 
 		} else {
 			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
@@ -171,7 +171,7 @@ SR4.Remote.pushChar = function() {
 		}
 
 		if (response[0].indexOf("ok:") === 0) {
-			$('#remote-status-popup').text('<h3>Character is now stored on the server!</h3>').popup('open');
+			$('#remote-status-popup').html('<h3>Character is now stored on the server!</h3>').popup('open');
 
 			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length), 10);
 			SR4.currChar.Remote.last_modified = response[2].slice("last_modified=".length);
@@ -197,7 +197,7 @@ SR4.Remote.removeCharByCID = function(cid) {
 		response = $.trim(response);
 
 		if (response.indexOf("ok:") === 0) {
-			$('#remote-status-popup').text('<h3>Character successfully removed!</h3>').popup('open');
+			$('#remote-status-popup').html('<h3>Character successfully removed!</h3>').popup('open');
 		} else if (response.indexOf("err:") === 0) {
 			$('#remote-status-popup').html('<h3>Remove failed!</h3>Message: '+response).popup('open');	
 		} else {

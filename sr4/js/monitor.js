@@ -122,8 +122,8 @@ Monitor.refresh = function() {
 	SR4.currChar.mods.phyMod  = phyMod;
 	SR4.currChar.mods.miscMod = cond.currMisc;
 
-	$('#stun-monitor .ui-btn-text').html(stun_msg+" &mdash; <span>("+cond.currStun+" / "+maxStun+")</span>");
-	$('#phy-monitor  .ui-btn-text').html(phy_msg+ " &mdash; <span>("+cond.currPhy+" / " +maxPhy+ ")</span>");
+	$('#stun-monitor .ui-btn-text').html(stun_msg+" &mdash; <span>("+cond.currStun+"/"+maxStun+")</span>");
+	$('#phy-monitor  .ui-btn-text').html(phy_msg+ " &mdash; <span>("+cond.currPhy+"/"+maxPhy+ ")</span>");
 	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
 
 	// Refresh Ini test, this needs a better separation (TODO)

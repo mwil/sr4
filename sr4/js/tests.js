@@ -71,7 +71,7 @@ Test.recentlyUsed = function(id) {
 	var li = $("#search-skill-lv ."+id).closest("li");
 
 	// wait for the button animation to finish instead of appending buttons during animation
-	li.promise().done(function() {
+	$("#search-skill-lv ."+id).promise().done(function() {
 		$("#recent-skill-lv").prepend(li.clone()).listview("refresh");
 	});	
 };
@@ -95,7 +95,7 @@ Test.refresh = function() {
 
 		num_dice = Math.max(0, num_dice);
 
-		$(this).text("("+num_dice+"d"+(offset!==0?"+"+offset:"")+")");
+		$(this).html("("+num_dice+"d"+(offset!==0?"+"+offset:"")+")");
 
 		if (num_dice === 0) {
 			$(this).closest("a").addClass("ui-disabled");
@@ -104,13 +104,15 @@ Test.refresh = function() {
 		}
 	});
 
-	$('#test-mod-label .ui-btn-text').html('Additional Modifiers <span class="info">('+Test.mods+')</span>');
+	$('#test-mod-label .ui-btn-text').html('Additional Modifiers <span class="info">('+(Test.mods+SR4.currChar.getMods())+')</span> &mdash; '+Test.mods);
 };
 
 Test.resetAll = function() {
-	$("span.test-res").text("--");
+	$("span.test-res").html("&mdash;");
+	$("#recent-skill-lv").empty();
 };
 
+// jQuery event handling
 
 $(document).on('pageinit', '#tests',  function() {
 	$("#tests").on("updatedChar", function() {

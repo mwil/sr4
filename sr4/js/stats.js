@@ -15,6 +15,10 @@
 */
 
 SR4.refreshStatsPage = function() {
+	if (!this.currChar) {
+		return;
+	};
+		
 	for (var i = 0; i < this.StatList.length; i++) { 
 		var stat = this.StatList[i];
 
@@ -27,7 +31,7 @@ SR4.refreshStatsPage = function() {
 SR4.updateStatsPopup = function(statName, statTarget, value) {
 	// auto-adjust the maxval to repair a too loose maxval
 	var maxval = 9;
-	
+
 	while (maxval < value) {
 		maxval += 5;
 	};
@@ -40,16 +44,29 @@ SR4.updateStatsPopup = function(statName, statTarget, value) {
 	$('#stats-poptext').html("New "+statName+" value:");
 };
 
+
+
 $(document).on('pageinit', '#stats',  function() {
 	// Taking care of focus
 	$("#stats-popup").on("popupafteropen", function(e) {
 		// focus on the handle and not just the input element (focuses text box next to slider)
 		$("#stats-popup .ui-slider-handle").focus();
 	});
+
+
+	$("#stats").on("updatedChar", function() {
+		SR4.refreshStatsPage();
+	});
+
+	$("#title").on("switchedChar", function() {
+		SR4.refreshStatsPage();
+	});
 });
 
-
 $(document).on('pagebeforeshow', '#stats',  function() {
-	// hide elements that are only of interest for mages or technomancers
-	SR4.hideMAGorRES();
+	if (SR4.currChar) {
+		SR4.refreshStatsPage();	
+	} else {
+		$.mobile.changePage('#title', {transition: "none"});
+	}
 });

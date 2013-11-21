@@ -18,6 +18,8 @@ var DEFAULTVAL = 0;
 var DEFAULTNAME = "Character Name";
 
 var Character = function(charName) {
+	var i;
+
 	this.charName  = DEFAULTNAME;
 	this.stats     = {};
 	this.condition = {currStun:0, currPhy:0, currMisc:0};
@@ -32,13 +34,13 @@ var Character = function(charName) {
 	this.rename(charName);
 
 	// set default values for known stats ...
-	for (var i = 0; i < SR4.StatList.length; i++) {
+	for (i = 0; i < SR4.StatList.length; i++) {
 		this.stats[SR4.StatList[i]] = DEFAULTVAL;
-	};
+	}
 
-	for (var i = 0; i < SR4.CondList.length; i++) {
+	for (i = 0; i < SR4.CondList.length; i++) {
 		this.condition[SR4.CondList[i]] = 0;
-	};
+	}
 
 	this.updated();
 };
@@ -46,39 +48,38 @@ var Character = function(charName) {
 // Bring character to the newest 'version', i.e., add Stats from SR4.StatList when missing
 Character.prototype.upgrade = function() {
 	// TODO: also remove props that were factored out along the way!
+	var i;
 
 	if (!this.Remote) {
 		this.Remote = {
 			cid: null,
 			last_modified: null
 		};	
-	};
-
-	for (var i = 0; i < SR4.StatList.length; i++) {
-		if (!(SR4.StatList[i] in this.stats)) {
-			this.stats[SR4.StatList[i]] = DEFAULTVAL;
-		}
-	};
-
-	for (var i = 0; i < SR4.CondList.length; i++) {
-		if (!(SR4.CondList[i] in this.condition)) {
-			this.condition[SR4.CondList[i]] = 0;
-		}
-	};
-
-	if (!('mods' in this)) {
-		this.mods = {};
 	}
 
-	this.updated();
+	for (i = 0; i < SR4.StatList.length; i++) {
+		if (this.stats[SR4.StatList[i]] === undefined) {
+			this.stats[SR4.StatList[i]] = DEFAULTVAL;
+		}
+	}
+
+	for (i = 0; i < SR4.CondList.length; i++) {
+		if (this.condition[SR4.CondList[i]] === undefined) {
+			this.condition[SR4.CondList[i]] = 0;
+		}
+	}
+
+	if (this.mods === undefined) {
+		this.mods = {};
+	}
 };
 
 Character.prototype.updateByOther = function(other, cid, last_modified) {
-	if (this.charName != other.charName) {
+	if (this.charName !== other.charName) {
 		this.charName  = other.charName;
 
 		SR4.Local.charListChanged();	
-	};
+	}
 	
 	this.stats     = other.stats;
 	this.condition = other.condition;
@@ -89,12 +90,17 @@ Character.prototype.updateByOther = function(other, cid, last_modified) {
 		last_modified: last_modified
 	};
 
+	// the character in the string may be incomplete, do upgrade anyway
 	this.upgrade();
 	this.updated();
 };
 
 Character.prototype.updated = function() {
+	// dump the new version into localStorage to have it around next time
 	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);
+
+	// notify the visible page that the character changed ...
+	$("[data-role='page']:visible").trigger("updatedChar");
 };
 
 Character.prototype.rename = function(charName) {
@@ -106,27 +112,19 @@ Character.prototype.rename = function(charName) {
  * Update a single character statistic and update the page
  */
 Character.prototype.setStat = function(stat, value) {
-	this.stats[stat] = parseInt(value);
+	this.stats[stat] = parseInt(value, 10);
 	this.updated();
 };
 
 Character.prototype.getMods = function() {
+	var imod = null;
 	var mods = 0;
 
-	for (var mod in this.mods) {
-		mods += this.mods[mod];
-	};
+	for (imod in this.mods) {
+		if (this.mods.hasOwnProperty(imod)) {
+			mods += this.mods[imod];	
+		}
+	}
 
 	return mods;
 };
-
-
-// jQuery event registration
-
-$(document).on('pagebeforeshow', '#stats', function () {
-	if (SR4.currChar) {
-		SR4.refreshStatsPage();	
-	} else {
-		$.mobile.changePage('#title', {transition: "none"});
-	}
-});

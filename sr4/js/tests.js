@@ -77,6 +77,10 @@ Test.recentlyUsed = function(id) {
 };
 
 Test.refresh = function() {
+	if (!SR4.currChar) {
+		return;
+	}
+
 	$("span.test-label").each(function() {
 		var a     = $(this).closest("a");
 		var stats = SR4.currChar.stats;
@@ -107,11 +111,21 @@ Test.resetAll = function() {
 	$("span.test-res").text("--");
 };
 
+
+$(document).on('pageinit', '#tests',  function() {
+	$("#tests").on("updatedChar", function() {
+		SR4.refreshTestsPage();
+	});
+
+	$("#tests").on("switchedChar", function() {
+		Test.resetAll();
+		SR4.refreshTestsPage();
+	});
+});
+
 $(document).on('pagebeforeshow', '#tests', function () {	
 	if (SR4.currChar) {
-		SR4.hideMAGorRES();
 		SR4.refreshTestsPage();	
-		
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
 	};

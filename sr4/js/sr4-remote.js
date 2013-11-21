@@ -16,23 +16,25 @@
 
 
 SR4.Remote.init = function() {
-	if (window.APPSTRING+"__active_user__" in localStorage) {
+	if (localStorage.hasOwnProperty(window.APPSTRING+"__active_user__")) {
 		this.user = localStorage.getItem(window.APPSTRING+"__active_user__");
 	}
 };
 
 SR4.Remote.loginToServer = function() {
+	var i = 0;
+
 	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4-login.php', {'command': 'login', 'username': this.user, 'password': 'jdzt9R'}, function(response) {
 		response = response.split("\n");
 		
-		for (var i = 0; i < response.length; i++) {
+		for (i = 0; i < response.length; i++) {
 			response[i] = $.trim(response[i]);	
-		};
+		}
 
 		if (response[0].indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Login failed!<br/>'+response[1]).popup('open');
+			$('#remote-status-popup').html('<h3>Login failed!</h3>Message: '+response[1]).popup('open');
 		} else if (response[0].indexOf('ok:') === 0) {
 			var username = response[1].slice("username=".length);
 			var uid      = response[2].slice("uid=".length);
@@ -46,8 +48,8 @@ SR4.Remote.loginToServer = function() {
 			SR4.Events.sync = setInterval(SR4.Remote.checkSyncChar, 30000);
 
 		} else {
-			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response[0]).popup('open');
-		};
+			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
+		}
 
 		$.mobile.loading("hide");
 	});
@@ -60,7 +62,7 @@ SR4.Remote.logoutFromServer = function() {
 		response = $.trim(response);
 
 		if (response.indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Logout failed!<br/>Message from server: '+response).popup('open');
+			$('#remote-status-popup').html('<h3>Logout failed!</h3>Message: '+response).popup('open');
 		} else if (response.indexOf('ok:') === 0) {				
 			$("#rem-server-collap .ui-btn-text:first").text("Connect to Server");
 			$("#rem-lc-collap").trigger("collapse");
@@ -68,59 +70,65 @@ SR4.Remote.logoutFromServer = function() {
 			clearInterval(SR4.Events.sync);
 
 		} else {
-			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response).popup('open');
-		};
+			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response).popup('open');
+		}
 
 		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.fetchCharList = function() {
+	var i = 0;
+
 	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4-chars.php', {'command': 'list'}, function(response) {
 		response = response.split("\n");
 		
-		for (var i = 0; i < response.length; i++) {
+		for (i = 0; i < response.length; i++) {
 			response[i] = $.trim(response[i]);	
-		};
+		}
 
 		if (response[0].indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Listing failed!<br/>Message from server: '+response[0]).popup('open');
+			$('#remote-status-popup').html('<h3>Listing failed!</h3>Message: '+response[0]).popup('open');
 			$('#rem-lc-collap').trigger('collapse');
+
 		} else if (response[0].indexOf('ok:') === 0) {
 			SR4.Remote.CharIDs = response[1] && JSON.parse(response[1]);
 			SR4.Remote.refreshCharList();	
-		} else {
-			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response[0]).popup('open');
-		};
 
-		$.mobile.loading("hide");
+		} else {
+			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
+		}
+
 		$("#rem-lc-collap").trigger("expand");
+		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.pullCharByCID = function(cid) {
+	var i = 0;
+
 	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4-chars.php', {'command': 'pull', 'cid': cid}, function(response) {
 		response = response.split("\n");
 		
-		for (var i = 0; i < response.length; i++) {
+		for (i = 0; i < response.length; i++) {
 			response[i] = $.trim(response[i]);	
-		};
+		}
 
 		if (response[0].indexOf('err:') === 0) {
-			$('#remote-status-popup').html('Pull failed!<br/>Message from server: '+response).popup('open');
+			$('#remote-status-popup').html('<h3>Pull failed!</h3>Message: '+response).popup('open');
 
 		} else if (response[0].indexOf('ok:') === 0) {
 			var character = response[1] && JSON.parse(response[1]);
 			var charName  = character.charName;
 
-			var cid  = parseInt(response[2].slice("cid=".length));
+			var cid  = parseInt(response[2].slice("cid=".length), 10);
 			var lmod = response[3].slice("last_modified=".length);
 
-			if (charName in SR4.Local.Chars) {
+			if (SR4.Local.Chars[charName] !== undefined) {
 				// update the existing char ... TODO ask for confirmation?
 				SR4.Local.Chars[charName].updateByOther(character, cid, lmod);
 
@@ -133,8 +141,6 @@ SR4.Remote.pullCharByCID = function(cid) {
 				character.Remote.last_modified = lmod;
 
 				SR4.Local.Chars[charName] = character;
-				SR4.Local.Chars[charName].updated();
-
 				SR4.Local.charListChanged();
 			}
 
@@ -143,14 +149,16 @@ SR4.Remote.pullCharByCID = function(cid) {
 			$('#remote-status-popup').html('Character successfully added to local library!').popup('open');
 
 		} else {
-			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response[0]).popup('open');
-		};
+			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
+		}
 
 		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.pushChar = function() {
+	var i = 0;
+
 	$.mobile.loading("show");
 
 	$.post('../cgi-bin/sr4-chars.php', {'command': 'push', 'cid': SR4.currChar.Remote.cid,
@@ -158,21 +166,21 @@ SR4.Remote.pushChar = function() {
 	{
 		response = response.split("\n");
 		
-		for (var i = 0; i < response.length; i++) {
+		for (i = 0; i < response.length; i++) {
 			response[i] = $.trim(response[i]);	
-		};
+		}
 
 		if (response[0].indexOf("ok:") === 0) {
-			$('#remote-status-popup').text('Character is now stored on the server!').popup('open');
+			$('#remote-status-popup').text('<h3>Character is now stored on the server!</h3>').popup('open');
 
-			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length));
+			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length), 10);
 			SR4.currChar.Remote.last_modified = response[2].slice("last_modified=".length);
 			SR4.currChar.updated();
 
 		} else if (response[0].indexOf("err:") === 0) {
-			$('#remote-status-popup').html('Push failed!<br/>Message from server: '+response[0]).popup('open');	
+			$('#remote-status-popup').html('<h3>Push failed!</h3>Message: '+response[0]).popup('open');	
 		} else {
-			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response[0]).popup('open');
+			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
 		}
 
 		$('#rem-lc-collap').trigger('collapse');
@@ -189,36 +197,41 @@ SR4.Remote.removeCharByCID = function(cid) {
 		response = $.trim(response);
 
 		if (response.indexOf("ok:") === 0) {
-			$('#remote-status-popup').text('Character successfully removed!').popup('open');
+			$('#remote-status-popup').text('<h3>Character successfully removed!</h3>').popup('open');
 		} else if (response.indexOf("err:") === 0) {
-			$('#remote-status-popup').html('Remove failed!<br/>Message: '+response).popup('open');	
+			$('#remote-status-popup').html('<h3>Remove failed!</h3>Message: '+response).popup('open');	
 		} else {
-			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response).popup('open');
-		};
+			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response).popup('open');
+		}
 
 		$('#rem-lc-collap').trigger('collapse');
-		SR4.Remote.refreshCharList();
 
 		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.checkSyncChar = function() {
+	var i = 0;
+
 	$.post('../cgi-bin/sr4-chars.php', {'command':      'sync', 
 										'cid':           SR4.currChar.Remote.cid,
 										'last_modified': SR4.currChar.Remote.last_modified},
-	function(response) {
+	function(response) 
+	{
 		response = response.split("\n");
 		
-		for (var i = 0; i < response.length; i++) {
+		for (i = 0; i < response.length; i++) {
 			response[i] = $.trim(response[i]);	
-		};
+		}
 
 		if (response[0].indexOf("ok:sync:modified_on_server") === 0) {
 			console.log("checkSync: found modified on server (timestamp: ", response[2].slice("last_modified=".length), ")!");
 
+			// found new character, stop polling until we updated again to the latest version!
+			clearInterval(SR4.Events.sync);
+
 			$(".header-sync-btn").removeClass("ui-disabled");
-			$(".header-sync-btn").data("target", parseInt(response[1].slice("cid=".length)));
+			$(".header-sync-btn").data("target", parseInt(response[1].slice("cid=".length), 10));
 
 		} else if (response[0].indexOf("ok:sync:up_to_date") === 0) {
 			// nothing to do, nopping around
@@ -229,11 +242,13 @@ SR4.Remote.checkSyncChar = function() {
 			console.log('checkSync failed! Message: '+response[0]);
 		} else {
 			console.log('checkSync unexpected response from server! Message: '+response[0]);
-		};
+		}
 	});	
 };
 
 SR4.Remote.doSyncChar = function(cid) {
+	var i = 0;
+
 	$.mobile.loading("show");
 
 	if (!cid) {
@@ -243,46 +258,50 @@ SR4.Remote.doSyncChar = function(cid) {
 	$.post('../cgi-bin/sr4-chars.php', {'command': 'pull', 'cid': cid}, function(response) {
 		response = response.split("\n");
 		
-		for (var i = 0; i < response.length; i++) {
+		for (i = 0; i < response.length; i++) {
 			response[i] = $.trim(response[i]);	
-		};
+		}
 
 		if (response[0].indexOf('err:') === 0) {
 			console.log('Pull failed! Message from server: '+response[0]);
 
 		} else if (response[0].indexOf('ok:') === 0) {
 			var character = response[1] && JSON.parse(response[1]);
-			var cid  = parseInt(response[2].slice("cid=".length));
+			var cid  = parseInt(response[2].slice("cid=".length), 10);
 			var lmod = response[3].slice("last_modified=".length);
 
-			if (SR4.currChar.Remote.cid == cid) {
+			if (SR4.currChar.Remote.cid === cid) {
 				SR4.currChar.updateByOther(character, cid, lmod);
 
-				// TODO: update the current page!
+				SR4.Events.sync = setInterval(SR4.Remote.checkSyncChar, 30000);
 
 				$(".header-sync-btn").addClass("ui-disabled");
 				console.log("Character successfully synced!");
 
 			} else {
 				console.log("Syncing with wrong char id, something is wrong ... local: ", SR4.currChar.Remote.cid, ", received: ", cid);
-			};
+			}
 
 		} else {
 			console.log('Unexpected response from server! Message: '+response[0]);
-		};
+		}
 
 		$.mobile.loading("hide");
 	});
 };
 
 SR4.Remote.refreshCharList = function() {
+	var cid = 0;
+
 	$('#rem-loadchar-lv').empty();
 
-	for (var cid in this.CharIDs) {
-		$('#rem-loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' "+
+	for (cid in this.CharIDs) {
+		if (this.CharIDs.hasOwnProperty(cid)) {
+			$('#rem-loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' "+
 			"onClick='SR4.Remote.pullCharByCID("+cid+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharIDs[cid]+"</a>"+
-			"<a href='#rem-delete-popup' data-rel='popup' onClick='$(\"#rem-delete-popup\").data(\"target\", "+cid+");'>Delete</a></li>")	
-	};
+			"<a href='#rem-delete-popup' data-rel='popup' onClick='$(\"#rem-delete-popup\").data(\"target\", "+cid+");'>Delete</a></li>");
+		}
+	}
 
 	$("#rem-loadchar-lv").listview("refresh");
 };
@@ -307,14 +326,14 @@ $(document).on('pageinit', '#title',  function() {
 				e.stopImmediatePropagation();
 
 				SR4.Remote.fetchCharList();
-			};
+			}
 			// other callapsibles on #title also trigger this event, do nothing ...
 
 		} else {  // on closing a collapsible
-			if(curr_id === "rem-server-collap") {
+			if (curr_id === "rem-server-collap") {
 				SR4.Remote.logoutFromServer();
-			};
-		};
+			}
+		}
 	});
 
 	// Taking care of focus

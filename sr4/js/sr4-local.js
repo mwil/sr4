@@ -16,61 +16,58 @@
 
 
 SR4.Local.init = function() {
-	var gotChar = false;
+	var i = 0;
+	var icharname = null;
 
-	SR4.StatList = $('.AttrList').attr("data-stats").trim().split(/\s+/);
+	// get the statlist that was saved by XSLT in a data element of a hidden div
+	SR4.StatList = $('.AttrList').data("stats").trim().split(/\s+/);
 
 	// Get the skill information from each category and add it to the statlist
 	$('.SkillList').each(function() {
-		SR4.StatList = SR4.StatList.concat($(this).attr("data-stats").trim().split(/\s+/));
+		SR4.StatList = SR4.StatList.concat($(this).data("stats").trim().split(/\s+/));
 	});
 	
 
 	// load available chars from localStorage
-	if (window.APPSTRING+"__charlist__" in localStorage) {
+	if (localStorage.hasOwnProperty(window.APPSTRING+"__charlist__")) {
 		var charnames = localStorage.getObject(window.APPSTRING+"__charlist__");
 
-		for (var i = 0; i < charnames.length; i++) {
-			if (window.APPSTRING_C+charnames[i] in localStorage) {
+		for (i = 0; i < charnames.length; i++) {
+			if (localStorage.hasOwnProperty(window.APPSTRING_C+charnames[i])) {
 				this.Chars[charnames[i]] = localStorage.getObject(window.APPSTRING_C+charnames[i]);
-				this.Chars[charnames[i]].__proto__ = Character.prototype; // add prototype functions again (I hope)
+				this.Chars[charnames[i]].__proto__ = Character.prototype; // add prototype functions again
 
 				this.Chars[charnames[i]].upgrade();
 			}
-		};
+		}
 
 		this.CharList = Object.keys(this.Chars);
+		this.charListChanged();
 	}
 
-	if (window.APPSTRING+"__active_char__" in localStorage) {
+	if (localStorage.hasOwnProperty(window.APPSTRING+"__active_char__")) {
 		var activechar = localStorage.getItem(window.APPSTRING+"__active_char__");
 		
-		if (activechar in this.Chars) {
-			SR4.currChar = this.Chars[activechar];
-			localStorage.setItem(window.APPSTRING+"__active_char__", activechar);
-
-			gotChar = true;
+		if (this.Chars[activechar] !== undefined) {
+			SR4.switchToChar(activechar);
 		} else {
-			// Unknown activechar, this should not happen ...
-			if (Object.keys(this.Chars).length > 0) {
-				// if there are other characters, take a (random) one
-				for (var charname in this.Chars) {
-					SR4.currChar = this.Chars[charname];
-					localStorage.setItem(window.APPSTRING+"__active_char__", charname);
-					gotChar = true;
-					break;
-				};
-			} else {
-				localStorage.removeItem(window.APPSTRING+"__active_char__");
+			localStorage.removeItem(window.APPSTRING+"__active_char__");
+		}
+	}
+			
+	if (Object.keys(this.Chars).length > 0 && !SR4.currChar) {
+		// if we don't have a char yet and there are other characters, take a (random) one
+		for (icharname in this.Chars) {
+			if (this.Chars.hasOwnProperty(icharname)) {
+				SR4.switchToChar(charname);
+				break;	
 			}
 		}
 	}
-
-	SR4.refreshHeader();
 };
 
 SR4.Local.createChar = function(charName) {
-	if (charName in this.Chars || !charName) {
+	if (this.Chars[charName] !== undefined || !charName) {
 		// Name already exists ... TODO: in-app notification
 		return;
 	}
@@ -83,6 +80,7 @@ SR4.Local.createChar = function(charName) {
 };
 
 SR4.Local.removeChar = function() {
+	var icharname = null;
 	// cleanup 
 	localStorage.removeItem(window.APPSTRING_C+SR4.currChar.charName);
 	delete this.Chars[SR4.currChar.charName];
@@ -91,9 +89,11 @@ SR4.Local.removeChar = function() {
 
 	if (Object.keys(this.Chars).length > 0) {
 		// pick up someone (possibly random) TODO: is there a less ugly way?
-		for (var charname in this.Chars) {
-			SR4.switchToChar(charname);
-			break;	
+		for (icharname in this.Chars) {
+			if (this.Chars.hasOwnProperty(icharname)) {
+				SR4.switchToChar(charname);
+				break;
+			}
 		}
 	} else {
 		// remove and disable all links again
@@ -113,7 +113,7 @@ SR4.Local.removeCharByIndex = function(index) {
 		delete this.Chars[charname];
 
 		this.charListChanged();		
-	};
+	}
 };
 
 SR4.Local.renameChar = function(newName) {
@@ -121,7 +121,7 @@ SR4.Local.renameChar = function(newName) {
 
 	if (newName === oldName) {
 		return;
-	};
+	}
 
 	SR4.currChar.rename(newName);
 
@@ -146,13 +146,15 @@ SR4.Local.charListChanged = function() {
 };
 
 SR4.Local.refreshCharList = function() {
+	var i = 0;
+
 	$('#loadchar-lv').empty();
 
-	for (var i = 0; i < this.CharList.length; i++) {
+	for (i = 0; i < this.CharList.length; i++) {
 		$('#loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward'" +
 			                     "onClick='SR4.switchToCharByIndex("+i+"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+this.CharList[i]+
-			                     "</a><a href='#delete-popup' data-rel='popup' onClick='$(\"#delete-popup\").attr(\"data-target\", "+i+")'>Delete</a></li>")	
-	};
+			                     "</a><a href='#delete-popup' data-rel='popup' onClick='$(\"#delete-popup\").attr(\"data-target\", "+i+")'>Delete</a></li>");	
+	}
 
 	$("#loadchar-lv").listview("refresh");
 };

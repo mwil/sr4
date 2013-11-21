@@ -18,10 +18,10 @@ var Monitor = {
 	knock_msg: "<span class='fade'>Knocked Out!<span>",
 	coma_msg:  "<span class='warn'>Character in Coma!<span>",
 	dead_msg:  "<span class='warn'>! DEAD !<span>"
-}
+};
 
 Monitor.hitStun = function(hits) {
-	var maxStun = (8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2));
+	var maxStun = (8+Math.ceil(SR4.currChar.stats.Attrib_WIL/2));
 	var cond    = SR4.currChar.condition;
 
 	if (hits >= 0) {
@@ -43,7 +43,7 @@ Monitor.hitStun = function(hits) {
 };
 
 Monitor.hitPhy = function(hits) {
-	var maxPhy = (8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2));
+	var maxPhy = (8+Math.ceil(SR4.currChar.stats.Attrib_BOD/2));
 	var cond   = SR4.currChar.condition;
 
 	if (hits >= 0) {
@@ -54,7 +54,7 @@ Monitor.hitPhy = function(hits) {
 			cond.currPhy += hits;
 		}
 	} else {
-		if (cond.currPhy == 0) {
+		if (cond.currPhy === 0) {
 			return;
 		} else {
 			cond.currPhy -= 1;
@@ -89,8 +89,12 @@ Monitor.resetMisc = function() {
 };
 
 Monitor.refresh = function() {
-	var maxStun = (8+Math.ceil(SR4.currChar.stats['Attrib_WIL']/2));
-	var maxPhy  = (8+Math.ceil(SR4.currChar.stats['Attrib_BOD']/2));
+	if (!SR4.currChar) {
+		return;
+	}
+
+	var maxStun = (8+Math.ceil(SR4.currChar.stats.Attrib_WIL/2));
+	var maxPhy  = (8+Math.ceil(SR4.currChar.stats.Attrib_BOD/2));
 	var stunMod = -Math.floor(SR4.currChar.condition.currStun/3);
 	var phyMod  = -Math.floor(SR4.currChar.condition.currPhy/3);
 	var cond    = SR4.currChar.condition;
@@ -103,25 +107,24 @@ Monitor.refresh = function() {
 	}
 
 	if (cond.currPhy > maxPhy) {
-		if (cond.currPhy <= (maxPhy + SR4.currChar.stats['Attrib_BOD'])) {
+
+		if (cond.currPhy <= (maxPhy + SR4.currChar.stats.Attrib_BOD)) {
 			phy_msg = this.coma_msg;
 		} else {
 			phy_msg = this.dead_msg;
 		}
-	} else if (cond.currPhy == maxPhy) {
+	} else if (cond.currPhy === maxPhy) {
 		phy_msg = this.knock_msg;
 	}
 
 	// update the dice pool modifiers of the current character
-	SR4.currChar.mods['stunMod'] = stunMod;
-	SR4.currChar.mods['phyMod']  = phyMod;
-	SR4.currChar.mods['miscMod'] = cond.currMisc;
+	SR4.currChar.mods.stunMod = stunMod;
+	SR4.currChar.mods.phyMod  = phyMod;
+	SR4.currChar.mods.miscMod = cond.currMisc;
 
 	$('#stun-monitor .ui-btn-text').html(stun_msg+" &mdash; <span>("+cond.currStun+" / "+maxStun+")</span>");
 	$('#phy-monitor  .ui-btn-text').html(phy_msg+ " &mdash; <span>("+cond.currPhy+" / " +maxPhy+ ")</span>");
 	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
-
-	SR4.currChar.updated();
 
 	// Refresh Ini test, this needs a better separation (TODO)
 	Test.refresh();
@@ -130,10 +133,20 @@ Monitor.refresh = function() {
 
 // jQuery event registration
 
+$(document).on('pageinit', '#monitor',  function() {
+	$("#monitor").on("updatedChar", function() {
+		SR4.refreshMonitorPage();
+	});
+
+	$("#monitor").on("switchedChar", function() {
+		SR4.refreshMonitorPage();
+	});
+});
+
 $(document).on('pagebeforeshow', '#monitor', function () {	
 	if (SR4.currChar) {
 		SR4.refreshMonitorPage();
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
-	};
+	}
 });

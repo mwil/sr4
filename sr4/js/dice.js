@@ -30,17 +30,18 @@ Dice.rollToPopup = function(num_dice, edge) {
 Dice.rerollToPopup = function() {
 	var count = this.prev_count;
 	var num_reroll = 0;
+	var i = 0;
 
 	// reroll dice that did not score a hit
-	for (var i = 0; i < 5; i++) {
+	for (i = 0; i < 5; i++) {
 		num_reroll += count[i];
 		count[i] = 0;
-	};
+	}
 
-	for (var i = 0; i < num_reroll; i++) {
+	for (i = 0; i < num_reroll; i++) {
 		var roll = 1 + Math.floor(Math.random() * 6);
 		count[roll] += 1;
-	};
+	}
 
 	this.updateDicePopup(count);
 };
@@ -48,29 +49,31 @@ Dice.rerollToPopup = function() {
 Dice.addEdge = function(num_edge) {
 	var count = this.prev_count;
 	var adds = 0;
+	var i = 0;
 
 	var edge_count = this.roll(num_edge, true);
 
-	for (var i = 0; i < count.length; i++) {
+	for (i = 0; i < count.length; i++) {
 		count[i] += edge_count[i];
-	};
+	}
 
 	this.updateDicePopup(count);
 };
 
 Dice.roll = function(num_dice, rule_of_six) {
-	var count = new Array(0, 0, 0, 0, 0, 0, 0);
+	var count = [0, 0, 0, 0, 0, 0, 0];
 	var adds  = 0;
+	var i = 0;
 	
-	for (var i = 0; i < (num_dice + adds); i++) {
+	for (i = 0; i < (num_dice + adds); i++) {
 		var roll = 1 + Math.floor(Math.random() * 6);
 		count[roll] += 1;
 
 		// Rule of Six with Edge
-		if (rule_of_six && roll == 6) {
+		if (rule_of_six && roll === 6) {
 			adds += 1;
 		}
-	};
+	}
 
 	return count;
 };
@@ -78,11 +81,11 @@ Dice.roll = function(num_dice, rule_of_six) {
 Dice.interpretResult = function(count) {
 	var res = {'hits':0, 'zeros':0, 'glitch':false, 'critical':false};
 
-	res['num_dice'] = count.reduce(function(a, b) { return a + b })
-	res['hits']     = count[5] + count[6];
-	res['zeros']    = count[1];
-	res['glitch']   = res.zeros >= (res.num_dice)/2;
-	res['critical'] = res.glitch && (res.hits == 0);
+	res.num_dice = count.reduce(function(a, b) { return a + b; });
+	res.hits     = count[5] + count[6];
+	res.zeros    = count[1];
+	res.glitch   = res.zeros >= (res.num_dice)/2;
+	res.critical = res.glitch && (res.hits === 0);
 
 	return res;
 };
@@ -105,27 +108,27 @@ Dice.updateDicePopup = function (count) {
 		} else {
 			title = "<h3 class='diceres'>No Hits!</h3>";
 		}
-	};
+	}
 
-	$('.dice-poptext').html(title+"\
-			<table class='center'>\
-				<tr>\
-					<td><div class='die warn'>&#9856;</div></td>\
-					<td class='warn'>x</td><td class='warn'>"+count[1]+"</td>\
-					<td><div class='die fade'>&#9857;</div></td>\
-					<td class='fade'>x</td><td class='fade'>"+count[2]+"</td>\
-					<td><div class='die fade'>&#9858;</div></td>\
-					<td class='fade'>x</td><td class='fade'>"+count[3]+"</td>\
-				</tr>\
-				<tr>\
-					<td><div class='die fade'>&#9859;</div></td>\
-					<td class='fade'>x</td><td class='fade'>"+count[4]+"</td>\
-					<td><div class='die hit'>&#9860;</div></td>\
-					<td class='hit'>x</td><td class='hit'>"+count[5]+"</td>\
-					<td><div class='die hit'>&#9861;</div></td>\
-					<td class='hit'>x</td><td class='hit'>"+count[6]+"</td>\
-				</tr>\
-			</table>");
+	$('.dice-poptext').html(title+
+			"<table class='center'>"+
+				"<tr>"+
+					"<td><div class='die warn'>&#9856;</div></td>"+
+					"<td class='warn'>x</td><td class='warn'>"+count[1]+"</td>"+
+					"<td><div class='die fade'>&#9857;</div></td>"+
+					"<td class='fade'>x</td><td class='fade'>"+count[2]+"</td>"+
+					"<td><div class='die fade'>&#9858;</div></td>"+
+					"<td class='fade'>x</td><td class='fade'>"+count[3]+"</td>"+
+				"</tr>"+
+				"<tr>"+
+					"<td><div class='die fade'>&#9859;</div></td>"+
+					"<td class='fade'>x</td><td class='fade'>"+count[4]+"</td>"+
+					"<td><div class='die hit'>&#9860;</div></td>"+
+					"<td class='hit'>x</td><td class='hit'>"+count[5]+"</td>"+
+					"<td><div class='die hit'>&#9861;</div></td>"+
+					"<td class='hit'>x</td><td class='hit'>"+count[6]+"</td>"+
+				"</tr>"+
+			"</table>");
 };
 
 
@@ -136,13 +139,13 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 
 	$('.dicebutton').each(
 		function(index) {
-			var baseval = parseInt($(this).attr("baseval"));
-			var currval = parseInt($(this).attr("currval"));
+			var baseval = parseInt($(this).attr("baseval"), 10);
+			var currval = parseInt($(this).attr("currval"), 10);
 			
 			$(this).attr("baseval", baseval + offset);
 			$(this).attr("currval", currval + offset);
 		}
-	)
+	);
 
 	this.refreshDiceButtons();
 };
@@ -150,7 +153,7 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 Dice.changeOffset = function(obj, prop, remove) {
 	if (!remove) {
 		this.Offsets[prop] = obj;
-	} else if (prop in this.Offsets) {
+	} else if (this.Offsets[prop] !== undefined) {
 		delete this.Offsets[prop];
 	}
 
@@ -166,20 +169,24 @@ Dice.useCharMods = function(use) {
 Dice.refreshDiceButtons = function() {
 	$('.dicebutton').each(
 		function(index) {
-			var baseval = parseInt($(this).attr("baseval"));
+			var iprop = null;
+			var i = 0;
+			var baseval = parseInt($(this).attr("baseval"), 10);
 			var offset = 0;
 
 			// ugly hack, why is there no sane way to access nested objects ??
-			for (var prop in Dice.Offsets) {
-				var proplist = prop.split('.');
-				var currobj  = Dice.Offsets[prop];
-				
-				for (var i = 0; i < proplist.length; i++) {
-					currobj = currobj[proplist[i]];
-				};
-				
-				offset += currobj;
-			};
+			for (iprop in Dice.Offsets) {
+				if (Dice.Offsets.hasOwnProperty(iprop)) {
+					var proplist = prop.split('.');
+					var currobj  = Dice.Offsets[prop];
+					
+					for (i = 0; i < proplist.length; i++) {
+						currobj = currobj[proplist[i]];
+					}
+					
+					offset += currobj;
+				}
+			}
 
 			if (Dice.use_cmods) {
 				offset += SR4.currChar.getMods();
@@ -196,7 +203,7 @@ Dice.refreshDiceButtons = function() {
 			}
 
 			$(this).find(".ui-btn-text").html(baseval + 
-				(offset != 0 ? "<sub class='info'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
+				(offset !== 0 ? "<sub class='info'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
 		}
 	);
 };
@@ -204,10 +211,21 @@ Dice.refreshDiceButtons = function() {
 
 // jQuery event registration
 
+$(document).on('pageinit', '#dice',  function() {
+
+	$("#dice").on("updatedChar", function() {
+		SR4.refreshDicePage();
+	});
+
+	$("#dice").on("switchedChar", function() {
+		SR4.refreshDicePage();
+	});
+});
+
 $(document).on('pagebeforeshow', '#dice', function () {
 	if (SR4.currChar) {
 		SR4.refreshDicePage();
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
-	};
+	}
 });

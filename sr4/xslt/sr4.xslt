@@ -34,7 +34,7 @@
 
 		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
 			<h1><xsl:text>SR4.Datajack</xsl:text></h1>
-			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled inheader"><xsl:text>Nav</xsl:text></a>
+			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled"><xsl:text>Nav</xsl:text></a>
 			<a href="#" data-iconpos="right" data-icon="refresh" class="header-sync-btn ui-disabled remote-disabled" data-target=""
 				onClick="SR4.Remote.doSyncChar($('.header-sync-btn').data('target'));">
 				<xsl:text>Sync</xsl:text>
@@ -49,10 +49,10 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#title"><xsl:text>Chars</xsl:text></a></li>
-					<li><a href="#stats"   class="ui-disabled nochar-disabled inheader"><xsl:text>Stats</xsl:text></a></li>
-					<li><a href="#tests"   class="ui-disabled nochar-disabled inheader"><xsl:text>Tests</xsl:text></a></li>
-					<li><a href="#dice"    class="ui-disabled nochar-disabled inheader"><xsl:text>Dicer</xsl:text></a></li>
-					<li><a href="#monitor" class="ui-disabled nochar-disabled inheader"><xsl:text>Monitor</xsl:text></a></li>
+					<li><a href="#stats"   class="ui-disabled nochar-disabled"><xsl:text>Stats</xsl:text></a></li>
+					<li><a href="#tests"   class="ui-disabled nochar-disabled"><xsl:text>Tests</xsl:text></a></li>
+					<li><a href="#dice"    class="ui-disabled nochar-disabled"><xsl:text>Dicer</xsl:text></a></li>
+					<li><a href="#monitor" class="ui-disabled nochar-disabled"><xsl:text>Monitor</xsl:text></a></li>
 				</ul>
 			</div><!-- /navbar -->
 		</div><!-- /footer -->

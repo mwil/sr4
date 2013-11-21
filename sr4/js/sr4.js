@@ -14,8 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-window.APPSTRING   = "Datajack."
-window.APPSTRING_C = window.APPSTRING + "Character."
+window.APPSTRING   = "Datajack.";
+window.APPSTRING_C = window.APPSTRING + "Character.";
 
 var SR4 = {
 	StatList: [],
@@ -51,8 +51,7 @@ SR4.switchToChar = function(charName) {
 
 	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
 
-	Test.resetAll();
-	this.refreshTitlePage();
+	$("[data-role='page']:visible").trigger("switchedChar");
 };
 
 SR4.switchToCharByIndex = function(index) {
@@ -60,31 +59,24 @@ SR4.switchToCharByIndex = function(index) {
 	this.switchToChar(this.Local.CharList[index]);
 };
 
-
-SR4.refreshHeader = function() {
-	$('.inheader').removeClass('ui-disabled');
-};
-
 SR4.refreshTitlePage = function() {
 	if (this.currChar) {
 		$('.charName').html(this.currChar.charName);
+		$('.nochar-disabled').removeClass('ui-disabled');
+
 	} else {
 		$('.charName').html("No Char found!");
+		$('.nochar-disabled').addClass('ui-disabled');
 	}
 
 	if (Object.keys(this.Local.Chars).length > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
-		$('.nochar-disabled').removeClass('ui-disabled');
-
-		this.Local.refreshCharList();
-	} else {
-		$('.nochar-disabled').addClass('ui-disabled');
-	};
+	}
 };
 
 SR4.refreshDicePage = function() {
 	Dice.refreshDiceButtons();
-}
+};
 
 SR4.refreshMonitorPage = function() {
 	Monitor.refresh();
@@ -97,39 +89,43 @@ SR4.refreshTestsPage = function() {
 };
 
 SR4.hideMAGorRES = function() {
+	if(!this.currChar) {
+		return;
+	}
+
 	// hide skill collapsibles on stats page if attrib requirements are not satisfied
 	// detach list element and restore them if necessary, just hiding them breaks ...
-	if (this.currChar.stats["Attrib_MAG"] === 0) {
+	if (this.currChar.stats.Attrib_MAG === 0) {
 		$("div.skill-magic").hide();
 
-		if (!this.Detached["tests_MAG"]) {
-			this.Detached["tests_MAG"] = $("li.skill-magic").detach();	
-		};
+		if (!this.Detached.tests_MAG) {
+			this.Detached.tests_MAG = $("li.skill-magic").detach();	
+		}
 
 	} else {
 		$("div.skill-magic").show();
 
-		if (this.Detached["tests_MAG"]) {
-			this.Detached["tests_MAG"].appendTo("#search-skill-lv");
-			this.Detached["tests_MAG"] = null;
-		};
-	};
+		if (this.Detached.tests_MAG) {
+			this.Detached.tests_MAG.appendTo("#search-skill-lv");
+			this.Detached.tests_MAG = null;
+		}
+	}
 
-	if (this.currChar.stats["Attrib_RES"] === 0) {
+	if (this.currChar.stats.Attrib_RES === 0) {
 		$("div.skill-resonance").hide();
 
-		if (!this.Detached["tests_RES"]) {
-			this.Detached["tests_RES"] = $("li.skill-resonance").detach();
-		};
+		if (!this.Detached.tests_RES) {
+			this.Detached.tests_RES = $("li.skill-resonance").detach();
+		}
 
 	} else {
 		$("div.skill-resonance").show();
 
-		if (this.Detached["tests_RES"]) {
-			this.Detached["tests_RES"].appendTo("#search-skill-lv");
-			this.Detached["tests_RES"] = null;
-		};
-	};
+		if (this.Detached.tests_RES) {
+			this.Detached.tests_RES.appendTo("#search-skill-lv");
+			this.Detached.tests_RES = null;
+		}
+	}
 };
 
 
@@ -164,6 +160,15 @@ $(document).on('pageinit', '#title',  function() {
 
 	$("#rename-popup").on("popupafteropen", function(e) {
 		$("#charname-txtbx").focus();
+	});
+
+
+	$("#title").on("updatedChar", function() {
+		SR4.refreshTitlePage();
+	});
+
+	$("#title").on("switchedChar", function() {
+		SR4.refreshTitlePage();
 	});
 });
 

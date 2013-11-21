@@ -22,7 +22,7 @@ $(document).on('pageinit', "[data-role='page']", function () {
 		SR4.Local.init();
 		SR4.Remote.init();
 		window.startup = false;
-	};
+	}
 });
 
 /* // Handle swiping, does not work so well.
@@ -31,16 +31,16 @@ $(document).on('pagebeforeshow', "[data-role='page']", function () {
 
 	if (window.withSwipe) {
 		$(this).bind('swipeleft', function(event, ui) {
-	    	$.mobile.changePage('#'+$(this).jqmData('next'), {transition: "slide"});
+			$.mobile.changePage('#'+$(this).jqmData('next'), {transition: "slide"});
 		});
 
 		$(this).bind('swiperight', function(event, ui) {
-	    	$.mobile.changePage('#'+$(this).jqmData('prev'), {transition: "slide", reverse: true});
+			$.mobile.changePage('#'+$(this).jqmData('prev'), {transition: "slide", reverse: true});
 		});
 	};
 });
 
-$(document).on('pagebeforehide', "[data-role='page']", function () { 		
+$(document).on('pagebeforehide', "[data-role='page']", function () {
 	if (window.withSwipe) {
 		$(this).off('swipeleft swiperight');
 	}

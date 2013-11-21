@@ -22,9 +22,10 @@ $(document).on('pageinit', "[data-role='page']", function () {
 		SR4.Local.init();
 		SR4.Remote.init();
 		window.startup = false;
-	}
+	};
 });
 
+/* // Handle swiping, does not work so well.
 $(document).on('pagebeforeshow', "[data-role='page']", function () { 
 	$('.next-button').attr('href', '#'+$(this).jqmData('next'));
 
@@ -44,26 +45,4 @@ $(document).on('pagebeforehide', "[data-role='page']", function () {
 		$(this).off('swipeleft swiperight');
 	}
 });
-
-$(document).on('pageinit', '#title',  function() {
-	// Taking care of focus for input popups
-	$("#login-popup").on("popupafteropen", function(e) {
-		$("#login-submit-btn").focus();
-	});
-
-	$("#createchar-popup").on("popupafteropen", function(e) {
-		$("#newchar-name-txtbx").focus();
-	});
-
-	$("#rename-popup").on("popupafteropen", function(e) {
-		$("#charname-txtbx").focus();
-	});
-});
-
-$(document).on('pageinit', '#stats',  function() {
-	// Taking care of focus
-	$("#stats-popup").on("popupafteropen", function(e) {
-		// focus on the handle and not just the input element (focuses text box next to slider)
-		$(".ui-slider-handle").focus();
-	});
-});
+*/

@@ -27,10 +27,9 @@ var SR4 = {
 		window.APPSTRING+"__active_user__"
 	],
 
-	Remote: { 
-		Chars: {}, 
+	Remote: {
 		CharIDs: {},
-		user: null,
+		user: null
 	},
 
 	Local:  {Chars: {}, CharList: []},
@@ -39,6 +38,10 @@ var SR4 = {
 	Detached: {
 		tests_MAG: null,
 		tests_RES: null	
+	},
+
+	Events: {
+		sync: null
 	}
 };
 
@@ -79,34 +82,9 @@ SR4.refreshTitlePage = function() {
 	};
 };
 
-SR4.refreshStatsPage = function() {
-	for (var i = 0; i < this.StatList.length; i++) { 
-		var stat = this.StatList[i];
-
-		$('#'+stat).html(this.currChar.stats[stat]);	
-	};
-
-	this.hideMAGorRES();
-};
-
 SR4.refreshDicePage = function() {
 	Dice.refreshDiceButtons();
 }
-
-SR4.updateStatsPopup = function(statName, statTarget, value) {
-	// auto-adjust the maxval to repair a too loose maxval
-	var maxval = 9;
-	while (maxval < value) {
-		maxval += 5;
-	}
-
-	$('#stats-slider').val(value);
-	$('#stats-slider').attr('stat-target', statTarget);
-	$('#stats-slider').attr('max', maxval);
-	$('#stats-slider').slider('refresh');
-
-	$('#stats-poptext').html("New "+statName+" value:");
-};
 
 SR4.refreshMonitorPage = function() {
 	Monitor.refresh();
@@ -174,11 +152,21 @@ Storage.prototype.getObject = function(key) {
     jQuery event registration
    ########################### */
 
-$(document).on('pagebeforeshow', '#title', function () {
-	SR4.refreshTitlePage();
+$(document).on('pageinit', '#title',  function() {
+	// Taking care of focus for input popups
+	$("#login-popup").on("popupafteropen", function(e) {
+		$("#login-submit-btn").focus();
+	});
+
+	$("#createchar-popup").on("popupafteropen", function(e) {
+		$("#newchar-name-txtbx").focus();
+	});
+
+	$("#rename-popup").on("popupafteropen", function(e) {
+		$("#charname-txtbx").focus();
+	});
 });
 
-$(document).on('pagebeforeshow', '#stats',  function() {
-	// hide elements that are only of interest for mages or technomancers
-	SR4.hideMAGorRES();
+$(document).on('pagebeforeshow', '#title', function () {
+	SR4.refreshTitlePage();
 });

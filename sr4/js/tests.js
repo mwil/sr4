@@ -68,7 +68,12 @@ Test.recentlyUsed = function(id) {
 		$("#recent-skill-lv li:last").remove();
 	};
 
-	$("#recent-skill-lv").prepend($("#search-skill-lv ."+id).closest("li").clone()).listview("refresh");
+	var li = $("#search-skill-lv ."+id).closest("li");
+
+	// wait for the button animation to finish instead of appending buttons during animation
+	li.promise().done(function() {
+		$("#recent-skill-lv").prepend(li.clone()).listview("refresh");
+	});	
 };
 
 Test.refresh = function() {

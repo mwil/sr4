@@ -40,7 +40,11 @@ SR4.Remote.loginToServer = function() {
 			localStorage.setItem(window.APPSTRING+"__active_user__", username);
 
 			$("#rem-server-collap .ui-btn-text:first").text("Connected to Server (as "+username+")");
-			$("#rem-server-collap").trigger("expand");	
+			$("#rem-server-collap").trigger("expand");
+
+			// Check for char updates every 30 seconds
+			SR4.Events.sync = setInterval(SR4.Remote.checkSyncChar, 30000);
+
 		} else {
 			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response[0]).popup('open');
 		};
@@ -60,6 +64,9 @@ SR4.Remote.logoutFromServer = function() {
 		} else if (response.indexOf('ok:') === 0) {				
 			$("#rem-server-collap .ui-btn-text:first").text("Connect to Server");
 			$("#rem-lc-collap").trigger("collapse");
+
+			clearInterval(SR4.Events.sync);
+
 		} else {
 			$('#remote-status-popup').html('Unexpected response from server!<br/>Message: '+response).popup('open');
 		};
@@ -110,20 +117,27 @@ SR4.Remote.pullCharByCID = function(cid) {
 			var character = response[1] && JSON.parse(response[1]);
 			var charName  = character.charName;
 
-			character.__proto__ = Character.prototype;
+			var cid  = parseInt(response[2].slice("cid=".length));
+			var lmod = response[3].slice("last_modified=".length);
 
-			SR4.Remote.Chars[charName] = character;
-			SR4.Remote.Chars[charName].upgrade();
+			if (charName in SR4.Local.Chars) {
+				// update the existing char ... TODO ask for confirmation?
+				SR4.Local.Chars[charName].updateByOther(character, cid, lmod);
 
-			SR4.Remote.Chars[charName].Remote.cid = parseInt(response[2].slice("cid=".length));
-			SR4.Remote.Chars[charName].Remote.last_modified = response[3].slice("last_modified=".length);
+			} else {
+				// New char, update the received option to a character object
+				character.__proto__ = Character.prototype;
+				character.upgrade();
 
-			SR4.Remote.refreshCharList();
+				character.Remote.cid = cid;
+				character.Remote.last_modified = lmod;
 
-			// Overwrite local chars with the same name with remote chars // TODO: ask for confirmation
-			SR4.Local.Chars[charName] = SR4.Remote.Chars[charName];
-			SR4.Local.Chars[charName].updated();
-			SR4.Local.charListChanged();
+				SR4.Local.Chars[charName] = character;
+				SR4.Local.Chars[charName].updated();
+
+				SR4.Local.charListChanged();
+			}
+
 			SR4.switchToChar(charName);
 
 			$('#remote-status-popup').html('Character successfully added to local library!').popup('open');
@@ -150,7 +164,9 @@ SR4.Remote.pushChar = function() {
 
 		if (response[0].indexOf("ok:") === 0) {
 			$('#remote-status-popup').text('Character is now stored on the server!').popup('open');
-			SR4.currChar.Remote.cid = parseInt(response[1].slice("cid=".length));
+
+			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length));
+			SR4.currChar.Remote.last_modified = response[2].slice("last_modified=".length);
 			SR4.currChar.updated();
 
 		} else if (response[0].indexOf("err:") === 0) {
@@ -236,24 +252,20 @@ SR4.Remote.doSyncChar = function(cid) {
 
 		} else if (response[0].indexOf('ok:') === 0) {
 			var character = response[1] && JSON.parse(response[1]);
-			var charName  = character.charName;
+			var cid  = parseInt(response[2].slice("cid=".length));
+			var lmod = response[3].slice("last_modified=".length);
 
-			character.__proto__ = Character.prototype;
+			if (SR4.currChar.Remote.cid == cid) {
+				SR4.currChar.updateByOther(character, cid, lmod);
 
-			SR4.Remote.Chars[charName] = character;
-			SR4.Remote.Chars[charName].upgrade();
+				// TODO: update the current page!
 
-			SR4.Remote.Chars[charName].Remote.cid = parseInt(response[2].slice("cid=".length));
-			SR4.Remote.Chars[charName].Remote.last_modified = response[3].slice("last_modified=".length);
+				$(".header-sync-btn").addClass("ui-disabled");
+				console.log("Character successfully synced!");
 
-			SR4.Local.Chars[charName] = SR4.Remote.Chars[charName];
-			SR4.Local.Chars[charName].updated();
-
-			// necessary to update currChar as well?
-			SR4.switchToChar(charName);
-
-			$(".header-sync-btn").addClass("ui-disabled");
-			console.log("Character successfully synced (hopefully ...)");
+			} else {
+				console.log("Syncing with wrong char id, something is wrong ... local: ", SR4.currChar.Remote.cid, ", received: ", cid);
+			};
 
 		} else {
 			console.log('Unexpected response from server! Message: '+response[0]);
@@ -298,9 +310,7 @@ $(document).on('pageinit', '#title',  function() {
 			};
 			// other callapsibles on #title also trigger this event, do nothing ...
 
-		} else {
-			// Closing a collapsible
-
+		} else {  // on closing a collapsible
 			if(curr_id === "rem-server-collap") {
 				SR4.Remote.logoutFromServer();
 			};

@@ -94,9 +94,9 @@ switch ($command) {
 		}
 
 		# Check if char is already in table, then update!
-		if ($check_stmt = $mysqli->prepare("SELECT cid FROM chars WHERE cid=? OR (gid=? AND charname=?)")) {
+		if ($check_stmt = $mysqli->prepare("SELECT cid, last_modified FROM chars WHERE cid=? OR (gid=? AND charname=?)")) {
 			$check_stmt->bind_param("iis", $cid, $gid, $charname);
-			$check_stmt->bind_result($res_cid);
+			$check_stmt->bind_result($res_cid, $res_mod);
 			$check_stmt->execute();
 			$check_stmt->store_result();
 			$check_stmt->fetch();
@@ -109,10 +109,8 @@ switch ($command) {
 
 					if ($update_stmt->affected_rows == 1) {
 						echo "ok:push:success\n";
-						echo "cid=".$res_cid;
 					} else if ($update_stmt->affected_rows == 0) {
 						echo "ok:push:nothing_changed\n";
-						echo "cid=".$res_cid;
 					}
 					
 					$update_stmt->close();
@@ -129,7 +127,7 @@ switch ($command) {
 					$ins_stmt->execute();
 
 					if ($ins_stmt->affected_rows == 1) {
-						echo "ok:push:success";
+						echo "ok:push:success\n";
 					} else {
 						echo "err:push:wrong_number_affected:ins\n";
 						echo "MySQL error: ".$ins_stmt->error;
@@ -140,6 +138,16 @@ switch ($command) {
 					echo "err:push:mysql_statement_error:ins\n";
 					echo "MySQL error: '".$mysqli->error."'.";
 				}
+			}
+
+			// read back the modified values
+			$check_stmt->execute();
+			$check_stmt->store_result();
+			$check_stmt->fetch();
+
+			if ($check_stmt->num_rows > 0) {
+				echo "cid=".$res_cid."\n";
+				echo "last_modified=".$res_mod;
 			}
 
 			$check_stmt->close();
@@ -202,7 +210,7 @@ switch ($command) {
 			} else {
 				echo "ok:sync:up_to_date\n";
 				echo "cid=".$cid."\n";
-				echo "last_modified=".$res_mod;
+				echo "last_modified=".$modified;
 			}
 			
 			$sync_stmt->close();

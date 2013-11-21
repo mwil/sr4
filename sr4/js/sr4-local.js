@@ -139,7 +139,6 @@ SR4.Local.renameChar = function(newName) {
 
 SR4.Local.charListChanged = function() {
 	// update charlist in localStorage
-	// keys breaks in old browsers? who cares. This already breaks in Firefox.
 	localStorage.setObject(window.APPSTRING+"__charlist__", Object.keys(this.Chars));
 	this.CharList = Object.keys(this.Chars);
 

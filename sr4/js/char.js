@@ -45,33 +45,53 @@ var Character = function(charName) {
 
 // Bring character to the newest 'version', i.e., add Stats from SR4.StatList when missing
 Character.prototype.upgrade = function() {
-	// TODO: also remove props that were refactored along the way!
+	// TODO: also remove props that were factored out along the way!
 
 	if (!this.Remote) {
 		this.Remote = {
 			cid: null,
 			last_modified: null
 		};	
-	}
+	};
 
 	for (var i = 0; i < SR4.StatList.length; i++) {
 		if (!(SR4.StatList[i] in this.stats)) {
 			this.stats[SR4.StatList[i]] = DEFAULTVAL;
 		}
-	}
+	};
 
 	for (var i = 0; i < SR4.CondList.length; i++) {
 		if (!(SR4.CondList[i] in this.condition)) {
 			this.condition[SR4.CondList[i]] = 0;
 		}
-	}
+	};
 
 	if (!('mods' in this)) {
 		this.mods = {};
 	}
 
 	this.updated();
-}
+};
+
+Character.prototype.updateByOther = function(other, cid, last_modified) {
+	if (this.charName != other.charName) {
+		this.charName  = other.charName;
+
+		SR4.Local.charListChanged();	
+	};
+	
+	this.stats     = other.stats;
+	this.condition = other.condition;
+	this.mods      = other.mods;
+
+	this.Remote = {
+		cid: cid,
+		last_modified: last_modified
+	};
+
+	this.upgrade();
+	this.updated();
+};
 
 Character.prototype.updated = function() {
 	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);

@@ -177,8 +177,8 @@ Dice.refreshDiceButtons = function() {
 			// ugly hack, why is there no sane way to access nested objects ??
 			for (iprop in Dice.Offsets) {
 				if (Dice.Offsets.hasOwnProperty(iprop)) {
-					var proplist = prop.split('.');
-					var currobj  = Dice.Offsets[prop];
+					var proplist = iprop.split('.');
+					var currobj  = Dice.Offsets[iprop];
 					
 					for (i = 0; i < proplist.length; i++) {
 						currobj = currobj[proplist[i]];

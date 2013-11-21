@@ -104,13 +104,14 @@ Test.refresh = function() {
 		}
 	});
 
-	$('#test-mod-label .ui-btn-text').html('Additional Modifiers <span class="info">('+(Test.mods+SR4.currChar.getMods())+')</span> &mdash; '+Test.mods);
+	$('#test-mod-label .ui-btn-text').html('Test Modifiers <span class="info">('+(Test.mods+SR4.currChar.getMods())+')</span> &mdash; '+Test.mods);
 };
 
 Test.resetAll = function() {
-	$("span.test-res").html("&mdash;");
+	$("span.test-res").html("&ndash;");
 	$("#recent-skill-lv").empty();
 };
+
 
 // jQuery event handling
 

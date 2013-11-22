@@ -38,7 +38,7 @@
 		<xsl:for-each select="/app/skills/category/skill">
 			<li data-icon="false" class="{../@type}">
 				<a href="#tests-popup" data-rel="popup" class="roll-{id}"
-					stat_a="Skill_{id}" stat_b="Attrib_{attribute}" offset="0"
+					data-stat_a="Skill_{id}" data-stat_b="Attrib_{attribute}" data-offset="0"
 					onClick="$('.count-{id}').html(Test.asString('Skill_{id}', 'Attrib_{attribute}', 0)); Test.recentlyUsed('roll-{id}');">
 
 					<xsl:value-of select="name"/>

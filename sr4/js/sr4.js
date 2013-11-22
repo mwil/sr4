@@ -29,10 +29,15 @@ var SR4 = {
 
 	Remote: {
 		CharIDs: {},
-		user: null
+		user: null,
+		sync_state: null
 	},
 
-	Local:  {Chars: {}, CharList: []},
+	Local:  {
+		Chars: {},
+		CharList: []
+	},
+	
 	currChar: null,
 
 	Detached: {
@@ -51,7 +56,7 @@ SR4.switchToChar = function(charName) {
 
 	localStorage.setItem(window.APPSTRING+"__active_char__", charName);
 
-	$("[data-role='page']:visible").trigger("switchedChar");
+	$("div[data-role='page']:visible").trigger("switchedChar");
 };
 
 SR4.switchToCharByIndex = function(index) {
@@ -74,10 +79,6 @@ SR4.refreshTitlePage = function() {
 	}
 
 	this.Local.refreshCharList();
-};
-
-SR4.refreshDicePage = function() {
-	Dice.refreshDiceButtons();
 };
 
 SR4.refreshMonitorPage = function() {

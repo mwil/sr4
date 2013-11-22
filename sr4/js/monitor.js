@@ -127,6 +127,7 @@ Monitor.refresh = function() {
 	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
 
 	// Refresh Ini test, this needs a better separation (TODO)
+	$("roll-initiative").data("offset", SR4.currChar.stats.Attrib_REA + SR4.currChar.stats.Attrib_INT);
 	Test.refresh();
 };
 

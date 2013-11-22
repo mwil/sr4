@@ -99,8 +99,10 @@ Character.prototype.updated = function() {
 	// dump the new version into localStorage to have it around next time
 	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);
 
-	// notify the visible page that the character changed ...
-	$("[data-role='page']:visible").trigger("updatedChar");
+	if (this === SR4.currChar) {
+		// notify the visible page that the current character changed ...
+		$("div[data-role='page']:visible").trigger("updatedChar");	
+	}
 };
 
 Character.prototype.rename = function(charName) {

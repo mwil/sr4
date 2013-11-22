@@ -14,19 +14,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-window.startup = true;
 window.withSwipe = false;
 
-$(document).on('pageinit', "[data-role='page']", function () {
-	if (window.startup) {
+$(document).one('pageinit', function () {
 		SR4.Local.init();
 		SR4.Remote.init();
-		window.startup = false;
+		console.log("Should appear once.");
 	}
 });
 
 /* // Handle swiping, does not work so well.
-$(document).on('pagebeforeshow', "[data-role='page']", function () { 
+$(document).on('pagebeforeshow', "div[data-role='page']", function () { 
 	$('.next-button').attr('href', '#'+$(this).jqmData('next'));
 
 	if (window.withSwipe) {
@@ -40,7 +38,7 @@ $(document).on('pagebeforeshow', "[data-role='page']", function () {
 	};
 });
 
-$(document).on('pagebeforehide', "[data-role='page']", function () {
+$(document).on('pagebeforehide', "div[data-role='page']", function () {
 	if (window.withSwipe) {
 		$(this).off('swipeleft swiperight');
 	}

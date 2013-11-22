@@ -41,7 +41,7 @@
 			<ul data-role="listview" id="rem-loadchar-lv" data-split-icon="delete" data-split-theme="c"></ul>
 		</div>
 
-		<a href="#" data-role="button" data-icon="check" data-iconpos="right" onClick="SR4.Remote.pushChar();"
+		<a href="#" data-role="button" data-icon="check" data-iconpos="right" onClick="SR4.Remote.pushChar(true);"
 			class="ui-disabled nochar-disabled" id="rem-server-a">
 			<xsl:text>Push Character to Server</xsl:text>
 		</a>
@@ -63,7 +63,7 @@
 			<input type="text" id="rem-user-txtbx" value="" placeholder="Enter name ..." data-clear-btn="true"/>
 			<input type="text" id="rem-pass-txtbx" value="" placeholder="Password" disabled="disabled"/>
 
-			<button type="submit" data-theme="b" data-icon="check" data-iconpos="right" id="login-submit-btn"
+			<button type="button" data-theme="b" data-icon="check" data-iconpos="right" id="login-submit-btn"
 				onClick="SR4.Remote.user=$('#rem-user-txtbx').val(); SR4.Remote.loginToServer(); $('#login-popup').popup('close');">
 				<xsl:text>Sign in</xsl:text>
 			</button>
@@ -73,13 +73,10 @@
 	<!-- Generate new char popup -->
 	<div data-role="popup" id="createchar-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3 class="ui-title"><xsl:text>Enter a character name ...</xsl:text></h3>
+		
 		<form>
 			<input type="text" id="newchar-name-txtbx" value="" placeholder="Enter name ..."/>
-
-			<button type="submit" 
-				onClick="SR4.Local.createChar($('#newchar-name-txtbx').val()); $('#newchar-name-txtbx').val('');">
-				<xsl:text>Generate!</xsl:text>
-			</button>
+			<button type="button" id="local-newchar-ok-btn"><xsl:text>Generate!</xsl:text></button>
 		</form>
 	</div>
 
@@ -88,36 +85,27 @@
 		<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
 	
 		<form>	
-			<input type="text" id="charname-txtbx" value="" placeholder="Enter name ..." tabindex="1"/>
-
-			<button type="submit" tabindex="2"
-				onClick="SR4.Local.renameChar($('#charname-txtbx').val()); $('#charname-txtbx').val('');">
-				<xsl:text>Rename</xsl:text>
-			</button>
+			<input type="text" id="rename-txtbx" value="" placeholder="Enter name ..." tabindex="1"/>
+			<button type="button" id="local-rename-ok-btn" tabindex="2"><xsl:text>Rename</xsl:text></button>
 		</form>
 	</div>
 	
 	<!-- Delete confirmation Popup -->
 	<div data-role="popup" id="delete-popup" data-transition="pop" data-position-to="window" class="ui-content" data-target="">
+		<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character?</xsl:text></h3>
+		
 		<form>
-			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character?</xsl:text></h3>
-
-			<button type="submit"
-				onClick="SR4.Local.removeCharByIndex($('#delete-popup').data('target'));">
-				<xsl:text>Delete</xsl:text>
-			</button>
-
+			<button type="button" id="local-delete-ok-btn"><xsl:text>Delete</xsl:text></button>
 			<button type="reset"><xsl:text>Back</xsl:text></button>
 		</form>
 	</div>
 
 	<!-- Remote Delete confirmation Popup -->
 	<div data-role="popup" id="rem-delete-popup" data-transition="pop" data-position-to="window" class="ui-content" data-target="">
-		<form>
-			<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
+		<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
 
-			<button type="submit"
-				onClick="SR4.Remote.removeCharByCID($('#rem-delete-popup').data('target'));">
+		<form>
+			<button type="button" onClick="SR4.Remote.removeCharByCID($('#rem-delete-popup').data('target'));">
 				<xsl:text>Delete</xsl:text>
 			</button>
 

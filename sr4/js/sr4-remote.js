@@ -141,6 +141,7 @@ SR4.Remote.pullCharByCID = function(cid) {
 				character.Remote.last_modified = lmod;
 
 				SR4.Local.Chars[charName] = character;
+				SR4.Local.Chars[charName].updated();
 				SR4.Local.charListChanged();
 			}
 
@@ -156,7 +157,7 @@ SR4.Remote.pullCharByCID = function(cid) {
 	});
 };
 
-SR4.Remote.pushChar = function() {
+SR4.Remote.pushChar = function(with_popup) {
 	var i = 0;
 
 	$.mobile.loading("show");
@@ -171,19 +172,35 @@ SR4.Remote.pushChar = function() {
 		}
 
 		if (response[0].indexOf("ok:") === 0) {
-			$('#remote-status-popup').html('<h3>Character is now stored on the server!</h3>').popup('open');
+			if (with_popup) {
+				$('#remote-status-popup').html('<h3>Character is now stored on the server!</h3>').popup('open');	
+			} else {
+				console.log("Character is now stored on the server!");
+			}
 
 			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length), 10);
 			SR4.currChar.Remote.last_modified = response[2].slice("last_modified=".length);
 			SR4.currChar.updated();
 
 		} else if (response[0].indexOf("err:") === 0) {
-			$('#remote-status-popup').html('<h3>Push failed!</h3>Message: '+response[0]).popup('open');	
+			if (with_popup) {
+				$('#remote-status-popup').html('<h3>Push failed!</h3>Message: '+response[0]).popup('open');		
+			} else {
+				console.log('Push failed! Message: ', response[0]);
+			}
+			
 		} else {
-			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
+			if (with_popup) {
+				$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
+			} else {
+				console.log("Unexpected response from server! Message: ", response[0]);
+			}
 		}
 
-		$('#rem-lc-collap').trigger('collapse');
+		if (with_popup) {
+			$('#rem-lc-collap').trigger('collapse');	
+		}
+		
 		$.mobile.loading("hide");
 	});
 };
@@ -205,86 +222,6 @@ SR4.Remote.removeCharByCID = function(cid) {
 		}
 
 		$('#rem-lc-collap').trigger('collapse');
-
-		$.mobile.loading("hide");
-	});
-};
-
-SR4.Remote.checkSyncChar = function() {
-	var i = 0;
-
-	$.post('../cgi-bin/sr4-chars.php', {'command':      'sync', 
-										'cid':           SR4.currChar.Remote.cid,
-										'last_modified': SR4.currChar.Remote.last_modified},
-	function(response) 
-	{
-		response = response.split("\n");
-		
-		for (i = 0; i < response.length; i++) {
-			response[i] = $.trim(response[i]);	
-		}
-
-		if (response[0].indexOf("ok:sync:modified_on_server") === 0) {
-			console.log("checkSync: found modified on server (timestamp: ", response[2].slice("last_modified=".length), ")!");
-
-			// found new character, stop polling until we updated again to the latest version!
-			clearInterval(SR4.Events.sync);
-
-			$(".header-sync-btn").removeClass("ui-disabled");
-			$(".header-sync-btn").data("target", parseInt(response[1].slice("cid=".length), 10));
-
-		} else if (response[0].indexOf("ok:sync:up_to_date") === 0) {
-			// nothing to do, nopping around
-			$(".header-sync-btn").addClass("ui-disabled");
-			console.log("checkSync: we have the current char version.");
-
-		} else if (response[0].indexOf("err:") === 0) {
-			console.log('checkSync failed! Message: '+response[0]);
-		} else {
-			console.log('checkSync unexpected response from server! Message: '+response[0]);
-		}
-	});	
-};
-
-SR4.Remote.doSyncChar = function(cid) {
-	var i = 0;
-
-	$.mobile.loading("show");
-
-	if (!cid) {
-		return;
-	}
-
-	$.post('../cgi-bin/sr4-chars.php', {'command': 'pull', 'cid': cid}, function(response) {
-		response = response.split("\n");
-		
-		for (i = 0; i < response.length; i++) {
-			response[i] = $.trim(response[i]);	
-		}
-
-		if (response[0].indexOf('err:') === 0) {
-			console.log('Pull failed! Message from server: '+response[0]);
-
-		} else if (response[0].indexOf('ok:') === 0) {
-			var character = response[1] && JSON.parse(response[1]);
-			var cid  = parseInt(response[2].slice("cid=".length), 10);
-			var lmod = response[3].slice("last_modified=".length);
-
-			if (SR4.currChar.Remote.cid === cid) {
-				SR4.currChar.updateByOther(character, cid, lmod);
-
-				SR4.Events.sync = setInterval(SR4.Remote.checkSyncChar, 30000);
-
-				$(".header-sync-btn").addClass("ui-disabled");
-				console.log("Character successfully synced!");
-
-			} else {
-				console.log("Syncing with wrong char id, something is wrong ... local: ", SR4.currChar.Remote.cid, ", received: ", cid);
-			}
-
-		} else {
-			console.log('Unexpected response from server! Message: '+response[0]);
-		}
 
 		$.mobile.loading("hide");
 	});

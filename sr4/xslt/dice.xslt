@@ -7,22 +7,19 @@
 <xsl:template match="dicemode-cb">
 	<form class="txtcenter nosel">
 	<fieldset data-role="controlgroup" data-type="horizontal">
-		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" checked="checked"
-			onClick="Dice.useCharMods($('#dicemode-cb-condi')[0].checked);"/>
+		<input type="checkbox" name="dicemode-cb-condi" id="dicemode-cb-condi" checked="checked"/>
 		<label for="dicemode-cb-condi" style="width:110px;"><xsl:text>Monitor</xsl:text></label>
 
-		<input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge" 
-			onClick="Dice.changeOffset(SR4, 'currChar.stats.Attrib_EDG', !$('#dicemode-cb-edge')[0].checked);"/>
+		<input type="checkbox" name="dicemode-cb-edge" id="dicemode-cb-edge"/>
 		<label for="dicemode-cb-edge" style="width:110px;"><xsl:text>Edge</xsl:text></label>
 		
-		<input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"
-			onClick="Dice.rebaseDiceButtons(24, !$('#dicemode-cb-add')[0].checked);"/>
+		<input type="checkbox" name="dicemode-cb-add" id="dicemode-cb-add"/>
 		<label for="dicemode-cb-add" style="width:110px;"><xsl:text>+</xsl:text></label>
 	</fieldset>
 	</form>
 </xsl:template>
 
-<!-- Dice number select buttons and the corresponing popup -->
+<!-- Dice number select buttons and the corresponding popup -->
 <xsl:template match="dice-buttons">
 	<div class="ui-grid-c">
 		<xsl:call-template name="button-row">
@@ -34,13 +31,10 @@
 		<!-- Autofilled by Dice.updateDicePopup() -->
 		<h3 class="ui-title dice-poptext"><xsl:text>AUTOFILLED</xsl:text></h3>
 		<div data-role="controlgroup" data-type="horizontal">
-			<a href="#" data-role="button" 
-				onClick="Dice.addEdge(SR4.currChar.stats['Attrib_EDG']); $('.pop-edge').toggleClass('ui-disabled');"
-				data-icon="plus" data-iconpos="right" class="pop-edge">
+			<a href="#" data-role="button" id="dice-add-edge-btn" data-icon="plus" data-iconpos="right" class="pop-edge-btn">
 				<xsl:text>Edge</xsl:text>
 			</a>
-			<a href="#" data-role="button" onClick="Dice.rerollToPopup(); $('.pop-edge').toggleClass('ui-disabled');"
-				data-icon="refresh" data-iconpos="right" class="pop-edge">
+			<a href="#" data-role="button" id="dice-reroll-edge-btn" data-icon="refresh" data-iconpos="right" class="pop-edge-btn">
 				<xsl:text>Edge</xsl:text>
 			</a>
 		</div>
@@ -49,7 +43,7 @@
 
 <!-- Generate the dice grid (semi-)automatically, rowcount can be adapted to fit different screen sizes -->
 <!-- Adapted from http://www.ibm.com/developerworks/xml/library/x-tiploop/index.html -->
-<!-- Dice buttons labels are later autofilled by Dice.refreshDiceButtons() -->
+<!-- Dice buttons labels are later autofilled by Dice.refresh() -->
 <xsl:template name="button-row">
 	<xsl:param name="rowcount" select="1"/>
 	<xsl:param name="dicelabel" select="1"/>
@@ -57,30 +51,26 @@
 	<xsl:if test="$rowcount > 0">
 		<!-- content to put ... -->
 		<div class="ui-block-a">
-			<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
-			   baseval="{$dicelabel}" currval="{$dicelabel}" valoffset="0" id="b{$dicelabel}"
-			   onClick="Dice.rollToPopup(parseInt($('#b{$dicelabel}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);">
+			<a href="#dice-popup" class="dice-btn" data-rel="popup" data-role="button"	id="dice-btn-{$dicelabel}"
+			   data-baseval="{$dicelabel}" data-currval="{$dicelabel}" data-offset="0">
 			   <xsl:value-of select="$dicelabel"/>
 			</a>
 		</div>
 		<div class="ui-block-b">
-			<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
-			   baseval="{$dicelabel + 1}" currval="{$dicelabel + 1}" id="b{$dicelabel + 1}"
-			   onClick="Dice.rollToPopup(parseInt($('#b{$dicelabel+1}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);">
+			<a href="#dice-popup" class="dice-btn" data-rel="popup" data-role="button" id="dice-btn-{$dicelabel + 1}"
+			   data-baseval="{$dicelabel + 1}" data-currval="{$dicelabel + 1}" data-offset="0">
 			   <xsl:value-of select="$dicelabel + 1"/>
 			</a>
 		</div>
 		<div class="ui-block-c">
-			<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button" 
-			   baseval="{$dicelabel + 2}" currval="{$dicelabel + 2}" id="b{$dicelabel + 2}"
-			   onClick="Dice.rollToPopup(parseInt($('#b{$dicelabel+2}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);">
+			<a href="#dice-popup" class="dice-btn" data-rel="popup" data-role="button" id="dice-btn-{$dicelabel + 2}"
+			   data-baseval="{$dicelabel + 2}" data-currval="{$dicelabel + 2}" data-offset="0">
 			   <xsl:value-of select="$dicelabel + 2"/>
 			</a>
 		</div>
 		<div class="ui-block-d">
-			<a href="#dice-popup" class="dicebutton" data-rel="popup" data-role="button"
-			   baseval="{$dicelabel + 3}" currval="{$dicelabel + 3}" id="b{$dicelabel + 3}"
-			   onClick="Dice.rollToPopup(parseInt($('#b{$dicelabel+3}').attr('currval')), $('#dicemode-cb-edge')[0].checked); $('.pop-edge').toggleClass('ui-disabled', $('#dicemode-cb-edge')[0].checked);">
+			<a href="#dice-popup" class="dice-btn" data-rel="popup" data-role="button" id="dice-btn-{$dicelabel + 3}"
+			   data-baseval="{$dicelabel + 3}" data-currval="{$dicelabel + 3}" data-offset="0">
 			   <xsl:value-of select="$dicelabel + 3"/>
 			</a>
 		</div>
@@ -91,6 +81,7 @@
 			<xsl:with-param name="rowcount" select="$rowcount - 1"/>
 			<xsl:with-param name="dicelabel" select="$dicelabel + 4"/>
 		</xsl:call-template>
+		<!-- -->
 	</xsl:if>
 </xsl:template>
 

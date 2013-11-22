@@ -58,7 +58,7 @@ SR4.Local.init = function() {
 		// if we don't have a char yet and there are other characters, take a (random) one
 		for (icharname in this.Chars) {
 			if (this.Chars.hasOwnProperty(icharname)) {
-				SR4.switchToChar(charname);
+				SR4.switchToChar(icharname);
 				break;	
 			}
 		}
@@ -90,7 +90,7 @@ SR4.Local.removeChar = function() {
 		// pick up someone (possibly random) TODO: is there a less ugly way?
 		for (icharname in this.Chars) {
 			if (this.Chars.hasOwnProperty(icharname)) {
-				SR4.switchToChar(charname);
+				SR4.switchToChar(icharname);
 				break;
 			}
 		}
@@ -150,10 +150,61 @@ SR4.Local.refreshCharList = function() {
 	$('#loadchar-lv').empty();
 
 	for (i = 0; i < this.CharList.length; i++) {
-		$('#loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward'" +
-			                     "onClick='SR4.switchToCharByIndex("+i+"); $(\"#loadchar-container\").trigger(\"collapse\");'>"+this.CharList[i]+
-			                     "</a><a href='#delete-popup' data-rel='popup' onClick='$(\"#delete-popup\").attr(\"data-target\", "+i+")'>Delete</a></li>");	
+		$('#loadchar-lv').append(
+			"<li>"+
+				"<a href='#' class='local-loadchar-btn' data-role='button' data-icon='forward' data-target='"+i+"'>"+this.CharList[i]+"</a>"+
+			 	"<a href='#delete-popup' class='local-delchar-btn' data-rel='popup' data-target='"+i+"'>Delete</a>"+
+			"</li>"
+		);	
 	}
 
 	$("#loadchar-lv").listview("refresh");
 };
+
+// jQuery events
+
+$(document).on('pageinit', '#title',  function() {
+	// click handlers, inline onClick is deprecated 
+	$("#local-newchar-ok-btn").click( 
+		function() {
+			var $name = $('#newchar-name-txtbx');
+
+			SR4.Local.createChar($name.val());
+			$name.val("");
+
+			$(this).closest("div[data-role=popup]").popup("close");
+		}
+	);
+
+	$("#local-rename-ok-btn").click( 
+		function() {
+			var $name = $('#rename-txtbx');
+
+			SR4.Local.renameChar($name.val());
+			$name.val("");
+
+			$(this).closest("div[data-role=popup]").popup("close");
+		}
+	);
+
+	// use delegation for auto-generated entries!
+	$("#loadchar-lv").on("click", ".local-loadchar-btn", 
+		function() {
+			SR4.switchToCharByIndex($(this).data("target")); 
+			$("#loadchar-container").trigger("collapse");
+		}
+	);
+
+	$("#loadchar-lv").on("click", ".local-delchar-btn",
+		function() {
+			$("#delete-popup").data("target", $(this).data("target"));
+		}
+	);
+
+	$("#local-delete-ok-btn").click( 
+		function() {
+			SR4.Local.removeCharByIndex($('#delete-popup').data('target'));
+			$(this).closest("div[data-role=popup]").popup("close");
+		}
+	);
+});

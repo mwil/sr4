@@ -15,7 +15,7 @@
 */
 
 var Dice = {
-	Offsets: {},
+	Offsets: [],
 	use_cmods: true,
 	prev_count: []
 };
@@ -137,70 +137,56 @@ Dice.rebaseDiceButtons = function(offset, remove) {
 		offset = -offset;
 	}
 
-	$('.dicebutton').each(
+	$('.dice-btn').each(
 		function(index) {
-			var baseval = parseInt($(this).attr("baseval"), 10);
-			var currval = parseInt($(this).attr("currval"), 10);
+			var baseval = parseInt($(this).data("baseval"), 10);
+			var currval = parseInt($(this).data("currval"), 10);
 			
-			$(this).attr("baseval", baseval + offset);
-			$(this).attr("currval", currval + offset);
+			$(this).data("baseval", baseval + offset);
+			$(this).data("currval", currval + offset);
 		}
 	);
 
-	this.refreshDiceButtons();
+	this.refresh();
 };
 
-Dice.changeOffset = function(obj, prop, remove) {
+Dice.changeOffset = function(stat, remove) {
 	if (!remove) {
-		this.Offsets[prop] = obj;
-	} else if (this.Offsets[prop] !== undefined) {
-		delete this.Offsets[prop];
+		this.Offsets.push(stat);
+	} else if (this.Offsets.indexOf(stat) > -1) {
+		this.Offsets.splice(this.Offsets.indexOf(stat), 1);
 	}
 
-	this.refreshDiceButtons();
+	this.refresh();
 };
 
 Dice.useCharMods = function(use) {
 	this.use_cmods = use;
 
-	this.refreshDiceButtons();
+	this.refresh();
 };
 
-Dice.refreshDiceButtons = function() {
-	$('.dicebutton').each(
+Dice.refresh = function() {
+	$('.dice-btn').each( 
 		function(index) {
 			var iprop = null;
 			var i = 0;
-			var baseval = parseInt($(this).attr("baseval"), 10);
+			var baseval = parseInt($(this).data("baseval"), 10);
 			var offset = 0;
 
-			// ugly hack, why is there no sane way to access nested objects ??
-			for (iprop in Dice.Offsets) {
-				if (Dice.Offsets.hasOwnProperty(iprop)) {
-					var proplist = iprop.split('.');
-					var currobj  = Dice.Offsets[iprop];
-					
-					for (i = 0; i < proplist.length; i++) {
-						currobj = currobj[proplist[i]];
-					}
-					
-					offset += currobj;
-				}
+			for (i = 0; i < Dice.Offsets.length; i++) {
+				offset += SR4.currChar.stats[Dice.Offsets[i]];
 			}
 
 			if (Dice.use_cmods) {
 				offset += SR4.currChar.getMods();
 			}
 			
-			$(this).attr("currval", baseval + offset);
-			$(this).attr("valoffset", offset);
+			$(this).data("currval", baseval + offset);
+			$(this).data("offset", offset);
 
 			// disable buttons that have no dice available anyway
-			if (baseval+offset <= 0) {
-				$(this).addClass('ui-disabled');
-			} else {
-				$(this).removeClass('ui-disabled');
-			}
+			$(this).toggleClass("ui-disabled", (baseval+offset <= 0));
 
 			$(this).find(".ui-btn-text").html(baseval + 
 				(offset !== 0 ? "<sub class='info'>("+(offset>0?"+":"")+offset+")</sub>" : ""));
@@ -208,24 +194,69 @@ Dice.refreshDiceButtons = function() {
 	);
 };
 
+Dice.refreshPage = function() {
+	this.refresh();
+};
+
 
 // jQuery event registration
 
 $(document).on('pageinit', '#dice',  function() {
-
 	$("#dice").on("updatedChar", function() {
-		SR4.refreshDicePage();
+		Dice.refreshPage();
 	});
 
 	$("#dice").on("switchedChar", function() {
-		SR4.refreshDicePage();
+		Dice.refreshPage();
 	});
+
+	// click handlers, inline onClick is deprecated 
+
+	$(".dice-btn").click( 
+		function() {
+			Dice.rollToPopup(parseInt($(this).data("currval"), 10), $('#dicemode-cb-edge')[0].checked);
+			$(".pop-edge-btn").toggleClass("ui-disabled", $('#dicemode-cb-edge')[0].checked);
+		}
+	);
+
+	$("#dicemode-cb-condi").click(
+		function() {
+			Dice.useCharMods(this.checked);
+		}
+	);
+
+	$("#dicemode-cb-edge").click(
+		function() {
+			Dice.changeOffset('Attrib_EDG', !this.checked);
+		}
+	);
+
+	$("#dicemode-cb-add").click(
+		function() {
+			Dice.rebaseDiceButtons(24, !this.checked);
+		}
+	);
+
+	$("#dice-add-edge-btn").click(
+		function() {
+			Dice.addEdge(SR4.currChar.stats.Attrib_EDG); 
+			$('.pop-edge-btn').addClass('ui-disabled');
+		}
+	);
+
+	$("#dice-reroll-edge-btn").click(
+		function() {
+			Dice.rerollToPopup(); 
+			$('.pop-edge-btn').addClass('ui-disabled');
+		}
+	);
 });
 
 $(document).on('pagebeforeshow', '#dice', function () {
 	if (SR4.currChar) {
-		SR4.refreshDicePage();
+		Dice.refreshPage();
 	} else {
 		$.mobile.changePage('#title', {transition: "none"});
+		return false;
 	}
 });

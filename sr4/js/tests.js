@@ -85,10 +85,10 @@ Test.refresh = function() {
 		var a     = $(this).closest("a");
 		var stats = SR4.currChar.stats;
 
-		var num_dice = stats[a.attr("stat_a")] + stats[a.attr("stat_b")] + SR4.currChar.getMods() + Test.mods;
-		var offset   = parseInt(a.attr("offset"), 10);
+		var num_dice = stats[a.data("stat_a")] + stats[a.data("stat_b")] + SR4.currChar.getMods() + Test.mods;
+		var offset   = parseInt(a.data("offset"), 10);
 
-		if (stats[a.attr("stat_a")] === 0 || stats[a.attr("stat_b")] === 0) {
+		if (stats[a.data("stat_a")] === 0 || stats[a.data("stat_b")] === 0) {
 			//defaulting, one dice penalty!
 			num_dice -= 1;
 		}

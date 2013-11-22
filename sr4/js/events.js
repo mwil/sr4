@@ -17,10 +17,8 @@
 window.withSwipe = false;
 
 $(document).one('pageinit', function () {
-		SR4.Local.init();
-		SR4.Remote.init();
-		console.log("Should appear once.");
-	}
+	SR4.Local.init();
+	SR4.Remote.init();
 });
 
 /* // Handle swiping, does not work so well.

@@ -30,14 +30,14 @@ var SR4 = {
 	Remote: {
 		CharIDs: {},
 		user: null,
-		sync_state: null
+		login: false
 	},
 
 	Local:  {
 		Chars: {},
 		CharList: []
 	},
-	
+
 	currChar: null,
 
 	Detached: {

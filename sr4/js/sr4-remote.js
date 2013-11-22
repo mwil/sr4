@@ -44,8 +44,8 @@ SR4.Remote.loginToServer = function() {
 			$("#rem-server-collap .ui-btn-text:first").text("Connected to Server (as "+username+")");
 			$("#rem-server-collap").trigger("expand");
 
-			// Check for char updates every 30 seconds
-			SR4.Events.sync = setInterval(SR4.Remote.checkSyncChar, 30000);
+			SR4.Remote.login = true;
+			SR4.Remote.updateSyncState(SR4.currChar.Remote.sync_state);
 
 		} else {
 			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
@@ -67,7 +67,8 @@ SR4.Remote.logoutFromServer = function() {
 			$("#rem-server-collap .ui-btn-text:first").text("Connect to Server");
 			$("#rem-lc-collap").trigger("collapse");
 
-			clearInterval(SR4.Events.sync);
+			SR4.Remote.login = false;
+			SR4.Remote.stopSync();
 
 		} else {
 			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response).popup('open');
@@ -139,6 +140,7 @@ SR4.Remote.pullCharByCID = function(cid) {
 
 				character.Remote.cid = cid;
 				character.Remote.last_modified = lmod;
+				character.Remote.sync_state = "updated";
 
 				SR4.Local.Chars[charName] = character;
 				SR4.Local.Chars[charName].updated();
@@ -181,6 +183,8 @@ SR4.Remote.pushChar = function(with_popup) {
 			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length), 10);
 			SR4.currChar.Remote.last_modified = response[2].slice("last_modified=".length);
 			SR4.currChar.updated();
+
+			SR4.Remote.updateSyncState("updated");
 
 		} else if (response[0].indexOf("err:") === 0) {
 			if (with_popup) {

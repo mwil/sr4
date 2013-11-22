@@ -27,7 +27,8 @@ var Character = function(charName) {
 
 	this.Remote = {
 		cid: null,
-		last_modified: null
+		last_modified: null,
+		sync_state: "detached"
 	};
 
 	// TODO: possible problems if name exists already, prevent this before creation! 
@@ -54,6 +55,7 @@ Character.prototype.upgrade = function() {
 		this.Remote = {
 			cid: null,
 			last_modified: null
+			sync_state: "detached";
 		};	
 	}
 
@@ -87,7 +89,8 @@ Character.prototype.updateByOther = function(other, cid, last_modified) {
 
 	this.Remote = {
 		cid: cid,
-		last_modified: last_modified
+		last_modified: last_modified,
+		sync_state: "updated"
 	};
 
 	// the character in the string may be incomplete, do upgrade anyway
@@ -107,7 +110,16 @@ Character.prototype.updated = function() {
 
 Character.prototype.rename = function(charName) {
 	this.charName = charName;
+	
+	this.detachFromServer();
 	this.updated();
+};
+
+Character.prototype.detachFromServer = function() {
+	this.Remote = {
+		cid: null,
+		last_modified: null
+	};
 };
 
 /*

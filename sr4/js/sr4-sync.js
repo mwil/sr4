@@ -29,52 +29,67 @@ SR4.Remote.stopSync = function() {
 	}
 };
 
-SR4.Remote.updateSyncState = function(state) {
-	var curr_state = SR4.Remote.sync_state;
 
-	if ((state === "upload" && curr_state === "download")) || (state === "download" && curr_state === "upload")) {
-		SR4.Remote.sync_state = "conflict";
-	} else {
-		SR4.Remote.sync_state = state;
+SR4.Remote.updateSyncState = function(state) {
+	var curr_state = SR4.currChar.Remote.sync_state;
+
+	if (!SR4.Remote.login) {
+		this.stopSync();
+		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
+		$(".header-sync-btn").addClass("ui-disabled");
+		return;
 	}
 
-	switch (SR4.Remote.sync_state) {
-	case "idle":
-		SR4.Remote.stopSync();
-		$(".header-sync-btn").data("icon", "refresh");
+	if ((state === "upload" && curr_state === "download") || (state === "download" && curr_state === "upload")) {
+		state = "conflict";
+	} else if (state === "uptodate" && curr_state === "upload") {
+		state = "upload";
+	} else {
+		state = state;
+	}
+
+	switch (state) {
+	case "detached":
+		this.stopSync();
+		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
 		$(".header-sync-btn").addClass("ui-disabled");
 		break;
 
+	case "updated":
 	case "uptodate":
-		SR4.Remote.startSync();
-		$(".header-sync-btn").data("icon", "refresh");
+		this.startSync();
+		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
 		$(".header-sync-btn").addClass("ui-disabled");
 		break;
 
 	case "upload":
-		SR4.Remote.startSync();
+		this.startSync();
 		$(".header-sync-btn").removeClass("ui-disabled");
-		$(".header-sync-btn").data("icon", "arrow-u");
+		$(".header-sync-btn").buttonMarkup({icon: "arrow-u", theme: "b"});
 		break;
 
 	case "download":
-		SR4.Remote.stopSync();
+		this.stopSync();
 		$(".header-sync-btn").removeClass("ui-disabled");
-		$(".header-sync-btn").data("icon", "arrow-d");
+		$(".header-sync-btn").buttonMarkup({icon: "arrow-d", theme: "b"});
 		break;
 
 	case "conflict":
-		SR4.Remote.stopSync();
+		this.stopSync();
 		$(".header-sync-btn").addClass("ui-disabled");
-		$(".header-sync-btn").data("icon", "alert");
+		$(".header-sync-btn").buttonMarkup({icon: "alert", theme: "b"});
 		break;
 
 	default:
-		console.log("updateSyncState: unknown state ", SR4.Remote.sync_state, "!");
+		console.log("updateSyncState: unknown state ", state, "!");
+		$(".header-sync-btn").buttonMarkup({icon: "alert", theme: "b"});
 		$(".header-sync-btn").addClass("ui-disabled");
-		break;
+		return;
 	}
+
+	SR4.currChar.Remote.sync_state = state;
 };
+
 
 SR4.Remote.checkSyncChar = function() {
 	var i = 0;
@@ -86,8 +101,7 @@ SR4.Remote.checkSyncChar = function() {
 	$.post('../cgi-bin/sr4-chars.php', {'command':      'sync', 
 										'cid':           SR4.currChar.Remote.cid,
 										'last_modified': SR4.currChar.Remote.last_modified},
-	function(response) 
-	{
+	function(response) {
 		response = response.split("\n");
 		
 		for (i = 0; i < response.length; i++) {
@@ -139,7 +153,7 @@ SR4.Remote.doSyncChar = function() {
 			var lmod = response[3].slice("last_modified=".length);
 
 			SR4.currChar.updateByOther(character, cid, lmod);
-			SR4.Remote.updateSyncState("uptodate");
+			SR4.Remote.updateSyncState("updated");
 			console.log("Character successfully synced!");
 
 		} else {
@@ -150,12 +164,12 @@ SR4.Remote.doSyncChar = function() {
 	});
 };
 
-// jQuery event handling
+// jQuery event handling //
 
 $(document).on("switchedChar", function() {
 	if (SR4.currChar.Remote.cid === null) {
 		// local character that is not present on the server ...
-		SR4.Remote.updateSyncState("idle");
+		SR4.Remote.updateSyncState("detached");
 	} else {
 		SR4.Remote.checkSyncChar();
 	}
@@ -164,16 +178,22 @@ $(document).on("switchedChar", function() {
 $(document).on("updatedChar", function() {
 	if (SR4.currChar.Remote.cid === null) {
 		// local character that is not present on the server ...
-		SR4.Remote.updateSyncState("idle");
+		SR4.Remote.updateSyncState("detached");
 	} else {
 		SR4.Remote.updateSyncState("upload");
 	}
 });
 
 $(document).on("click", ".header-sync-btn", function() {
-	if (SR4.Remote.sync_state === "download") {
-		SR4.Remote.doSyncChar();	
-	} else if (SR4.Remote.sync_state === "upload") {
+	switch (SR4.currChar.Remote.sync_state) {
+	case "download":
+		SR4.Remote.doSyncChar();
+		break;
+	case "upload":
 		SR4.Remote.pushChar(false);
+		break;
+	default:
+		console.log("Clicked headersync but state is unknown!");
+		break;
 	}
 });

@@ -29,7 +29,7 @@
 
 	<div data-role="popup" id="dice-popup" class="ui-content dice-popup" data-transition="pop" data-position-to="window">
 		<!-- Autofilled by Dice.updateDicePopup() -->
-		<h3 class="ui-title dice-poptext"><xsl:text>AUTOFILLED</xsl:text></h3>
+		<h3 class="ui-title dice-poptext"><xsl:text>Loading ...</xsl:text></h3>
 		<div data-role="controlgroup" data-type="horizontal">
 			<a href="#" data-role="button" id="dice-add-edge-btn" data-icon="plus" data-iconpos="right" class="pop-edge-btn">
 				<xsl:text>Edge</xsl:text>

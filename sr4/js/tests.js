@@ -47,6 +47,8 @@ Test.asString = function(stat_a, stat_b, offset) {
 
 
 Test.incMod = function(value) {
+	value = parseInt(value, 10);
+
 	this.mods += value;
 	this.refresh();
 };
@@ -68,14 +70,16 @@ Test.recentlyUsed = function(cls) {
 		$("#recent-skill-lv li:last").remove();
 	}
 
-	var $li = $("#search-skill-lv ."+cls).clone();
+	//var $li = $("#search-skill-lv ."+cls).clone();
+	var $a  = $("#search-skill-lv ."+cls).find("a.test-btn").clone();
+	var $li = $('<li data-icon="false">'+$("<div/>").append($a).html()+"</li>");
 
-	// Get rid of animation stages of the clone ...
-	$li.removeClass("ui-btn-down-c ui-btn-hover-c ui-btn-active");
+	var skill_class = $("#search-skill-lv ."+cls).attr("class").match(/skill-\w+/i)[0];
+	$li.addClass(skill_class);
+	$li.addClass(cls);
 
 	$("#recent-skill-lv").prepend($li).listview("refresh");
 };
-
 
 Test.refresh = function() {
 	if (!SR4.currChar) {
@@ -109,7 +113,6 @@ Test.resetAll = function() {
 };
 
 
-
 // jQuery event handling
 
 $(document).on('pageinit', '#tests',  function() {
@@ -123,29 +126,25 @@ $(document).on('pageinit', '#tests',  function() {
 	});
 
 	$(".tests-mod-inc-btn").click( function() {
-		Test.incMod($(this).data("target"));
+		Test.incMod($(this).data("value"));
 	});
 
 	$(".tests-mod-reset-btn").click( function() {
 		Test.resetMod();
 	});
 
-	$("#search-skill-lv").on("click", ".test-btn",
-		function() {
-			var skill = $(this).data("skill");
+	$("#search-skill-lv").on("click", ".test-btn", function() {
+		var skill = $(this).data("skill");
 
-			$('.count-'+skill).html(Test.asString($(this).data("stat_a"), $(this).data("stat_b"), $(this).data("offset"))); 
-			Test.recentlyUsed('roll-'+skill);
-		}
-	);
+		$('.count-'+skill).html(Test.asString($(this).data("stat_a"), $(this).data("stat_b"), $(this).data("offset"))); 
+		Test.recentlyUsed('roll-'+skill);
+	});
 
-	$("#recent-skill-lv").on("click", ".test-btn",
-		function() {
-			var skill = $(this).data("skill");
+	$("#recent-skill-lv").on("click", ".test-btn", function() {
+		var skill = $(this).data("skill");
 
-			$('.count-'+skill).html(Test.asString($(this).data("stat_a"), $(this).data("stat_b"), $(this).data("offset"))); 
-		}
-	);
+		$('.count-'+skill).html(Test.asString($(this).data("stat_a"), $(this).data("stat_b"), $(this).data("offset"))); 
+	});
 });
 
 

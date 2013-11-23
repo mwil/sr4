@@ -41,7 +41,7 @@
 
 	<!-- the popup to change character stats values, it is reused for all stats and automatically filled refreshed by sr4.js/SR4.updateStatsPopup() -->
 	<div data-role="popup" id="stats-popup" class="ui-content" data-transition="pop" data-position-to="window">
-		<h3 id="stats-poptext" class="ui-title"><xsl:text>AUTOFILLED</xsl:text></h3>
+		<h3 id="stats-poptext" class="ui-title"><xsl:text>Loading ...</xsl:text></h3>
 		
 		<form style="width:320px;">
 			<input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" data-target="autofilled"/>

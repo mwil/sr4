@@ -291,14 +291,6 @@ $(document).on('pageinit', '#title',  function() {
 		$("#login-submit-btn").focus();
 	});
 
-	$("#createchar-popup").on("popupafteropen", function(e) {
-		$("#newchar-name-txtbx").focus();
-	});
-
-	$("#rename-popup").on("popupafteropen", function(e) {
-		$("#charname-txtbx").focus();
-	});
-
 	$("#rem-push-btn").click( function() {
 		SR4.Remote.pushChar(true);
 	});

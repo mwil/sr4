@@ -65,6 +65,7 @@ SR4.Local.init = function() {
 	}
 };
 
+
 SR4.Local.createChar = function(charName) {
 	if (this.Chars[charName] !== undefined || !charName) {
 		// Name already exists ... TODO: in-app notification
@@ -137,6 +138,7 @@ SR4.Local.renameChar = function(newName) {
 	this.charListChanged();
 };
 
+
 SR4.Local.charListChanged = function() {
 	// update charlist in localStorage
 	localStorage.setObject(window.APPSTRING+"__charlist__", Object.keys(this.Chars));
@@ -164,56 +166,69 @@ SR4.Local.refreshCharList = function() {
 
 // jQuery events
 
+
 $(document).on('pageinit', '#title',  function() {
+	// Taking care of focus
+	$("#createchar-popup").on("popupafteropen", function(e) {
+		$("#newchar-name-txtbx").focus();
+	});
+
+	$("#rename-popup").on("popupafteropen", function(e) {
+		$("#rename-txtbx").focus();
+	});
+
 	// click handlers, inline onClick is deprecated 
-	$("#local-newchar-ok-btn").click( 
-		function() {
-			var $name = $('#newchar-name-txtbx');
+	$("#local-newchar-ok-btn").click( function() {
+		var $name = $('#newchar-name-txtbx');
+		var charName = $name.val();
 
-			if(!$name || this.Chars[charName] !== undefined) {
-				SR4.Local.createChar($name.val());
-				$name.val("");
-				$(this).closest("div[data-role=popup]").popup("close");
+		if(charName && SR4.Local.Chars[charName] === undefined) {
+			SR4.Local.createChar(charName);
 
-			} else {
-				$name.val("");
-			}
-		}
-	);
-
-	$("#local-rename-ok-btn").click( 
-		function() {
-			var $name = $('#rename-txtbx');
-
-			if(!$name || this.Chars[charName] !== undefined) {
-				SR4.Local.renameChar($name.val());
-				$name.val("");
-
-				$(this).closest("div[data-role=popup]").popup("close");
-			} else {
-				$name.val("");
-			}
-		}
-	);
-
-	// use delegation for auto-generated entries!
-	$("#loadchar-lv").on("click", ".local-loadchar-btn", 
-		function() {
-			SR4.switchToCharByIndex($(this).data("target")); 
-			$("#loadchar-container").trigger("collapse");
-		}
-	);
-
-	$("#loadchar-lv").on("click", ".local-delchar-btn",
-		function() {
-			$("#delete-popup").data("target", $(this).data("target"));
-		}
-	);
-
-	$("#local-delete-ok-btn").click( 
-		function() {
-			SR4.Local.removeCharByIndex($('#delete-popup').data('target'));
 			$(this).closest("div[data-role=popup]").popup("close");
 		}
-	);
+	 
+		$name.val("");
+	});
+
+	// capture the enter event in the solitary text box (even if the button has no focus)
+	$("#newchar-name-txtbx").keypress( function(event) {
+		if (event.which === 13) {
+			$("#local-newchar-ok-btn").click();
+		}
+	});
+
+	$("#local-rename-ok-btn").click( function() {
+		var $name = $('#rename-txtbx');
+		var charName = $name.val();
+
+		if(charName && SR4.Local.Chars[charName] === undefined) {
+			SR4.Local.renameChar($name.val());
+
+			$(this).closest("div[data-role=popup]").popup("close");
+		} 
+		
+		$name.val("");
+	});
+
+	$("#rename-txtbx").keypress( function(event) {
+		if (event.which === 13) {
+			$("#local-rename-ok-btn").click();
+		}
+	});
+
+	// use delegation for auto-generated entries!
+	$("#loadchar-lv").on("click", ".local-loadchar-btn", function() {
+		SR4.switchToCharByIndex($(this).data("target")); 
+		$("#loadchar-container").trigger("collapse");
+	});
+
+	$("#loadchar-lv").on("click", ".local-delchar-btn", function() {
+		$("#delete-popup").data("target", $(this).data("target"));
+	});
+
+	$("#local-delete-ok-btn").click( function() {
+		SR4.Local.removeCharByIndex($('#delete-popup').data('target'));
+		$(this).closest("div[data-role=popup]").popup("close");
+	});
 });

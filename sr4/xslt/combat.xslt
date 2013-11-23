@@ -22,7 +22,7 @@
 		<a href="#" id="phy-monitor" data-role="button" data-target="Phy" class="btn-in monitor-reset-btn">
 			<xsl:text>Loading ...</xsl:text>
 		</a>
-		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Stun" data-value="1" class="btn-out monitor-hit-btn"></a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Phy" data-value="1" class="btn-out monitor-hit-btn"></a>
 	</fieldset>
 
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-misc-cg">

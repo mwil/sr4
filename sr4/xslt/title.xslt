@@ -41,8 +41,7 @@
 			<ul data-role="listview" id="rem-loadchar-lv" data-split-icon="delete" data-split-theme="c"></ul>
 		</div>
 
-		<a href="#" data-role="button" data-icon="check" data-iconpos="right" onClick="SR4.Remote.pushChar(true);"
-			class="ui-disabled nochar-disabled" id="rem-server-a">
+		<a href="#" data-role="button" data-icon="check" data-iconpos="right" id="rem-push-btn" class="ui-disabled nochar-disabled">
 			<xsl:text>Push Character to Server</xsl:text>
 		</a>
 	</div>
@@ -52,7 +51,7 @@
 
 	<!-- Notifications from remote server interaction Popup -->
 	<div data-role="popup" id="remote-status-popup" class="ui-content">
-		<h3><xsl:text>AUTOFILLED</xsl:text></h3>
+		<h3><xsl:text>Loading ...</xsl:text></h3>
 	</div>
 
 	<!-- Get Username / Groupname / Password / ... Popup -->
@@ -63,8 +62,7 @@
 			<input type="text" id="rem-user-txtbx" value="" placeholder="Enter name ..." data-clear-btn="true"/>
 			<input type="text" id="rem-pass-txtbx" value="" placeholder="Password" disabled="disabled"/>
 
-			<button type="button" data-theme="b" data-icon="check" data-iconpos="right" id="login-submit-btn"
-				onClick="SR4.Remote.user=$('#rem-user-txtbx').val(); SR4.Remote.loginToServer(); $('#login-popup').popup('close');">
+			<button type="button" data-theme="b" data-icon="check" data-iconpos="right" id="login-submit-btn">
 				<xsl:text>Sign in</xsl:text>
 			</button>
 		</form>
@@ -83,6 +81,8 @@
 	<!-- Rename Popup -->
 	<div data-role="popup" id="rename-popup" data-transition="pop" data-position-to="window" class="ui-content">
 		<h3 class="ui-title"><xsl:text>New Character Name:</xsl:text></h3>
+
+		<p><xsl:text>Warning: renaming detaches the character from the server!</xsl:text></p>
 	
 		<form>	
 			<input type="text" id="rename-txtbx" value="" placeholder="Enter name ..." tabindex="1"/>
@@ -105,10 +105,7 @@
 		<h3 class="ui-title"><xsl:text>Are you sure you want to delete this character from the server?</xsl:text></h3>
 
 		<form>
-			<button type="button" onClick="SR4.Remote.removeCharByCID($('#rem-delete-popup').data('target'));">
-				<xsl:text>Delete</xsl:text>
-			</button>
-
+			<button type="button" id="rem-delete-ok-btn"><xsl:text>Delete</xsl:text></button>
 			<button type="reset"><xsl:text>Back</xsl:text></button>
 		</form>
 	</div>

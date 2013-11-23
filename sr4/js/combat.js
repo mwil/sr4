@@ -24,12 +24,15 @@ Monitor.hitStun = function(hits) {
 	var maxStun = (8+Math.ceil(SR4.currChar.stats.Attrib_WIL/2));
 	var cond    = SR4.currChar.condition;
 
+	hits = parseInt(hits, 10);
+
 	if (hits >= 0) {
 		if ((cond.currStun + hits) > maxStun) {
 			var overflow = (cond.currStun + hits) - maxStun;
 			
 			this.hitPhy(overflow);
 			cond.currStun = maxStun;
+			return;
 		} else {
 			cond.currStun += hits;
 		}
@@ -39,12 +42,14 @@ Monitor.hitStun = function(hits) {
 		}
 	}
 
-	this.refresh();
+	SR4.currChar.updated();
 };
 
 Monitor.hitPhy = function(hits) {
 	var maxPhy = (8+Math.ceil(SR4.currChar.stats.Attrib_BOD/2));
 	var cond   = SR4.currChar.condition;
+
+	hits = parseInt(hits, 10);
 
 	if (hits >= 0) {
 		if ((cond.currPhy + hits) > maxPhy) {
@@ -61,31 +66,41 @@ Monitor.hitPhy = function(hits) {
 		}
 	}
 
-	this.refresh();
+	SR4.currChar.updated();
 };
 
-Monitor.incMisc = function(value) {
-	SR4.currChar.condition.currMisc += value;
-	this.refresh();
+Monitor.hitMisc = function(hits) {
+	hits = parseInt(hits, 10);
+
+	SR4.currChar.condition.currMisc += hits;
+	SR4.currChar.updated();
 };
 
 Monitor.resetStun = function() {
-	SR4.currChar.condition.currStun = 0;
+	if (SR4.currChar.condition.currStun === 0) {
+		return;
+	}
 
-	// changing the char directly seems to make it null for a short while and trigger a page transition ...
-	setTimeout(function(){Monitor.refresh();}, 50);
+	SR4.currChar.condition.currStun = 0;
+	SR4.currChar.updated();
 };
 
 Monitor.resetPhy = function() {
-	SR4.currChar.condition.currPhy = 0;
+	if (SR4.currChar.condition.currPhy === 0) {
+		return;
+	}
 
-	setTimeout(function(){Monitor.refresh();}, 50);
+	SR4.currChar.condition.currPhy = 0;
+	SR4.currChar.updated();
 };
 
 Monitor.resetMisc = function() {
+	if (SR4.currChar.condition.currMisc === 0) {
+		return;
+	}
+
 	SR4.currChar.condition.currMisc = 0;
-	
-	this.refresh();
+	SR4.currChar.updated();
 };
 
 Monitor.refresh = function() {
@@ -127,24 +142,37 @@ Monitor.refresh = function() {
 	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
 
 	// Refresh Ini test, this needs a better separation (TODO)
-	$("roll-initiative").data("offset", SR4.currChar.stats.Attrib_REA + SR4.currChar.stats.Attrib_INT);
+	$("#roll-initiative").data("offset", SR4.currChar.stats.Attrib_REA + SR4.currChar.stats.Attrib_INT);
 	Test.refresh();
 };
 
 
 // jQuery event registration
 
-$(document).on('pageinit', '#monitor',  function() {
-	$("#monitor").on("updatedChar", function() {
+$(document).on('pageinit', '#combat',  function() {
+	$("#combat").on("updatedChar", function() {
 		SR4.refreshMonitorPage();
 	});
 
-	$("#monitor").on("switchedChar", function() {
+	$("#combat").on("switchedChar", function() {
 		SR4.refreshMonitorPage();
 	});
+
+	$(".monitor-hit-btn").click( 
+		function() {
+			Monitor["hit"+$(this).data("target")]($(this).data("value"));
+		}
+	);
+
+	$(".monitor-reset-btn").click( 
+		function() {
+			Monitor["reset"+$(this).data("target")]();
+		}
+	);
+
 });
 
-$(document).on('pagebeforeshow', '#monitor', function () {	
+$(document).on('pagebeforeshow', '#combat', function () {	
 	if (SR4.currChar) {
 		SR4.refreshMonitorPage();
 	} else {

@@ -8,7 +8,7 @@
 
 
 <app>
-	<page id="title" prev="monitor" next="stats">
+	<page id="title" prev="combat" next="stats">
 		<title/>
 	</page>
 
@@ -21,12 +21,12 @@
 		<dice-buttons/>
 	</page>
 
-	<page id="tests" prev="dice" next="monitor">
+	<page id="tests" prev="dice" next="combat">
 		<tests/>
 	</page>
 
-	<page id="monitor" prev="tests" next="title">
-		<monitor/>
+	<page id="combat" prev="tests" next="title">
+		<combat/>
 	</page>
 
 	<page id="ammo">

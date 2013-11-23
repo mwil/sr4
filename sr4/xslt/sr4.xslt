@@ -7,7 +7,7 @@
 <xsl:include href="title.xslt"/>
 <xsl:include href="dice.xslt"/>
 <xsl:include href="stats.xslt"/>
-<xsl:include href="monitor.xslt"/>
+<xsl:include href="combat.xslt"/>
 <xsl:include href="tests.xslt"/>
 
 
@@ -51,7 +51,7 @@
 					<li><a href="#stats"   class="ui-disabled nochar-disabled"><xsl:text>Stats</xsl:text></a></li>
 					<li><a href="#tests"   class="ui-disabled nochar-disabled"><xsl:text>Tests</xsl:text></a></li>
 					<li><a href="#dice"    class="ui-disabled nochar-disabled"><xsl:text>Dicer</xsl:text></a></li>
-					<li><a href="#monitor" class="ui-disabled nochar-disabled"><xsl:text>Monitor</xsl:text></a></li>
+					<li><a href="#combat" class="ui-disabled nochar-disabled"><xsl:text>Combat</xsl:text></a></li>
 				</ul>
 			</div><!-- /navbar -->
 		</div><!-- /footer -->

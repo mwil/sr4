@@ -37,7 +37,7 @@ SR4.updateStatsPopup = function(statName, statTarget, value) {
 	};
 
 	$('#stats-slider').val(value);
-	$('#stats-slider').attr('stat-target', statTarget);
+	$('#stats-slider').data('target', statTarget);
 	$('#stats-slider').attr('max', maxval);
 	$('#stats-slider').slider('refresh');
 
@@ -61,6 +61,32 @@ $(document).on('pageinit', '#stats',  function() {
 	$("#title").on("switchedChar", function() {
 		SR4.refreshStatsPage();
 	});
+
+	$("#stats-set-btn").click( 
+		function() {
+			SR4.currChar.setStat($('#stats-slider').data('target'), $('#stats-slider').val());
+		}
+	);
+
+	$("#stats-max-btn").click( 
+		function() {
+			var $slider = $('#stats-slider');
+
+			$slider.attr('max', 5 + parseInt($slider.attr('max'), 10)).slider('refresh');
+		}
+	);
+
+	$("#stats-attr-lv").on("click", ".stats-attr-btn", 
+		function() {
+			SR4.updateStatsPopup($(this).data("name"), $(this).data("stat"), SR4.currChar.stats[$(this).data("stat")]);
+		}
+	);
+
+	$(".stats-skill-lv").on("click", ".stats-skill-btn", 
+		function() {
+			SR4.updateStatsPopup($(this).data("name"), $(this).data("stat"), SR4.currChar.stats[$(this).data("stat")]);
+		}
+	);
 });
 
 $(document).on('pagebeforeshow', '#stats',  function() {

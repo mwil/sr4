@@ -28,7 +28,7 @@ var Character = function(charName) {
 	this.Remote = {
 		cid: null,
 		last_modified: null,
-		sync_state: "detached"
+		sync_state: SYNC_CHAR_DETACHED
 	};
 
 	// TODO: possible problems if name exists already, prevent this before creation! 
@@ -54,8 +54,8 @@ Character.prototype.upgrade = function() {
 	if (!this.Remote) {
 		this.Remote = {
 			cid: null,
-			last_modified: null
-			sync_state: "detached";
+			last_modified: null,
+			sync_state: SYNC_CHAR_DETACHED
 		};	
 	}
 
@@ -90,7 +90,7 @@ Character.prototype.updateByOther = function(other, cid, last_modified) {
 	this.Remote = {
 		cid: cid,
 		last_modified: last_modified,
-		sync_state: "updated"
+		sync_state: SYNC_CHAR_ONLINE | SYNC_CHAR_UPDATED_LOCAL | SYNC_CHAR_JUST_PULLED
 	};
 
 	// the character in the string may be incomplete, do upgrade anyway
@@ -98,9 +98,17 @@ Character.prototype.updateByOther = function(other, cid, last_modified) {
 	this.updated();
 };
 
+/* When the character is updated, the changes should be reflected in the GUI and in localStorage */
 Character.prototype.updated = function() {
 	// dump the new version into localStorage to have it around next time
 	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);
+
+	if (this.Remote.sync_state & SYNC_CHAR_JUST_PULLED) {
+		// We have a fresh version from the server, don't try to upload it again directly!
+		this.Remote.sync_state &= ~(SYNC_CHAR_JUST_PULLED | SYNC_CHAR_UPDATED_LOCAL);
+	} else {
+		this.Remote.sync_state |= SYNC_CHAR_UPDATED_LOCAL;
+	}
 
 	if (this === SR4.currChar) {
 		// notify the visible page that the current character changed ...
@@ -118,7 +126,8 @@ Character.prototype.rename = function(charName) {
 Character.prototype.detachFromServer = function() {
 	this.Remote = {
 		cid: null,
-		last_modified: null
+		last_modified: null,
+		sync_state: SYNC_CHAR_DETACHED
 	};
 };
 
@@ -126,8 +135,11 @@ Character.prototype.detachFromServer = function() {
  * Update a single character statistic and update the page
  */
 Character.prototype.setStat = function(stat, value) {
-	this.stats[stat] = parseInt(value, 10);
-	this.updated();
+	if (this.stats[stat] !== parseInt(value, 10)) {
+		this.stats[stat] = parseInt(value, 10);
+
+		this.updated();
+	}
 };
 
 Character.prototype.getMods = function() {

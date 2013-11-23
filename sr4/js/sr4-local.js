@@ -94,6 +94,7 @@ SR4.Local.removeChar = function() {
 				break;
 			}
 		}
+		
 	} else {
 		// remove and disable all links again
 		SR4.currChar = null;
@@ -169,10 +170,14 @@ $(document).on('pageinit', '#title',  function() {
 		function() {
 			var $name = $('#newchar-name-txtbx');
 
-			SR4.Local.createChar($name.val());
-			$name.val("");
+			if(!$name || this.Chars[charName] !== undefined) {
+				SR4.Local.createChar($name.val());
+				$name.val("");
+				$(this).closest("div[data-role=popup]").popup("close");
 
-			$(this).closest("div[data-role=popup]").popup("close");
+			} else {
+				$name.val("");
+			}
 		}
 	);
 
@@ -180,10 +185,14 @@ $(document).on('pageinit', '#title',  function() {
 		function() {
 			var $name = $('#rename-txtbx');
 
-			SR4.Local.renameChar($name.val());
-			$name.val("");
+			if(!$name || this.Chars[charName] !== undefined) {
+				SR4.Local.renameChar($name.val());
+				$name.val("");
 
-			$(this).closest("div[data-role=popup]").popup("close");
+				$(this).closest("div[data-role=popup]").popup("close");
+			} else {
+				$name.val("");
+			}
 		}
 	);
 

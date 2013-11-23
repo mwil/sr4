@@ -45,7 +45,7 @@ SR4.Remote.loginToServer = function() {
 			$("#rem-server-collap").trigger("expand");
 
 			SR4.Remote.login = true;
-			SR4.Remote.updateSyncState(SR4.currChar.Remote.sync_state);
+			SR4.Remote.updateSyncState();
 
 		} else {
 			$('#remote-status-popup').html('<h3>Unexpected response from server!</h3>Message: '+response[0]).popup('open');
@@ -140,7 +140,7 @@ SR4.Remote.pullCharByCID = function(cid) {
 
 				character.Remote.cid = cid;
 				character.Remote.last_modified = lmod;
-				character.Remote.sync_state = "updated";
+				character.Remote.sync_state = SYNC_CHAR_ONLINE | SYNC_CHAR_JUST_PULLED;
 
 				SR4.Local.Chars[charName] = character;
 				SR4.Local.Chars[charName].updated();
@@ -180,11 +180,12 @@ SR4.Remote.pushChar = function(with_popup) {
 				console.log("Character is now stored on the server!");
 			}
 
-			SR4.currChar.Remote.cid  = parseInt(response[1].slice("cid=".length), 10);
+			SR4.currChar.Remote.cid           = parseInt(response[1].slice("cid=".length), 10);
 			SR4.currChar.Remote.last_modified = response[2].slice("last_modified=".length);
+			SR4.currChar.Remote.sync_state    = SYNC_CHAR_ONLINE | SYNC_CHAR_JUST_PULLED;
 			SR4.currChar.updated();
 
-			SR4.Remote.updateSyncState("updated");
+			SR4.Remote.updateSyncState();
 
 		} else if (response[0].indexOf("err:") === 0) {
 			if (with_popup) {
@@ -212,6 +213,11 @@ SR4.Remote.pushChar = function(with_popup) {
 SR4.Remote.removeCharByCID = function(cid) {
 	$.mobile.loading("show");
 
+	if (SR4.currChar === this.Chars[this.CharIDs[cid]]) {
+		// this means trouble ...
+		SR4.currChar = null;
+	} 
+	
 	delete this.Chars[this.CharIDs[cid]];
 
 	$.post('../cgi-bin/sr4-chars.php', {'command': 'delchar', 'cid': cid}, function(response) {
@@ -234,13 +240,16 @@ SR4.Remote.removeCharByCID = function(cid) {
 SR4.Remote.refreshCharList = function() {
 	var cid = 0;
 
-	$('#rem-loadchar-lv').empty();
+	$("#rem-loadchar-lv").empty();
 
 	for (cid in this.CharIDs) {
 		if (this.CharIDs.hasOwnProperty(cid)) {
-			$('#rem-loadchar-lv').append("<li><a href='#' data-role='button' data-icon='forward' "+
-			"onClick='SR4.Remote.pullCharByCID("+cid+"); $(\"#rem-lc-collap\").trigger(\"collapse\");'>"+this.CharIDs[cid]+"</a>"+
-			"<a href='#rem-delete-popup' data-rel='popup' onClick='$(\"#rem-delete-popup\").data(\"target\", "+cid+");'>Delete</a></li>");
+			$("#rem-loadchar-lv").append(
+				"<li>"+
+					'<a href="#"" data-role="button" data-icon="forward" class="rem-pull-btn">'+this.CharIDs[cid]+"</a>"+
+					'<a href="#rem-delete-popup" data-rel="popup" class="rem-delete-btn">Delete</a>'+
+				"</li>"
+			);
 		}
 	}
 
@@ -277,8 +286,40 @@ $(document).on('pageinit', '#title',  function() {
 		}
 	});
 
-	// Taking care of focus
+	// Taking care of focus for input popups
+	$("#login-popup").on("popupafteropen", function(e) {
+		$("#login-submit-btn").focus();
+	});
+
+	$("#createchar-popup").on("popupafteropen", function(e) {
+		$("#newchar-name-txtbx").focus();
+	});
+
 	$("#rename-popup").on("popupafteropen", function(e) {
 		$("#charname-txtbx").focus();
+	});
+
+	$("#rem-push-btn").click( function() {
+		SR4.Remote.pushChar(true);
+	});
+
+	$("#login-submit-btn").click( function() {
+		SR4.Remote.loginToServer(); 
+
+		SR4.Remote.user = $('#rem-user-txtbx').val();
+		$('#login-popup').popup('close');
+	});
+
+	$("#rem-delete-ok-btn").click( function() {
+		SR4.Remote.removeCharByCID($('#rem-delete-popup').data('target'));
+	});
+
+	$('#rem-loadchar-lv').on("click", ".rem-pull-btn", function() {
+		SR4.Remote.pullCharByCID(cid); 
+		$("#rem-lc-collap").trigger("collapse");
+	});
+
+	$('#rem-loadchar-lv').on("click", ".rem-delete-btn", function() {
+		$("#rem-delete-popup").data("target", cid);
 	});
 });

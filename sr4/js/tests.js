@@ -45,20 +45,20 @@ Test.asString = function(stat_a, stat_b, offset) {
 	}
 };
 
+
 Test.incMod = function(value) {
 	this.mods += value;
-
 	this.refresh();
 };
 
 Test.resetMod = function() {
 	this.mods = 0;
-
 	this.refresh();
 };
 
-Test.recentlyUsed = function(id) {
-	if ($("#recent-skill-lv ."+id).length > 0) {
+
+Test.recentlyUsed = function(cls) {
+	if ($("#recent-skill-lv ."+cls).length > 0) {
 		// this test is already present in the list, just do nothing ...
 		return;
 	}
@@ -68,13 +68,14 @@ Test.recentlyUsed = function(id) {
 		$("#recent-skill-lv li:last").remove();
 	}
 
-	var li = $("#search-skill-lv ."+id).closest("li");
+	var $li = $("#search-skill-lv ."+cls).clone();
 
-	// wait for the button animation to finish instead of appending buttons during animation
-	$("#search-skill-lv ."+id).promise().done(function() {
-		$("#recent-skill-lv").prepend(li.clone()).listview("refresh");
-	});	
+	// Get rid of animation stages of the clone ...
+	$li.removeClass("ui-btn-down-c ui-btn-hover-c ui-btn-active");
+
+	$("#recent-skill-lv").prepend($li).listview("refresh");
 };
+
 
 Test.refresh = function() {
 	if (!SR4.currChar) {
@@ -95,13 +96,8 @@ Test.refresh = function() {
 
 		num_dice = Math.max(0, num_dice);
 
-		$(this).html("("+num_dice+"d"+(offset!==0?"+"+offset:"")+")");
-
-		if (num_dice === 0) {
-			$(this).closest("a").addClass("ui-disabled");
-		} else {
-			$(this).closest("a").removeClass("ui-disabled");
-		}
+		$(this).html("("+num_dice+"d"+(offset!==0?"+"+offset:"")+")");	
+		$(this).closest("a").toggleClass("ui-disabled", (num_dice === 0));
 	});
 
 	$('#test-mod-label .ui-btn-text').html('Test Modifiers <span class="info">('+(Test.mods+SR4.currChar.getMods())+')</span> &mdash; '+Test.mods);
@@ -111,6 +107,7 @@ Test.resetAll = function() {
 	$("span.test-res").html("&ndash;");
 	$("#recent-skill-lv").empty();
 };
+
 
 
 // jQuery event handling
@@ -124,7 +121,33 @@ $(document).on('pageinit', '#tests',  function() {
 		Test.resetAll();
 		SR4.refreshTestsPage();
 	});
+
+	$(".tests-mod-inc-btn").click( function() {
+		Test.incMod($(this).data("target"));
+	});
+
+	$(".tests-mod-reset-btn").click( function() {
+		Test.resetMod();
+	});
+
+	$("#search-skill-lv").on("click", ".test-btn",
+		function() {
+			var skill = $(this).data("skill");
+
+			$('.count-'+skill).html(Test.asString($(this).data("stat_a"), $(this).data("stat_b"), $(this).data("offset"))); 
+			Test.recentlyUsed('roll-'+skill);
+		}
+	);
+
+	$("#recent-skill-lv").on("click", ".test-btn",
+		function() {
+			var skill = $(this).data("skill");
+
+			$('.count-'+skill).html(Test.asString($(this).data("stat_a"), $(this).data("stat_b"), $(this).data("offset"))); 
+		}
+	);
 });
+
 
 $(document).on('pagebeforeshow', '#tests', function () {	
 	if (SR4.currChar) {

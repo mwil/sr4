@@ -17,6 +17,7 @@
 window.APPSTRING   = "Datajack.";
 window.APPSTRING_C = window.APPSTRING + "Character.";
 
+
 var SR4 = {
 	StatList: [],
 	CondList: ['currStun', 'currPhy', 'currMisc'],
@@ -67,16 +68,15 @@ SR4.switchToCharByIndex = function(index) {
 SR4.refreshTitlePage = function() {
 	if (this.currChar) {
 		$('.charName').html(this.currChar.charName);
-		$('.nochar-disabled').removeClass('ui-disabled');
-
 	} else {
 		$('.charName').html("No Char found!");
-		$('.nochar-disabled').addClass('ui-disabled');
 	}
 
 	if (Object.keys(this.Local.Chars).length > 0) {
 		$('#loadchar-container').removeClass('ui-disabled');
 	}
+
+	$('.nochar-disabled').toggleClass('ui-disabled', (SR4.currChar === null));
 
 	this.Local.refreshCharList();
 };
@@ -152,20 +152,7 @@ Storage.prototype.getObject = function(key) {
    ########################### */
 
 $(document).on('pageinit', '#title',  function() {
-	// Taking care of focus for input popups
-	$("#login-popup").on("popupafteropen", function(e) {
-		$("#login-submit-btn").focus();
-	});
-
-	$("#createchar-popup").on("popupafteropen", function(e) {
-		$("#newchar-name-txtbx").focus();
-	});
-
-	$("#rename-popup").on("popupafteropen", function(e) {
-		$("#charname-txtbx").focus();
-	});
-
-
+	// Character events
 	$("#title").on("updatedChar", function() {
 		SR4.refreshTitlePage();
 	});
@@ -179,4 +166,8 @@ $(document).on('pageinit', '#title',  function() {
 
 $(document).on('pagebeforeshow', '#title', function () {
 	SR4.refreshTitlePage();
+});
+
+$(document).on('pagebeforeshow', function () {
+	$('.nochar-disabled').toggleClass('ui-disabled', (SR4.currChar === null));
 });

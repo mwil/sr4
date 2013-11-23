@@ -9,11 +9,10 @@
 
 		<div data-role="collapsible">
 			<h2><xsl:text>Attributes</xsl:text></h2>
-			<ul data-role="listview">
+			<ul data-role="listview" id="stats-attr-lv">
 				<xsl:for-each select="/app/attribs/attr">
 					<li data-icon="false">
-						<a href="#stats-popup" data-rel="popup"
-							onClick="SR4.updateStatsPopup('{name}', 'Attrib_{id}', SR4.currChar.stats['Attrib_{id}']);">
+						<a href="#stats-popup" class="stats-attr-btn" data-rel="popup" data-name="{name}" data-stat="Attrib_{id}">
 							<xsl:value-of select="name"/>
 							<span class="ui-li-count" id="Attrib_{id}"></span>
 						</a>
@@ -25,11 +24,10 @@
 		<xsl:for-each select="/app/skills/category">
 			<div data-role="collapsible" class="{@type}">
 				<h2><xsl:value-of select="@name"/></h2>
-				<ul data-role="listview">
+				<ul data-role="listview" class="stats-skill-lv">
 					<xsl:for-each select="./skill">
 						<li data-icon="false">
-							<a href="#stats-popup" data-rel="popup"
-								onClick="SR4.updateStatsPopup('{name}', 'Skill_{id}', SR4.currChar.stats['Skill_{id}']);">
+							<a href="#stats-popup" class="stats-skill-btn" data-rel="popup" data-name="{name}" data-stat="Skill_{id}">
 								<xsl:value-of select="name"/>
 								<span class="info"><xsl:text> (</xsl:text><xsl:value-of select="attribute"/><xsl:text>) </xsl:text></span>
 								<span class="ui-li-count" id="Skill_{id}"></span>
@@ -46,20 +44,14 @@
 		<h3 id="stats-poptext" class="ui-title"><xsl:text>AUTOFILLED</xsl:text></h3>
 		
 		<form style="width:320px;">
-			<input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" stat-target="autofilled"/>
+			<input type="range" id="stats-slider" data-highlight="true" min="0" max="9" value="7" data-target="autofilled"/>
 
 			<div class="ui-grid-a">
 				<div class="ui-block-a">
-					<a href="#" data-role="button" data-rel="back"
-						onClick="SR4.currChar.setStat($('#stats-slider').attr('stat-target'), $('#stats-slider').val()); SR4.refreshStatsPage();">
-					<xsl:text>Set</xsl:text>
-					</a>
+					<a href="#" data-role="button" data-rel="back" id="stats-set-btn"><xsl:text>Set</xsl:text></a>
 				</div>
 				<div class="ui-block-b">
-					<a href="#" data-role="button" data-icon="plus" data-iconpos="left"
-						onClick="$('#stats-slider').attr('max', parseInt($('#stats-slider').attr('max'))+5); $('#stats-slider').slider('refresh');">
-						<xsl:text>Max</xsl:text>
-					</a>
+					<a href="#" data-role="button" data-icon="plus" data-iconpos="left" id="stats-max-btn"><xsl:text>Max</xsl:text></a>
 				</div>
 			</div>
 		</form>

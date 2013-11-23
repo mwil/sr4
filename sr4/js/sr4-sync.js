@@ -16,6 +16,13 @@
 
 var SYNC_INTERVAL = 30000;
 
+var SYNC_CHAR_DETACHED       = 0;
+var SYNC_CHAR_ONLINE         = 1 << 0;
+var SYNC_CHAR_UPDATED_LOCAL  = 1 << 1;
+var SYNC_CHAR_UPDATED_ONLINE = 1 << 2;
+var SYNC_CHAR_JUST_PULLED    = 1 << 3;
+
+
 SR4.Remote.startSync = function() {
 	if (!SR4.Events.sync) {
 		SR4.Events.sync = setInterval(SR4.Remote.checkSyncChar, SYNC_INTERVAL);
@@ -30,71 +37,47 @@ SR4.Remote.stopSync = function() {
 };
 
 
-SR4.Remote.updateSyncState = function(state) {
-	var curr_state = SR4.currChar.Remote.sync_state;
+SR4.Remote.updateSyncState = function() {
+	if (!SR4.currChar) {
+		return;
+	}
 
-	if (!SR4.Remote.login) {
+	var state = SR4.currChar.Remote.sync_state;
+
+	if (!SR4.Remote.login || state === undefined || !(state & SYNC_CHAR_ONLINE)) {
 		this.stopSync();
 		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
 		$(".header-sync-btn").addClass("ui-disabled");
 		return;
 	}
 
-	if ((state === "upload" && curr_state === "download") || (state === "download" && curr_state === "upload")) {
-		state = "conflict";
-	} else if (state === "uptodate" && curr_state === "upload") {
-		state = "upload";
-	} else {
-		state = state;
-	}
-
-	switch (state) {
-	case "detached":
+	if ((state & SYNC_CHAR_UPDATED_ONLINE) && (state & SYNC_CHAR_UPDATED_LOCAL)) {
 		this.stopSync();
-		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
 		$(".header-sync-btn").addClass("ui-disabled");
-		break;
+		$(".header-sync-btn").buttonMarkup({icon: "alert", theme: "b"});
 
-	case "updated":
-	case "uptodate":
-		this.startSync();
-		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
-		$(".header-sync-btn").addClass("ui-disabled");
-		break;
-
-	case "upload":
+	} else if (state & SYNC_CHAR_UPDATED_LOCAL) {
 		this.startSync();
 		$(".header-sync-btn").removeClass("ui-disabled");
 		$(".header-sync-btn").buttonMarkup({icon: "arrow-u", theme: "b"});
-		break;
 
-	case "download":
+	} else if (state & SYNC_CHAR_UPDATED_ONLINE) {
 		this.stopSync();
 		$(".header-sync-btn").removeClass("ui-disabled");
 		$(".header-sync-btn").buttonMarkup({icon: "arrow-d", theme: "b"});
-		break;
-
-	case "conflict":
-		this.stopSync();
+		
+	} else {
+		this.startSync();
+		$(".header-sync-btn").buttonMarkup({icon: "refresh", theme: "b"});
 		$(".header-sync-btn").addClass("ui-disabled");
-		$(".header-sync-btn").buttonMarkup({icon: "alert", theme: "b"});
-		break;
-
-	default:
-		console.log("updateSyncState: unknown state ", state, "!");
-		$(".header-sync-btn").buttonMarkup({icon: "alert", theme: "b"});
-		$(".header-sync-btn").addClass("ui-disabled");
-		return;
 	}
-
-	SR4.currChar.Remote.sync_state = state;
 };
 
 
 SR4.Remote.checkSyncChar = function() {
 	var i = 0;
 
-	if (!SR4.currChar) {
+	if (!SR4.currChar || !SR4.Remote.login) {
 		return;
 	}
 
@@ -113,11 +96,13 @@ SR4.Remote.checkSyncChar = function() {
 
 			$(".header-sync-btn").data("target", parseInt(response[1].slice("cid=".length), 10));
 
-			SR4.Remote.updateSyncState("download");
+			SR4.currChar.Remote.sync_state |= SYNC_CHAR_UPDATED_ONLINE;
+			SR4.Remote.updateSyncState();
 
 		} else if (response[0].indexOf("ok:sync:up_to_date") === 0) {
 			// nothing to do, nopping around
-			SR4.Remote.updateSyncState("uptodate");			
+			SR4.currChar.Remote.sync_state &= ~SYNC_CHAR_UPDATED_ONLINE;
+			SR4.Remote.updateSyncState();			
 			console.log("checkSync: we have the current char version.");
 
 		} else if (response[0].indexOf("err:") === 0) {
@@ -133,7 +118,7 @@ SR4.Remote.doSyncChar = function() {
 
 	$.mobile.loading("show");
 
-	if (!SR4.currChar) {
+	if (!SR4.currChar || !SR4.Remote.login) {
 		return;
 	}
 
@@ -149,11 +134,11 @@ SR4.Remote.doSyncChar = function() {
 
 		} else if (response[0].indexOf('ok:') === 0) {
 			var character = response[1] && JSON.parse(response[1]);
-			var cid  = parseInt(response[2].slice("cid=".length), 10);
-			var lmod = response[3].slice("last_modified=".length);
+			var cid       = parseInt(response[2].slice("cid=".length), 10);
+			var lmod      = response[3].slice("last_modified=".length);
 
 			SR4.currChar.updateByOther(character, cid, lmod);
-			SR4.Remote.updateSyncState("updated");
+			SR4.Remote.updateSyncState();
 			console.log("Character successfully synced!");
 
 		} else {
@@ -169,7 +154,9 @@ SR4.Remote.doSyncChar = function() {
 $(document).on("switchedChar", function() {
 	if (SR4.currChar.Remote.cid === null) {
 		// local character that is not present on the server ...
-		SR4.Remote.updateSyncState("detached");
+		SR4.currChar.Remote.sync_state &= ~SYNC_CHAR_ONLINE;
+		SR4.Remote.updateSyncState();
+
 	} else {
 		SR4.Remote.checkSyncChar();
 	}
@@ -178,22 +165,24 @@ $(document).on("switchedChar", function() {
 $(document).on("updatedChar", function() {
 	if (SR4.currChar.Remote.cid === null) {
 		// local character that is not present on the server ...
-		SR4.Remote.updateSyncState("detached");
+		SR4.currChar.Remote.sync_state &= ~SYNC_CHAR_ONLINE;
+		SR4.Remote.updateSyncState();
+
 	} else {
-		SR4.Remote.updateSyncState("upload");
+		SR4.Remote.updateSyncState();
 	}
 });
 
 $(document).on("click", ".header-sync-btn", function() {
-	switch (SR4.currChar.Remote.sync_state) {
-	case "download":
+	var state = SR4.currChar.Remote.sync_state;
+
+	if ((state & SYNC_CHAR_UPDATED_ONLINE) && (state & SYNC_CHAR_UPDATED_LOCAL)) {
+		console.log("Clicked headersync but sync in conflict!");
+	} else if (state & SYNC_CHAR_UPDATED_ONLINE) {
 		SR4.Remote.doSyncChar();
-		break;
-	case "upload":
+	} else if (state & SYNC_CHAR_UPDATED_LOCAL) {
 		SR4.Remote.pushChar(false);
-		break;
-	default:
+	} else {
 		console.log("Clicked headersync but state is unknown!");
-		break;
 	}
 });

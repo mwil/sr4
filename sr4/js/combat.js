@@ -20,11 +20,9 @@ var Monitor = {
 	dead_msg:  "<span class='warn'>! DEAD !<span>"
 };
 
-Monitor.hitStun = function(hits) {
-	var maxStun = (8+Math.ceil(SR4.currChar.stats.Attrib_WIL/2));
-	var cond    = SR4.currChar.condition;
-
-	hits = parseInt(hits, 10);
+Character.prototype.hitStun = function(hits) {
+	var maxStun = (8+Math.ceil(this.stats.Attrib_WIL/2));
+	var cond    = this.condition;
 
 	if (hits >= 0) {
 		if ((cond.currStun + hits) > maxStun) {
@@ -42,14 +40,12 @@ Monitor.hitStun = function(hits) {
 		}
 	}
 
-	SR4.currChar.updated();
+	this.updated();
 };
 
-Monitor.hitPhy = function(hits) {
-	var maxPhy = (8+Math.ceil(SR4.currChar.stats.Attrib_BOD/2));
-	var cond   = SR4.currChar.condition;
-
-	hits = parseInt(hits, 10);
+Character.prototype.hitPhy = function(hits) {
+	var maxPhy = (8+Math.ceil(this.stats.Attrib_BOD/2));
+	var cond   = this.condition;
 
 	if (hits >= 0) {
 		if ((cond.currPhy + hits) > maxPhy) {
@@ -66,41 +62,49 @@ Monitor.hitPhy = function(hits) {
 		}
 	}
 
-	SR4.currChar.updated();
+	this.updated();
 };
 
-Monitor.hitMisc = function(hits) {
-	hits = parseInt(hits, 10);
-
-	SR4.currChar.condition.currMisc += hits;
-	SR4.currChar.updated();
+Character.prototype.hitMisc = function(hits) {
+	this.condition.currMisc += hits;
+	this.updated();
 };
 
-Monitor.resetStun = function() {
-	if (SR4.currChar.condition.currStun === 0) {
+Character.prototype.resetStun = function() {
+	if (this.condition.currStun === 0) {
 		return;
 	}
 
-	SR4.currChar.condition.currStun = 0;
-	SR4.currChar.updated();
+	this.condition.currStun = 0;
+	this.updated();
 };
 
-Monitor.resetPhy = function() {
-	if (SR4.currChar.condition.currPhy === 0) {
+Character.prototype.resetPhy = function() {
+	if (this.condition.currPhy === 0) {
 		return;
 	}
 
-	SR4.currChar.condition.currPhy = 0;
-	SR4.currChar.updated();
+	this.condition.currPhy = 0;
+	this.updated();
 };
 
-Monitor.resetMisc = function() {
-	if (SR4.currChar.condition.currMisc === 0) {
+Character.prototype.resetMisc = function() {
+	if (this.condition.currMisc === 0) {
 		return;
 	}
 
-	SR4.currChar.condition.currMisc = 0;
-	SR4.currChar.updated();
+	this.condition.currMisc = 0;
+	this.updated();
+};
+
+Character.prototype.updatedMonitor = function() {
+	var stunMod = -Math.floor(this.condition.currStun/3);
+	var phyMod  = -Math.floor(this.condition.currPhy/3);
+
+	// update the dice pool modifiers of the current character
+	this.mods.stunMod = stunMod;
+	this.mods.phyMod  = phyMod;
+	this.mods.miscMod = this.condition.currMisc;
 };
 
 Monitor.refresh = function() {
@@ -108,14 +112,14 @@ Monitor.refresh = function() {
 		return;
 	}
 
-	var maxStun = (8+Math.ceil(SR4.currChar.stats.Attrib_WIL/2));
-	var maxPhy  = (8+Math.ceil(SR4.currChar.stats.Attrib_BOD/2));
-	var stunMod = -Math.floor(SR4.currChar.condition.currStun/3);
-	var phyMod  = -Math.floor(SR4.currChar.condition.currPhy/3);
-	var cond    = SR4.currChar.condition;
+	var cc    = SR4.currChar;
+	var cond  = cc.condition;
 
-	var stun_msg = "Stun Track <span class='info'>("+stunMod+")</span>";
-	var phy_msg  = "Physical Track <span class='info'>("+phyMod+")</span>";
+	var maxStun = (8+Math.ceil(cc.stats.Attrib_WIL/2));
+	var maxPhy  = (8+Math.ceil(cc.stats.Attrib_BOD/2));
+
+	var stun_msg = "Stun Track <span class='info'>("+cc.mods.stunMod+")</span>";
+	var phy_msg  = "Physical Track <span class='info'>("+cc.mods.phyMod+")</span>";
 
 	if (cond.currStun >= maxStun) {
 		stun_msg = this.knock_msg;
@@ -123,7 +127,7 @@ Monitor.refresh = function() {
 
 	if (cond.currPhy > maxPhy) {
 
-		if (cond.currPhy <= (maxPhy + SR4.currChar.stats.Attrib_BOD)) {
+		if (cond.currPhy <= (maxPhy + cc.stats.Attrib_BOD)) {
 			phy_msg = this.coma_msg;
 		} else {
 			phy_msg = this.dead_msg;
@@ -132,18 +136,13 @@ Monitor.refresh = function() {
 		phy_msg = this.knock_msg;
 	}
 
-	// update the dice pool modifiers of the current character
-	SR4.currChar.mods.stunMod = stunMod;
-	SR4.currChar.mods.phyMod  = phyMod;
-	SR4.currChar.mods.miscMod = cond.currMisc;
-
 	$('#stun-monitor .ui-btn-text').html(stun_msg+" &mdash; <span>("+cond.currStun+"/"+maxStun+")</span>");
 	$('#phy-monitor  .ui-btn-text').html(phy_msg+ " &mdash; <span>("+cond.currPhy+"/"+maxPhy+ ")</span>");
 	$('#misc-monitor .ui-btn-text').html('Other Modifiers <span class="info">('+cond.currMisc+')</span>');
 
 	// Refresh Ini test, this needs a better separation (TODO)
 	$("#roll-initiative").data("offset", SR4.currChar.stats.Attrib_REA + SR4.currChar.stats.Attrib_INT);
-	Test.refresh();
+	// Test.refresh();
 };
 
 
@@ -158,18 +157,20 @@ $(document).on('pageinit', '#combat',  function() {
 		SR4.refreshMonitorPage();
 	});
 
-	$(".monitor-hit-btn").click( 
-		function() {
-			Monitor["hit"+$(this).data("target")]($(this).data("value"));
+	$(".monitor-btn").click( function() {
+		if (!SR4.currChar) {
+			return;
 		}
-	);
 
-	$(".monitor-reset-btn").click( 
-		function() {
-			Monitor["reset"+$(this).data("target")]();
+		var target = $(this).data("target");
+		var value  = parseInt($(this).data("value"), 10);
+
+		if (value !== 0) {
+			SR4.currChar["hit"+target](value);
+		} else {
+			SR4.currChar["reset"+target]();
 		}
-	);
-
+	});
 });
 
 $(document).on('pagebeforeshow', '#combat', function () {	

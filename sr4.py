@@ -20,7 +20,7 @@ import sys
 cgitb.enable()
 # cgi.test()
 
-import PyGreSQL
+#import PyGreSQL
 
 CHAR_LIMIT = 20
 

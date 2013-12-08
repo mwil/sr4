@@ -32,7 +32,7 @@
 	<div data-role="page" id="{@id}" data-prev="{@prev}" data-next="{@next}" data-theme="c" data-content-theme="c" class="nosel">
 		<xsl:copy-of select="document('../xml/panel.xml')/*"/>
 
-		<div data-role="header" id="theheader" data-position="fixed" data-theme="b">
+		<div data-role="header" id="theheader" data-position="fixed" data-tap-toggle="false" data-theme="b">
 			<h1><xsl:text>SR4.Datajack</xsl:text></h1>
 			<a href="#mypanel" data-icon="bars" class="ui-disabled nochar-disabled"><xsl:text>Nav</xsl:text></a>
 			<a href="#" data-iconpos="right" data-icon="refresh" class="header-sync-btn ui-disabled remote-disabled">
@@ -44,14 +44,14 @@
 			<xsl:apply-templates/>
 		</div>
 
-		<div data-role="footer" data-id="myfoot" data-position="fixed" data-theme="b">
+		<div data-role="footer" data-id="myfoot" data-position="fixed" data-tap-toggle="false" data-theme="b">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#title"><xsl:text>Chars</xsl:text></a></li>
 					<li><a href="#stats"   class="ui-disabled nochar-disabled"><xsl:text>Stats</xsl:text></a></li>
 					<li><a href="#tests"   class="ui-disabled nochar-disabled"><xsl:text>Tests</xsl:text></a></li>
 					<li><a href="#dice"    class="ui-disabled nochar-disabled"><xsl:text>Dicer</xsl:text></a></li>
-					<li><a href="#combat" class="ui-disabled nochar-disabled"><xsl:text>Combat</xsl:text></a></li>
+					<li><a href="#combat"  class="ui-disabled nochar-disabled"><xsl:text>Combat</xsl:text></a></li>
 				</ul>
 			</div><!-- /navbar -->
 		</div><!-- /footer -->
@@ -69,7 +69,7 @@
 	<xsl:copy-of select="."/>
 </xsl:template>
 
-<!-- Make the list of attributes available to the JavaScript app -->
+<!-- Make the list of attributes available to the JavaScript app in an empty div element -->
 <xsl:template match="attribs">
 	<xsl:element name="div">
 		<xsl:attribute name="class"><xsl:text>AttrList</xsl:text></xsl:attribute>

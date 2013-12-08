@@ -246,8 +246,8 @@ SR4.Remote.refreshCharList = function() {
 		if (this.CharIDs.hasOwnProperty(cid)) {
 			$("#rem-loadchar-lv").append(
 				"<li>"+
-					'<a href="#"" data-role="button" data-icon="forward" class="rem-pull-btn">'+this.CharIDs[cid]+"</a>"+
-					'<a href="#rem-delete-popup" data-rel="popup" class="rem-delete-btn">Delete</a>'+
+					'<a href="#" data-role="button" data-icon="forward" data-target="'+cid+'" class="rem-pull-btn">'+this.CharIDs[cid]+"</a>"+
+					'<a href="#" data-target="'+cid+'" class="rem-delete-btn">Delete</a>'+
 				"</li>"
 			);
 		}
@@ -296,9 +296,9 @@ $(document).on('pageinit', '#title',  function() {
 	});
 
 	$("#login-submit-btn").click( function() {
+		SR4.Remote.user = $('#rem-user-txtbx').val();
 		SR4.Remote.loginToServer(); 
 
-		SR4.Remote.user = $('#rem-user-txtbx').val();
 		$('#login-popup').popup('close');
 	});
 
@@ -307,11 +307,11 @@ $(document).on('pageinit', '#title',  function() {
 	});
 
 	$('#rem-loadchar-lv').on("click", ".rem-pull-btn", function() {
-		SR4.Remote.pullCharByCID(cid); 
+		SR4.Remote.pullCharByCID($(this).data("target")); 
 		$("#rem-lc-collap").trigger("collapse");
 	});
 
 	$('#rem-loadchar-lv').on("click", ".rem-delete-btn", function() {
-		$("#rem-delete-popup").data("target", cid);
+		$("#rem-delete-popup").data("target", $(this).data('target')).popup('open');
 	});
 });

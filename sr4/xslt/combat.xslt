@@ -10,27 +10,27 @@
 
 	<form class="txtcenter fullwidth nosel">
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-stun-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-target="Stun" data-value="-1" class="btn-out monitor-hit-btn"></a>
-		<a href="#" id="stun-monitor" data-role="button" data-target="Stun" class="btn-in monitor-reset-btn">
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-target="Stun" data-value="-1" class="btn-out monitor-btn"></a>
+		<a href="#" id="stun-monitor" data-role="button" data-target="Stun" data-value="0" class="btn-in monitor-btn">
 			<xsl:text>Loading ...</xsl:text>
 		</a>
-		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Stun" data-value="1" class="btn-out monitor-hit-btn"></a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Stun" data-value="1" class="btn-out monitor-btn"></a>
 	</fieldset>
 	
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-phy-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-target="Phy" data-value="-1" class="btn-out monitor-hit-btn"></a>
-		<a href="#" id="phy-monitor" data-role="button" data-target="Phy" class="btn-in monitor-reset-btn">
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-target="Phy" data-value="-1" class="btn-out monitor-btn"></a>
+		<a href="#" id="phy-monitor" data-role="button" data-target="Phy" data-value="0" class="btn-in monitor-btn">
 			<xsl:text>Loading ...</xsl:text>
 		</a>
-		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Phy" data-value="1" class="btn-out monitor-hit-btn"></a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Phy" data-value="1" class="btn-out monitor-btn"></a>
 	</fieldset>
 
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-misc-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-target="Misc" data-value="-1" class="btn-out monitor-hit-btn"></a>
-		<a href="#" id="misc-monitor" data-role="button" data-target="Misc" class="btn-in monitor-reset-btn">
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-target="Misc" data-value="-1" class="btn-out monitor-btn"></a>
+		<a href="#" id="misc-monitor" data-role="button" data-target="Misc" data-value="0" class="btn-in monitor-btn">
 			<xsl:text>Loading ...</xsl:text>
 		</a>
-		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Misc" data-value="1" class="btn-out monitor-hit-btn"></a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-target="Misc" data-value="1" class="btn-out monitor-btn"></a>
 	</fieldset>
 	</form>
 

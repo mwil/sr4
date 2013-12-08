@@ -47,8 +47,6 @@ Test.asString = function(stat_a, stat_b, offset) {
 
 
 Test.incMod = function(value) {
-	value = parseInt(value, 10);
-
 	this.mods += value;
 	this.refresh();
 };
@@ -60,7 +58,10 @@ Test.resetMod = function() {
 
 
 Test.recentlyUsed = function(cls) {
-	if ($("#recent-skill-lv ."+cls).length > 0) {
+	var $r_li = $("#recent-skill-lv ."+cls);
+	var $s_li = $("#search-skill-lv ."+cls);
+
+	if ($r_li.length > 0) {
 		// this test is already present in the list, just do nothing ...
 		return;
 	}
@@ -71,12 +72,11 @@ Test.recentlyUsed = function(cls) {
 	}
 
 	//var $li = $("#search-skill-lv ."+cls).clone();
-	var $a  = $("#search-skill-lv ."+cls).find("a.test-btn").clone();
-	var $li = $('<li data-icon="false">'+$("<div/>").append($a).html()+"</li>");
+	var $a  = $s_li.find("a.test-btn").clone();
+	var $li = $( '<li data-icon="false">'+$("<div/>" ).append($a).html()+"</li>");
 
-	var skill_class = $("#search-skill-lv ."+cls).attr("class").match(/skill-\w+/i)[0];
-	$li.addClass(skill_class);
-	$li.addClass(cls);
+	$li.addClass( $s_li.attr("class").match(/skill-\w+/i)[0] );
+	$li.addClass( cls );
 
 	$("#recent-skill-lv").prepend($li).listview("refresh");
 };
@@ -87,13 +87,14 @@ Test.refresh = function() {
 	}
 
 	$("span.test-label").each(function() {
-		var a     = $(this).closest("a");
-		var stats = SR4.currChar.stats;
+		var $a     = $(this).closest("a");
+		var stat_a = SR4.currChar.stats[$a.data("stat_a")];
+		var stat_b = SR4.currChar.stats[$a.data("stat_b")];
 
-		var num_dice = stats[a.data("stat_a")] + stats[a.data("stat_b")] + SR4.currChar.getMods() + Test.mods;
-		var offset   = parseInt(a.data("offset"), 10);
+		var num_dice = stat_a + stat_b + SR4.currChar.getMods() + Test.mods;
+		var offset   = parseInt($a.data("offset"), 10);
 
-		if (stats[a.data("stat_a")] === 0 || stats[a.data("stat_b")] === 0) {
+		if (stat_a === 0 || stat_b === 0) {
 			//defaulting, one dice penalty!
 			num_dice -= 1;
 		}
@@ -101,10 +102,15 @@ Test.refresh = function() {
 		num_dice = Math.max(0, num_dice);
 
 		$(this).html("("+num_dice+"d"+(offset!==0?"+"+offset:"")+")");	
-		$(this).closest("a").toggleClass("ui-disabled", (num_dice === 0));
+		$a.toggleClass("ui-disabled", (num_dice === 0));
 	});
 
 	$('#test-mod-label .ui-btn-text').html('Test Modifiers <span class="info">('+(Test.mods+SR4.currChar.getMods())+')</span> &mdash; '+Test.mods);
+
+	SR4.hideMAGorRES();
+	$("#search-skill-lv").listview("refresh");
+	$("#recent-skill-lv").listview("refresh");
+
 };
 
 Test.resetAll = function() {
@@ -125,12 +131,14 @@ $(document).on('pageinit', '#tests',  function() {
 		SR4.refreshTestsPage();
 	});
 
-	$(".tests-mod-inc-btn").click( function() {
-		Test.incMod($(this).data("value"));
-	});
+	$(".tests-mod-btn").click( function() {
+		var value = parseInt($(this).data("value"), 10);
 
-	$(".tests-mod-reset-btn").click( function() {
-		Test.resetMod();
+		if (value !== 0) {
+			Test.incMod(value);
+		} else {
+			Test.resetMod();
+		}
 	});
 
 	$("#search-skill-lv").on("click", ".test-btn", function() {

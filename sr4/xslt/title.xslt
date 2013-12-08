@@ -6,8 +6,8 @@
 <xsl:template match="title">
 	<h1 class="txtcenter charName"><xsl:text>No Char found!</xsl:text></h1>
 	
-	<a href="#createchar-popup" data-rel="popup" data-transition="pop" data-position-to="window"
-		data-role="button" data-icon="gear" data-iconpos="right"> 
+	<a href="#createchar-popup" data-role="button" data-icon="gear" data-iconpos="right" id="createchar-popup-btn"
+		data-rel="popup" data-transition="pop" data-position-to="window"> 
 		<xsl:text>New Character</xsl:text>
 	</a>
 
@@ -19,8 +19,7 @@
 	</div>
 	<!-- -->
 
-	<a href="#rename-popup" data-rel="popup"
-		data-role="button" data-icon="edit" data-iconpos="right" class="ui-disabled nochar-disabled">
+	<a href="#rename-popup" data-rel="popup" id="rename-popup-btn" data-role="button" data-icon="edit" data-iconpos="right" class="ui-disabled nochar-disabled">
 		<xsl:text>Rename Character</xsl:text>
 	</a>
 

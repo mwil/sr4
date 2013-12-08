@@ -9,12 +9,12 @@
 
 	<form class="txtcenter fullwidth">
 	<fieldset data-role="controlgroup" data-type="horizontal" id="tworow-test-cg">
-		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-value="-1" class="btn-out tests-mod-inc-btn"></a>
+		<a href="#" data-role="button" data-icon="minus" data-iconpos="left" data-value="-1" class="btn-out tests-mod-btn"></a>
 		<!-- Autofilled by tests.js/Test.refresh() -->
-		<a href="#" id="test-mod-label" data-role="button" class="btn-in tests-mod-reset-btn">
+		<a href="#" id="test-mod-label" data-role="button" data-value="0" class="btn-in tests-mod-btn">
 			<xsl:text>Loading ...</xsl:text>
 		</a>
-		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-value="1" class="btn-out tests-mod-inc-btn"></a>
+		<a href="#" data-role="button" data-icon="plus" data-iconpos="right" data-value="1" class="btn-out tests-mod-btn"></a>
 	</fieldset>
 	</form>
 

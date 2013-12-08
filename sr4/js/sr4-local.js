@@ -149,11 +149,12 @@ SR4.Local.charListChanged = function() {
 
 SR4.Local.refreshCharList = function() {
 	var i = 0;
+	var $lv = $('#loadchar-lv'); 
 
-	$('#loadchar-lv').empty();
+	$lv.empty();
 
 	for (i = 0; i < this.CharList.length; i++) {
-		$('#loadchar-lv').append(
+		$lv.append(
 			"<li>"+
 				"<a href='#' class='local-loadchar-btn' data-role='button' data-icon='forward' data-target='"+i+"'>"+this.CharList[i]+"</a>"+
 			 	"<a href='#delete-popup' class='local-delchar-btn' data-rel='popup' data-target='"+i+"'>Delete</a>"+
@@ -161,17 +162,25 @@ SR4.Local.refreshCharList = function() {
 		);	
 	}
 
-	$("#loadchar-lv").listview("refresh");
+	$lv.listview("refresh");
 };
 
-// jQuery events
 
+// jQuery events
 
 $(document).on('pageinit', '#title',  function() {
 	// Taking care of focus
 	$("#createchar-popup").on("popupafteropen", function(e) {
 		$("#newchar-name-txtbx").focus();
 	});
+
+	$("#createchar-popup-btn").click( function() {
+		$("#newchar-name-txtbx").show().focus();
+	});
+
+	//$("#rename-popup-btn").click( function() {
+	//	$("#rename-txtbx").focus().blur();
+	//});
 
 	$("#rename-popup").on("popupafteropen", function(e) {
 		$("#rename-txtbx").focus();

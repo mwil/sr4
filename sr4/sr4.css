@@ -11,7 +11,8 @@ td { text-align: center; }
 .info { color:gray; font-size: smaller; }
 .warn { color:red; }
 .fade { color:gray; }
-.hit  { /* text-shadow:0px 0px 1px gold; */ }
+
+/* .hit  { text-shadow:0px 0px 1px gold; } */
 
 .center-collap .ui-btn-inner { 
 	text-align: center; 
@@ -50,13 +51,23 @@ td { text-align: center; }
 }
 
 /* Prevent the app to take the whole screen on the desktop */
-html { background-color: #F9F9F9; }
-@media only screen and (min-width: 600px) {
+body { background-image: linear-gradient(#f9f9f9, #eee) !important; }
+
+
+@media only screen and (min-width: 800px) {
+	.ui-content[data-role=content] {
+		padding: 16px 20% 3.5em;
+	}
+/*
 	.ui-page {
-		width: 600px !important;
+		width: 800px !important;
 		margin: 0 auto !important;
 		position: relative !important;
-		border-right: 2px #666 outset !important;
-		border-left:  2px #666 outset !important;
+	}
+
+	.ui-header, .ui-footer {
+		width: 800px !important;
+		margin: 0 auto !important;
 	}
 }
+*/

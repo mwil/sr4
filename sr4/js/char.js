@@ -100,6 +100,8 @@ Character.prototype.updateByOther = function(other, cid, last_modified) {
 
 /* When the character is updated, the changes should be reflected in the GUI and in localStorage */
 Character.prototype.updated = function() {
+	this.updatedMonitor();
+
 	// dump the new version into localStorage to have it around next time
 	localStorage.setObject(window.APPSTRING+"Character."+this.charName, this);
 
